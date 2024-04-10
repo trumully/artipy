@@ -1,0 +1,66 @@
+from typing import Optional
+
+from artipy.stats import MainStat, SubStat
+from .artifacts.upgrade_strategy import AddStatStrategy, UpgradeStatStrategy
+
+
+class Artifact:
+    """Class representing an artifact in Genshin Impact."""
+
+    def __init__(self) -> None:
+        self._mainstat: Optional[MainStat] = None
+        self._substats: list[SubStat] = []
+        self._level: int = 0
+        self._rarity: int = 0
+        self._set: str = ""
+        self._slot: str = ""
+
+    def set_mainstat(self, mainstat: MainStat) -> None:
+        self._mainstat = mainstat
+
+    def set_substats(self, substats: list[SubStat]) -> None:
+        self._substats = substats
+
+    def add_substat(self, substat: SubStat) -> None:
+        self._substats.append(substat)
+
+    def set_level(self, level: int) -> None:
+        self._level = level
+
+    def set_rarity(self, rarity: int) -> None:
+        self._rarity = rarity
+
+    def set_artifact_set(self, set: str) -> None:
+        self._set = set
+
+    def set_artifact_slot(self, slot: str) -> None:
+        self._slot = slot
+
+    def get_mainstat(self) -> MainStat:
+        return self._mainstat
+
+    def get_substats(self) -> list[SubStat]:
+        return self._substats
+
+    def get_level(self) -> int:
+        return self._level
+
+    def get_rarity(self) -> int:
+        return self._rarity
+
+    def get_artifact_set(self) -> str:
+        return self._set
+
+    def get_artifact_slot(self) -> str:
+        return self._slot
+
+    def upgrade(self) -> None:
+        if len(self.get_substats) < self.get_rarity - 1:
+            return AddStatStrategy().upgrade(self)
+        return UpgradeStatStrategy().upgrade(self)
+
+    def __str__(self) -> str:
+        return (
+            f"{self._slot} [+{self._level}]\n{'★' * self._rarity}\n"
+            f"{self._mainstat}\n{'\n'.join(str(s) for s in self._substats)}"
+        )
