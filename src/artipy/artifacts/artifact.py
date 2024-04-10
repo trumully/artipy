@@ -1,7 +1,7 @@
 from typing import Optional
 
 from artipy.stats import MainStat, SubStat
-from .artifacts.upgrade_strategy import AddStatStrategy, UpgradeStatStrategy
+from .upgrade_strategy import AddStatStrategy, UpgradeStatStrategy
 
 
 class Artifact:
@@ -16,12 +16,16 @@ class Artifact:
         self._slot: str = ""
 
     def set_mainstat(self, mainstat: MainStat) -> None:
+        mainstat.rarity = self.get_rarity()
         self._mainstat = mainstat
 
     def set_substats(self, substats: list[SubStat]) -> None:
+        for substat in substats:
+            substat.rarity = self.get_rarity()
         self._substats = substats
 
     def add_substat(self, substat: SubStat) -> None:
+        substat.rarity = self.get_rarity()
         self._substats.append(substat)
 
     def set_level(self, level: int) -> None:
@@ -29,6 +33,9 @@ class Artifact:
 
     def set_rarity(self, rarity: int) -> None:
         self._rarity = rarity
+        stats: list[MainStat | SubStat] = [self.get_mainstat(), *self.get_substats()]
+        for stat in stats:
+            stat.rarity = rarity
 
     def set_artifact_set(self, set: str) -> None:
         self._set = set
@@ -37,6 +44,8 @@ class Artifact:
         self._slot = slot
 
     def get_mainstat(self) -> MainStat:
+        if self._mainstat is None:
+            raise ValueError("MainStat is not set.")
         return self._mainstat
 
     def get_substats(self) -> list[SubStat]:
@@ -55,7 +64,7 @@ class Artifact:
         return self._slot
 
     def upgrade(self) -> None:
-        if len(self.get_substats) < self.get_rarity - 1:
+        if len(self.get_substats()) < self.get_rarity() - 1:
             return AddStatStrategy().upgrade(self)
         return UpgradeStatStrategy().upgrade(self)
 

@@ -8,7 +8,7 @@ from .utils import possible_mainstat_values as possible_values
 class MainStat(Stat):
     """Mainstat dataclass for a Genshin Impact artifact."""
 
-    rarity: int
+    rarity: int = 5
 
     def set_value(self, level: int) -> None:
         """Set the value of the mainstat based on the level of the artifact."""

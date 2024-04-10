@@ -1,11 +1,11 @@
 from typing import TYPE_CHECKING
 import random
 
-from artipy.stats import StatType, SubStat, generate_substat
-from .artifacts.utils import choose
+from artipy.stats import StatType, SubStat, create_substat
+from .utils import choose
 
 if TYPE_CHECKING:
-    from .artifacts.artifact import Artifact
+    from .artifact import Artifact
 
 
 substat_weights: dict[StatType, int] = {
@@ -18,7 +18,7 @@ substat_weights: dict[StatType, int] = {
     StatType.ENERGY_RECHARGE: 4,
     StatType.ELEMENTAL_MASTERY: 4,
     StatType.CRIT_RATE: 3,
-    StatType.CRIT_DAMAGE: 3,
+    StatType.CRIT_DMG: 3,
 }
 
 UPGRADE_STEP = 4
@@ -46,10 +46,11 @@ class AddStatStrategy(UpgradeStrategy):
 
     def pick_stat(self, artifact: "Artifact") -> SubStat:
         """Pick a new substat for the artifact."""
-        stats = [artifact.mainstat.name] + [s.name for s in artifact.get_substats()]
+        stats = [s.name for s in (artifact.get_mainstat(), *artifact.get_substats())]
         pool = {s: w for s, w in substat_weights.items() if s not in stats}
-        new_stat_name = choose(*zip(*pool.items()))
-        new_stat = generate_substat(new_stat_name, artifact.rarity)
+        population, weights = map(tuple, zip(*pool.items()))
+        new_stat_name = choose(population, weights)
+        new_stat = create_substat(name=new_stat_name, rarity=artifact.get_rarity())
         return new_stat
 
     def upgrade(self, artifact: "Artifact") -> None:
