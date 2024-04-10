@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from decimal import Decimal
 from enum import StrEnum
 
@@ -57,11 +57,15 @@ STAT_NAMES: dict[StatType, str] = {
 @dataclass
 class Stat:
     name: StatType
-    value: Decimal
+    _value: float | int | Decimal = field(default=Decimal(0), repr=False)
 
-    def __post_init__(self) -> None:
-        """Minimise any precision loss when using Decimal."""
-        self.value = self.value.quantize(Decimal("1e-8"))
+    @property
+    def value(self) -> Decimal:
+        return Decimal(self._value)
+
+    @value.setter
+    def value(self, value: float | int | Decimal) -> None:
+        self._value = value
 
     def __format__(self, format_spec: str) -> str:
         """Format the stat value based on the format specifier.
@@ -75,5 +79,5 @@ class Stat:
     def __str__(self) -> str:
         name = STAT_NAMES[self.name].split("%")
         if self.name.is_pct:
-            return f"{name[0]}+{self.value:.1%}%"
+            return f"{name[0]}+{self.value:.1%}"
         return f"{name[0]}+{self.value:,.0f}"

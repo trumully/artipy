@@ -1,6 +1,7 @@
 from decimal import Decimal
 from functools import lru_cache
 from operator import attrgetter
+from typing import Generator
 
 from .stat_data import StatData
 from .stats import StatType
@@ -9,7 +10,7 @@ MAISTAT_DATA = StatData("mainstat_data.json")
 SUBSTAT_DATA = StatData("substat_data.json")
 
 
-def map_to_decimal(values: tuple[float, ...]) -> tuple[Decimal, ...]:
+def map_to_decimal(values: Generator[float, None, None]) -> tuple[Decimal, ...]:
     """Helper function to map float values to Decimal."""
     return tuple(map(Decimal, values))
 
