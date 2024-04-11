@@ -2,9 +2,38 @@
 
 
 
+## v0.1.1 (2024-04-11)
+
+### Build
+
+* build: add ruff, pytest, and isort to pyproject.toml ([`d8280ef`](https://github.com/trumully/artipy/commit/d8280efe05e77edc037764420f5e7908e32578e6))
+
+### Chore
+
+* chore: Updated workflow to upload binaries to GitHub Releases ([`d8a9d29`](https://github.com/trumully/artipy/commit/d8a9d2909a71c2032317bdfcc4585390a29d8cbe))
+
+### Ci
+
+* ci: remove &#39;poetry.lock&#39; from workflow trigger. ([`5745012`](https://github.com/trumully/artipy/commit/5745012909af89b2139151062f5dbeef52f4639b))
+
+* ci: add isort to pre-commit hooks ([`888ed53`](https://github.com/trumully/artipy/commit/888ed53c59fb9884d3092f85d7cce00a3b375701))
+
+### Documentation
+
+* docs: add acknowledgements to README ([`d240a2f`](https://github.com/trumully/artipy/commit/d240a2f98f29fd9591e2f24a4fa5a05913f99518))
+
+* docs: update README.md with quick start instructions and badges ([`c5fe1a9`](https://github.com/trumully/artipy/commit/c5fe1a9d659b7b6c7c97ffcd2e8899a17881a60c))
+
+### Fix
+
+* fix: prevent create_substat from picking incorrect StatType ([`d2aefd3`](https://github.com/trumully/artipy/commit/d2aefd31f75ee444cd3175b438251936d95dc522))
+
+
 ## v0.1.0 (2024-04-11)
 
 ### Chore
+
+* chore(release): v0.1.0 [skip ci] ([`c527364`](https://github.com/trumully/artipy/commit/c5273649e7bcb17184a8594fb09b5ef1319f1453))
 
 * chore: Fix workflow to install package before running pytest ([`70b2fc5`](https://github.com/trumully/artipy/commit/70b2fc5b7ab5df1bbbf0de1a6d7ff82e20db24c8))
 
