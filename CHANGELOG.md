@@ -2,6 +2,25 @@
 
 
 
+## v0.2.0 (2024-04-11)
+
+### Ci
+
+* ci: remove upload binaries step from workflow ([`cee8c57`](https://github.com/trumully/artipy/commit/cee8c57a16a869378aa122aaf8fad048dc61fab9))
+
+### Feature
+
+* feat: add truncated_value property to SubStat using helper function ([`1beaec6`](https://github.com/trumully/artipy/commit/1beaec69bc5c8396c71ec0266bf6b0173537e283))
+
+### Refactor
+
+* refactor(Stat): change truncated_value property to directly quantize ([`272b2d8`](https://github.com/trumully/artipy/commit/272b2d8e7562134e5c5e6d5d54a5f1b450b1f525))
+
+### Unknown
+
+* Merge branch &#39;main&#39; of https://github.com/trumully/artipy ([`42faf2d`](https://github.com/trumully/artipy/commit/42faf2d543e81eae00d04448babf92db679e4e4f))
+
+
 ## v0.1.1 (2024-04-11)
 
 ### Build
@@ -9,6 +28,8 @@
 * build: add ruff, pytest, and isort to pyproject.toml ([`d8280ef`](https://github.com/trumully/artipy/commit/d8280efe05e77edc037764420f5e7908e32578e6))
 
 ### Chore
+
+* chore(release): v0.1.1 [skip ci] ([`43c2ea6`](https://github.com/trumully/artipy/commit/43c2ea69bbcafea5294c9e5291ffe99e50a04cc3))
 
 * chore: Updated workflow to upload binaries to GitHub Releases ([`d8a9d29`](https://github.com/trumully/artipy/commit/d8a9d2909a71c2032317bdfcc4585390a29d8cbe))
 
