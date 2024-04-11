@@ -1,6 +1,9 @@
 from dataclasses import dataclass, field
 from decimal import Decimal
 from enum import StrEnum
+from typing import ClassVar
+
+from .utils import truncate
 
 
 class StatType(StrEnum):
@@ -73,6 +76,8 @@ class Stat:
     name: StatType
     _value: float | int | Decimal = field(default=Decimal(0), repr=False)
 
+    TRUNCATE: ClassVar[int] = field(default=4, repr=False)
+
     @property
     def value(self) -> Decimal:
         return Decimal(self._value)
@@ -80,6 +85,10 @@ class Stat:
     @value.setter
     def value(self, value: float | int | Decimal) -> None:
         self._value = value
+
+    @property
+    def truncated_value(self) -> Decimal:
+        return truncate(self.value, dp=self.TRUNCATE)
 
     def __format__(self, format_spec: str) -> str:
         """Format the stat value based on the format specifier.
