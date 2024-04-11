@@ -18,6 +18,18 @@ python-semantic-release = "^9.4.1"
 pre-commit = "^3.7.0"
 mypy = "^1.9.0"
 
+[tool.ruff]
+line-length = 88
+fix = true
+
+[tool.pytest.ini_options]
+minversion = "8.0.0"
+testpaths = [ "tests/" ]
+
+[tool.isort]
+profile = "black"
+src_paths = [ "src/", "tests/" ]
+
 [tool.semantic_release]
 version_variable = [ "src/artipy/__init__.py:__version__" ]
 version_toml = [ "pyproject.toml:tool.poetry.version" ]
