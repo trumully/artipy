@@ -22,9 +22,11 @@ jobs:
       with:
         python-version: ${{ matrix.python-version}}
         poetry-version: ${{ matrix.poetry-version}}
-      
+
     - name: Run Tests
-      run: poetry run pytest
+      run: |
+        poetry install --only-root
+        poetry run pytest
 
   release:
     name: Semantic Release
