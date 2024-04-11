@@ -19,3 +19,6 @@ python3 -m pip install -U git+https://github.com/trumully/artipy.git
 python3 -m pip install -U https://github.com/trumully/artipy/zipball/main
 ```
 For example usage, check out the short example program [here](example.py).
+
+## Acknowledgements
+Original header image belongs to HoYoverse 
