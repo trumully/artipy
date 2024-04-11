@@ -56,16 +56,3 @@ def possible_substat_values(stat_type: StatType, rarity: int) -> tuple[Decimal, 
     ]
     sorted_data = sorted(data, key=attrgetter("propValue"))
     return map_to_decimal((d.propValue for d in sorted_data))
-
-
-def truncate(number: Decimal, *, dp: int = 0) -> Decimal:
-    """Truncate a number to a specific number of decimal places.
-
-    :param number: The number to truncate
-    :type number: Decimal
-    :param decimals: The number of decimal places to truncate to, defaults to 0
-    :type decimals: int, optional
-    :return: The truncated number
-    :rtype: Decimal
-    """
-    return number.quantize(Decimal(f"1E-{dp}"))

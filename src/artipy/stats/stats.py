@@ -3,8 +3,6 @@ from decimal import Decimal
 from enum import StrEnum
 from typing import ClassVar
 
-from .utils import truncate
-
 
 class StatType(StrEnum):
     """Enumeration of stat types in Genshin Impact."""
@@ -88,7 +86,7 @@ class Stat:
 
     @property
     def truncated_value(self) -> Decimal:
-        return truncate(self.value, dp=self.TRUNCATE)
+        return self.value.quantize(Decimal(f"1E-{self.TRUNCATE}"))
 
     def __format__(self, format_spec: str) -> str:
         """Format the stat value based on the format specifier.
