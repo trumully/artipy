@@ -9,6 +9,23 @@ jobs:
   test:
     name: Run Tests
     runs-on: ubuntu-latest
+    concurrency: test
+    strategy:
+      matrix:
+        python-version: [ 3.12.1 ]
+        poetry-version: [ 1.8.2 ]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Python, Poetry, and Dependencies
+      uses: packetcoders/action-setup-cache-python-poetry@main
+      with:
+        python-version: ${{ matrix.python-version}}
+        poetry-version: ${{ matrix.poetry-version}}
+      
+    - name: Run Tests
+      run: poetry run pytest
+
   release:
     name: Semantic Release
     runs-on: ubuntu-latest
