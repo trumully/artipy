@@ -1,8 +1,8 @@
+import random
 from dataclasses import dataclass, field
 from decimal import Decimal
-import random
 
-from .stats import Stat, StatType
+from .stats import VALID_SUBSTATS, Stat, StatType
 from .utils import possible_substat_values as possible_values
 
 
@@ -32,7 +32,7 @@ class SubStat(Stat):
 
 
 def create_substat(
-    *, name: StatType = StatType(random.choice(list(StatType))), rarity: int
+    *, name: StatType = StatType(random.choice(VALID_SUBSTATS)), rarity: int
 ) -> SubStat:
     """Create a new SubStat object.
 

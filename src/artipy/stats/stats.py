@@ -54,6 +54,20 @@ STAT_NAMES: dict[StatType, str] = {
 }
 
 
+VALID_SUBSTATS: list[StatType] = [
+    StatType.HP,
+    StatType.ATK,
+    StatType.DEF,
+    StatType.HP_PERCENT,
+    StatType.ATK_PERCENT,
+    StatType.DEF_PERCENT,
+    StatType.ELEMENTAL_MASTERY,
+    StatType.ENERGY_RECHARGE,
+    StatType.CRIT_RATE,
+    StatType.CRIT_DMG,
+]
+
+
 @dataclass
 class Stat:
     name: StatType
