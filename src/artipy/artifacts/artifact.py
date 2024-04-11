@@ -1,7 +1,7 @@
 from typing import Optional
 
 from artipy.stats import MainStat, SubStat
-from .upgrade_strategy import AddStatStrategy, UpgradeStatStrategy
+from .upgrade_strategy import UpgradeStrategy, AddStatStrategy, UpgradeStatStrategy
 
 
 class Artifact:
@@ -63,10 +63,13 @@ class Artifact:
     def get_artifact_slot(self) -> str:
         return self._slot
 
-    def upgrade(self) -> None:
+    def get_strategy(self) -> UpgradeStrategy:
         if len(self.get_substats()) < self.get_rarity() - 1:
-            return AddStatStrategy().upgrade(self)
-        return UpgradeStatStrategy().upgrade(self)
+            return AddStatStrategy()
+        return UpgradeStatStrategy()
+
+    def upgrade(self) -> None:
+        self.get_strategy().upgrade(self)
 
     def __str__(self) -> str:
         return (

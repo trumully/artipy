@@ -34,7 +34,7 @@ class UpgradeStrategy:
         """
         new_level = artifact.get_level() + 1
         artifact.set_level(new_level)
-        artifact.get_mainstat().set_value(new_level)
+        artifact.get_mainstat().set_value_by_level(new_level)
 
 
 class AddStatStrategy(UpgradeStrategy):
@@ -58,9 +58,10 @@ class AddStatStrategy(UpgradeStrategy):
 
         Increase the artifact level by 1, upgrade the mainstat, and add a new substat.
         """
+        if artifact.get_level() % UPGRADE_STEP == 0:
+            new_stat = self.pick_stat(artifact)
+            artifact.add_substat(new_stat)
         super().upgrade(artifact)
-        new_stat = self.pick_stat(artifact)
-        artifact.add_substat(new_stat)
 
 
 class UpgradeStatStrategy(UpgradeStrategy):
@@ -75,7 +76,7 @@ class UpgradeStatStrategy(UpgradeStrategy):
 
         Increase the artifact level by 1, upgrade the mainstat, and upgrade a substat.
         """
-        super().upgrade(artifact)
         if artifact.get_level() % UPGRADE_STEP == 0:
             substat = random.choice(artifact.get_substats())
             substat.upgrade()
+        super().upgrade(artifact)

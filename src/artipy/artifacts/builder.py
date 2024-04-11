@@ -4,7 +4,18 @@ from artipy.stats import MainStat, SubStat
 
 
 class ArtifactBuilder:
-    """Builder class for creating an Artifact object."""
+    """Builder class for creating an Artifact object.
+
+    Options:
+    - with_mainstat: Set the mainstat of the artifact
+    - with_substat: Add a substat to the artifact
+    - with_substats: Add multiple substats to the artifact
+    - with_level: Set the level of the artifact
+    - with_rarity: Set the rarity of the artifact
+    - with_set: Set the artifact set
+    - with_slot: Set the artifact slot
+    - build: Build the artifact object based on the parameters passed into the builder
+    """
 
     def __init__(self) -> None:
         self._artifact: Artifact = Artifact()

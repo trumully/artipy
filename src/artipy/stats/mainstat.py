@@ -10,9 +10,6 @@ class MainStat(Stat):
 
     rarity: int = 5
 
-    def set_value(self, level: int) -> None:
+    def set_value_by_level(self, level: int) -> None:
         """Set the value of the mainstat based on the level of the artifact."""
         self.value = possible_values(self.name, self.rarity)[level - 1]
-
-    def __str__(self) -> str:
-        return f"• {super().__str__()}"

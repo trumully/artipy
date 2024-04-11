@@ -6,7 +6,7 @@ from typing import Generator
 from .stat_data import StatData
 from .stats import StatType
 
-MAISTAT_DATA = StatData("mainstat_data.json")
+MAINSTAT_DATA = StatData("mainstat_data.json")
 SUBSTAT_DATA = StatData("substat_data.json")
 
 
@@ -27,8 +27,14 @@ def possible_mainstat_values(stat_type: StatType, rarity: int) -> tuple[Decimal,
     :return: The possible values for the mainstat.
     :rtype: tuple[Decimal, ...]
     """
-    data = [d.addProps for d in MAISTAT_DATA if d.rank == rarity]
-    return map_to_decimal((d.value for d in data if d.propType == stat_type))
+    data = []
+    for d in MAINSTAT_DATA:
+        try:
+            if d.rank == rarity:
+                data.append(d.addProps)
+        except AttributeError:
+            continue
+    return map_to_decimal((j.value for i in data for j in i if j.propType == stat_type))
 
 
 @lru_cache(maxsize=None)
