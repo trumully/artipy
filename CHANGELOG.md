@@ -2,7 +2,36 @@
 
 
 
+## v0.2.3 (2024-04-12)
+
+### Chore
+
+* chore(merge): merge upstream changes ([`228cee0`](https://github.com/trumully/artipy/commit/228cee02376b3001b1a75ad72a4ca66f819843e1))
+
+### Ci
+
+* ci: edit concurrency of test job to cancel-in-progress ([`8fdfac6`](https://github.com/trumully/artipy/commit/8fdfac6099ac0218738eacc62c368233fc9e58ba))
+
+### Fix
+
+* fix(ArtifactBuilder): refine constraints for with_substat, with_substats, with_level parameters ([`1c56475`](https://github.com/trumully/artipy/commit/1c56475466656697796ea9532c986843231f5016))
+
+* fix(ArtifactBuilder): add constraints for mainstat, substat, level, rarity setters ([`6786fa6`](https://github.com/trumully/artipy/commit/6786fa65321020a40d4f131bdb70d3d6c2adf37a))
+
+### Style
+
+* style: run isort ([`85414a6`](https://github.com/trumully/artipy/commit/85414a6028e04538d3e96c57e11ab14b32093496))
+
+### Test
+
+* test: add tests for ArtifactBuilder constraints. ([`0e4aab7`](https://github.com/trumully/artipy/commit/0e4aab79f320b189022adb7ef2655650a341cf01))
+
+
 ## v0.2.2 (2024-04-12)
+
+### Chore
+
+* chore(release): v0.2.2 [skip ci] ([`1440e40`](https://github.com/trumully/artipy/commit/1440e40e09502e53e308ba4dd83370c1e529331f))
 
 ### Documentation
 
