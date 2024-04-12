@@ -2,7 +2,30 @@
 
 
 
+## v0.2.1 (2024-04-12)
+
+### Fix
+
+* fix: change &#39;DECIMAL_PLACES&#39; constant type from float to str ([`11cdecc`](https://github.com/trumully/artipy/commit/11cdecccb2a12b57595243ea6fa2a723464a8257))
+
+* fix(Stat.value): convert value to Decimal by default ([`0cf4418`](https://github.com/trumully/artipy/commit/0cf44184c351c0160fb282fcab675ebc5a51dc52))
+
+* fix: move DECIMAL_PLACES constant from stats module to parent module ([`1759c80`](https://github.com/trumully/artipy/commit/1759c806f69a078762c160de6d4816949555c673))
+
+### Refactor
+
+* refactor(Stat): rename &#39;truncated_value&#39; to &#39;rounded_value&#39; ([`7857289`](https://github.com/trumully/artipy/commit/78572897f3fa162416940058179dac22a4c44b12))
+
+### Unknown
+
+* tests: new verbose stat fixtures for rounded_values property testing ([`725d5ec`](https://github.com/trumully/artipy/commit/725d5ec4301973b11c804d85d2e3187f624ec6dc))
+
+
 ## v0.2.0 (2024-04-11)
+
+### Chore
+
+* chore(release): v0.2.0 [skip ci] ([`290440b`](https://github.com/trumully/artipy/commit/290440b1b00a41520d87a00bf5b1bdadeb354d51))
 
 ### Ci
 
