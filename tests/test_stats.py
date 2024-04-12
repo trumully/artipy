@@ -1,7 +1,10 @@
-import pytest
 import math
+from decimal import Decimal
 
-from artipy.stats import MainStat, SubStat, StatType
+import pytest
+
+from artipy import DECIMAL_PLACES
+from artipy.stats import MainStat, StatType, SubStat
 from artipy.stats.utils import possible_mainstat_values, possible_substat_values
 
 
@@ -13,6 +16,16 @@ def mainstat() -> MainStat:
 @pytest.fixture
 def substat() -> SubStat:
     return SubStat(StatType.HP_PERCENT, 0.05)
+
+
+@pytest.fixture
+def verbose_mainstat() -> MainStat:
+    return MainStat(StatType.HP, 1000.123456789)
+
+
+@pytest.fixture
+def verbose_substat() -> SubStat:
+    return SubStat(StatType.HP_PERCENT, 0.123456789)
 
 
 def test_mainstat(mainstat) -> None:
@@ -66,3 +79,9 @@ def test_substat_upgrade(substat) -> None:
 def test_substat_str(substat) -> None:
     assert str(substat) == "• HP+5.0%"
     assert f"{substat:v}" == f"{StatType.HP_PERCENT} = {substat.value}"
+
+
+def test_rounded_value(verbose_mainstat, verbose_substat) -> None:
+    dp = Decimal(DECIMAL_PLACES)
+    assert verbose_mainstat.rounded_value == verbose_mainstat.value.quantize(dp)
+    assert verbose_substat.rounded_value == verbose_substat.value.quantize(dp)
