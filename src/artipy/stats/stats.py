@@ -1,7 +1,8 @@
 from dataclasses import dataclass, field
 from decimal import Decimal
 from enum import StrEnum
-from typing import ClassVar
+
+from artipy.stats import DECIMAL_PLACES
 
 
 class StatType(StrEnum):
@@ -74,8 +75,6 @@ class Stat:
     name: StatType
     _value: float | int | Decimal = field(default=Decimal(0), repr=False)
 
-    TRUNCATE: ClassVar[int] = field(default=4, repr=False)
-
     @property
     def value(self) -> Decimal:
         return Decimal(self._value)
@@ -85,8 +84,8 @@ class Stat:
         self._value = value
 
     @property
-    def truncated_value(self) -> Decimal:
-        return self.value.quantize(Decimal(f"1E-{self.TRUNCATE}"))
+    def rounded_value(self) -> Decimal:
+        return self.value.quantize(Decimal(DECIMAL_PLACES))
 
     def __format__(self, format_spec: str) -> str:
         """Format the stat value based on the format specifier.
