@@ -1,6 +1,7 @@
 import random
 from typing import TYPE_CHECKING
 
+from artipy import UPGRADE_STEP
 from artipy.stats import StatType, SubStat, create_substat
 
 from .utils import choose
@@ -21,8 +22,6 @@ substat_weights: dict[StatType, int] = {
     StatType.CRIT_RATE: 3,
     StatType.CRIT_DMG: 3,
 }
-
-UPGRADE_STEP = 4
 
 
 class UpgradeStrategy:
