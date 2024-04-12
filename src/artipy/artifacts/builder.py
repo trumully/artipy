@@ -1,6 +1,7 @@
+from artipy.stats import MainStat, StatType, SubStat
+
 from .artifact import Artifact
 from .upgrade_strategy import AddStatStrategy
-from artipy.stats import MainStat, SubStat
 
 
 class ArtifactBuilder:
@@ -20,24 +21,24 @@ class ArtifactBuilder:
     def __init__(self) -> None:
         self._artifact: Artifact = Artifact()
 
-    def with_mainstat(self, mainstat: MainStat) -> "ArtifactBuilder":
+    def with_mainstat(self, stat: StatType, value: float | int) -> "ArtifactBuilder":
         """Set the mainstat of the artifact."""
-        self._artifact.set_mainstat(mainstat)
+        self._artifact.set_mainstat(MainStat(stat, value))
         return self
 
-    def with_substat(self, substat: SubStat) -> "ArtifactBuilder":
+    def with_substat(self, stat: StatType, value: float | int) -> "ArtifactBuilder":
         """Add a substat to the artifact."""
-        self._artifact.add_substat(substat)
+        self._artifact.add_substat(SubStat(stat, value))
         return self
 
     def with_substats(
-        self, substats: list[SubStat] = [], *, amount: int = 0
+        self, substats: list[tuple[StatType, float | int]] = [], *, amount: int = 0
     ) -> "ArtifactBuilder":
         """Add multiple substats to the artifact. If substats is not provided and an
         amount is provided, random substats will be generated.
 
         :param substats: The substats to add, defaults to []
-        :type substats: list[SubStat], optional
+        :type substats: list[tuple[StatType, float | int]], optional
         :param amount: The amount of substats to add (if none are provided),
                        defaults to 0
         :type amount: int, optional
@@ -56,9 +57,9 @@ class ArtifactBuilder:
             for _ in range(amount):
                 new_stat = strategy.pick_stat(self._artifact)
                 self._artifact.add_substat(new_stat)
-
-        # Add the provided/generated substats to the artifact
-        self._artifact.set_substats(substats)
+        else:
+            # Add the provided substats to the artifact
+            self._artifact.set_substats([SubStat(*spec) for spec in substats])
 
         return self
 

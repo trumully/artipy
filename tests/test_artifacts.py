@@ -1,21 +1,22 @@
-import pytest
 from copy import deepcopy
 
+import pytest
+
 from artipy.artifacts import (
+    AddStatStrategy,
     Artifact,
     ArtifactBuilder,
-    AddStatStrategy,
     UpgradeStatStrategy,
 )
-from artipy.stats import StatType, MainStat, create_substat
+from artipy.stats import StatType
 
 
 @pytest.fixture
 def artifact() -> Artifact:
     return (
         ArtifactBuilder()
-        .with_mainstat(MainStat(StatType.HP, 0))
-        .with_substat(create_substat(name=StatType.HP_PERCENT, rarity=5))
+        .with_mainstat(StatType.HP, 0)
+        .with_substat(StatType.HP_PERCENT, 5)
         .with_rarity(5)
         .with_level(0)
         .with_set("Gladiator's Finale")
