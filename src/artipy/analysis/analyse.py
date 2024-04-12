@@ -1,4 +1,5 @@
 from decimal import Decimal
+from math import ceil
 
 from artipy.artifacts import Artifact
 from artipy.artifacts.upgrade_strategy import UPGRADE_STEP
@@ -18,12 +19,25 @@ def calculate_substat_roll_value(substat: SubStat) -> Decimal:
     stat_value = substat.value
     highest_value = max(possible_substat_values(substat.name, substat.rarity))
 
-    # Convert values to percentage if necessary
     if substat.name.is_pct:
         stat_value *= 100
         highest_value *= 100
 
     return stat_value / highest_value
+
+
+def calculate_substat_rolls(substat: SubStat) -> int:
+    """Calculate the number of rolls a substat has gone through. This is the difference
+    between the current value and the average value divided by the average value.
+
+    :param substat: The substat to get the rolls for.
+    :type substat: SubStat
+    :return: The number of rolls the substat has gone through.
+    :rtype: int
+    """
+    possible_rolls = possible_substat_values(substat.name, substat.rarity)
+    average_roll = Decimal(sum(possible_rolls) / len(possible_rolls))
+    return ceil((substat.value - average_roll) / average_roll)
 
 
 def calculate_artifact_roll_value(artifact: Artifact) -> Decimal:

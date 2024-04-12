@@ -1,5 +1,5 @@
 import random
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from decimal import Decimal
 
 from .stats import VALID_SUBSTATS, Stat, StatType
@@ -11,7 +11,6 @@ class SubStat(Stat):
     """Substat dataclass for a Genshin Impact artifact."""
 
     rarity: int = 5
-    rolls: int = field(default=0, init=False)
 
     def roll(self) -> Decimal:
         """Roll a random value for the substat. This is used when initially creating
@@ -21,7 +20,6 @@ class SubStat(Stat):
         :rtype: Decimal
         """
         values = possible_values(self.name, self.rarity)
-        self.rolls += 1
         return random.choice(values)
 
     def upgrade(self) -> None:

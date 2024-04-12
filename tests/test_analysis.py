@@ -8,6 +8,7 @@ from artipy.analysis import (
     calculate_artifact_maximum_roll_value,
     calculate_artifact_roll_value,
     calculate_substat_roll_value,
+    calculate_substat_rolls,
 )
 from artipy.artifacts import Artifact, ArtifactBuilder
 from artipy.stats import StatType, SubStat
@@ -59,6 +60,15 @@ def test_calculate_substat_roll_value(substat) -> None:
     """This test verifies the roll_value of a given substat"""
     roll_value = calculate_substat_roll_value(substat)
     assert math.isclose(roll_value, Decimal(1.9), rel_tol=1e-2)
+
+
+def test_calculate_substat_rolls(substat, artifact) -> None:
+    """This test verifies the number of rolls of a given substat"""
+    assert calculate_substat_rolls(substat) == 2
+
+    expected_rolls = (1, 1, 1, 2)
+    for substat, roll in zip(artifact.get_substats(), expected_rolls):
+        assert calculate_substat_rolls(substat) == roll
 
 
 def test_calcualte_artifact_roll_value(artifact) -> None:
