@@ -81,6 +81,8 @@ class Stat:
 
     @value.setter
     def value(self, value: float | int | Decimal) -> None:
+        if not isinstance(value, Decimal):
+            value = Decimal(value)
         self._value = value
 
     @property
