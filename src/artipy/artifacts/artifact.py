@@ -1,11 +1,14 @@
 from typing import Optional
 
 from artipy.stats import MainStat, SubStat
-from .upgrade_strategy import UpgradeStrategy, AddStatStrategy, UpgradeStatStrategy
+
+from .upgrade_strategy import AddStatStrategy, UpgradeStatStrategy, UpgradeStrategy
 
 
 class Artifact:
     """Class representing an artifact in Genshin Impact."""
+
+    __slots__ = ["_mainstat", "_substats", "_level", "_rarity", "_set", "_slot"]
 
     def __init__(self) -> None:
         self._mainstat: Optional[MainStat] = None
