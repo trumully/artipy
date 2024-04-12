@@ -34,9 +34,10 @@ class ArtifactBuilder:
 
     def with_substat(self, stat: StatType, value: float | int) -> "ArtifactBuilder":
         """Add a substat to the artifact."""
-        # Constraint: The number of substats cannot exceed the rarity of the artifact
-        if len(self._artifact.get_substats()) >= self._artifact.get_rarity() - 1:
-            raise ValueError("Substats are already full.")
+        if (rarity := self._artifact.get_rarity()) > 0:
+            # Constraint: The number of substats can't exceed the rarity of the artifact
+            if len(self._artifact.get_substats()) >= rarity - 1:
+                raise ValueError("Substats are already full.")
         self._artifact.add_substat(SubStat(stat, value))
         return self
 
@@ -67,9 +68,10 @@ class ArtifactBuilder:
                 new_stat = strategy.pick_stat(self._artifact)
                 self._artifact.add_substat(new_stat)
         else:
-            # Constraint: The number of substats cannot exceed artifact rarity
-            if len(substats) > self._artifact.get_rarity() - 1:
-                raise ValueError("Too many substats provided.")
+            if (rarity := self._artifact.get_rarity()) > 0:
+                # Constraint: The number of substats cannot exceed artifact rarity
+                if len(substats) > rarity - 1:
+                    raise ValueError("Too many substats provided.")
 
             # Add the provided substats to the artifact
             self._artifact.set_substats([SubStat(*spec) for spec in substats])
@@ -86,6 +88,13 @@ class ArtifactBuilder:
                 raise ValueError(
                     f"Invalid level '{level}' for rarity '{rarity}'. "
                     f"(Expected {min(expected_range)}-{max(expected_range)})"
+                )
+
+            # Constraint: The number of substats must be less than the rarity.
+            if (substat_length := len(self._artifact.get_substats())) >= rarity:
+                raise ValueError(
+                    f"Substat length mismatch with rarity '{rarity}' "
+                    f"(Expected {rarity} substats, got {substat_length})"
                 )
 
         self._artifact.set_level(level)
