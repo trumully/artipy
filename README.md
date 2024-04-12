@@ -18,12 +18,13 @@
 </p>
 
 ## 📚 Table of Contents
-- [About](#about)
-- [Getting Started](#getting-started)
-- [Usage](#usage)
+- [About](#📝-about)
+- [Getting Started](#📦-getting-started)
+- [Deployment](#🚀-deployment)
+- [Usage](#⚙️-usage)
 - [License](LICENSE)
 - [Changelog](CHANGELOG.md)
-- [Acknowledgements](#acknowledgements)
+- [Acknowledgements](#🎉-acknowledgements)
 
 ## 📝 About
 This is a Python package that can generate Genshin Impact artifacts as close to how they are in the game as possible. It is intended to be used for statistical analysis 
@@ -90,5 +91,5 @@ python -m pip install -U dist/artipy-(version)-py3-none-any.whl
 python -m pip install -U dist/artipy-(version).tar.gz
 ```
 
-## 🎉 Acknowledgements
+## 🎉 Acknowledgements <a href="acknowledgements"></a>
 * Original header image belongs to HoYoverse
