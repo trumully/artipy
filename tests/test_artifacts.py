@@ -61,3 +61,36 @@ def test_artifact_str(artifact) -> None:
         f"{'★' * artifact.get_rarity()}\n{artifact.get_mainstat()}\n"
         f"{'\n'.join(str(s) for s in artifact.get_substats())}"
     )
+
+
+def test_builder_constraint_mainstat() -> None:
+    with pytest.raises(ValueError):
+        ArtifactBuilder().with_mainstat(StatType.HP, 0).with_mainstat(StatType.HP, 0)
+
+
+def test_builder_constraint_substats() -> None:
+    # Case 1: Rarity is 5, so the number of substats can't exceed 4
+    with pytest.raises(ValueError):
+        (
+            ArtifactBuilder()
+            .with_substat(StatType.HP, 0)
+            .with_substat(StatType.HP, 0)
+            .with_substat(StatType.HP, 0)
+            .with_substat(StatType.HP, 0)
+            .with_substat(StatType.HP, 0)
+            .with_rarity(5)
+        )
+
+    # Case 2: Rarity is 4, so the number of substats can't exceed 3
+    with pytest.raises(ValueError):
+        (ArtifactBuilder().with_substats(amount=4))
+
+
+def test_builder_constraint_rarity() -> None:
+    # Case 1: Rarity must not exceed 5
+    with pytest.raises(ValueError):
+        ArtifactBuilder().with_rarity(6)
+
+    # Case 2: Rarity must not be less than 1
+    with pytest.raises(ValueError):
+        ArtifactBuilder().with_rarity(0)
