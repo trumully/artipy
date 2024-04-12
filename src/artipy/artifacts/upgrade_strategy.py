@@ -1,7 +1,8 @@
-from typing import TYPE_CHECKING
 import random
+from typing import TYPE_CHECKING
 
 from artipy.stats import StatType, SubStat, create_substat
+
 from .utils import choose
 
 if TYPE_CHECKING:

@@ -1,6 +1,6 @@
 from .artifact import Artifact
 from .builder import ArtifactBuilder
-from .upgrade_strategy import UpgradeStrategy, UpgradeStatStrategy, AddStatStrategy
+from .upgrade_strategy import AddStatStrategy, UpgradeStatStrategy, UpgradeStrategy
 
 __all__ = (
     "Artifact",

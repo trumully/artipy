@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
-from typing import Any, ClassVar, Iterator
 from types import SimpleNamespace
+from typing import Any, ClassVar, Iterator
 
 from artipy import __data__
 
