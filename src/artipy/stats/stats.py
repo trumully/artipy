@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from decimal import Decimal
 from enum import StrEnum
 
-from artipy.stats import DECIMAL_PLACES
+from artipy import DECIMAL_PLACES
 
 
 class StatType(StrEnum):

@@ -4,5 +4,3 @@ from .stats import StatType
 from .substat import SubStat, create_substat
 
 __all__ = ("MainStat", "SubStat", "StatData", "StatType", "create_substat")
-
-DECIMAL_PLACES = 1e-4
