@@ -7,4 +7,5 @@ __version__ = toml.load("pyproject.toml")["tool"]["poetry"]["version"]
 
 __data__ = Path(__file__).parent / "data"
 
-DECIMAL_PLACES = 1e-4
+# 4 decimal places
+DECIMAL_PLACES = "1E-4"
