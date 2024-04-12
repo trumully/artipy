@@ -2,7 +2,34 @@
 
 
 
+## v0.2.2 (2024-04-12)
+
+### Documentation
+
+* docs: correct example.py with up-to-date build syntax ([`2044744`](https://github.com/trumully/artipy/commit/2044744846f149c20a7309312eb722a34d8f16e5))
+
+* docs: correct anchor headers in README ([`0f932da`](https://github.com/trumully/artipy/commit/0f932daeb58ecd60717ddbe8f4d36c82c66ebc98))
+
+* docs: fix table of contents for README ([`b49a525`](https://github.com/trumully/artipy/commit/b49a525cb9ed1a43398a27c30ccae925c1b2e145))
+
+* docs: beautify README ([`015cfa7`](https://github.com/trumully/artipy/commit/015cfa762737a35b69ef0b62f643cc8ac78e1f25))
+
+### Performance
+
+* perf(Artifact): add __slots__ ([`8cb20f1`](https://github.com/trumully/artipy/commit/8cb20f180b8ef34f8876aa818bfe1f14c383db81))
+
+### Refactor
+
+* refactor(ArtifactBuilder): simplify with_substat, with_substats parameters
+
+Add substats like with_substat(&lt;stat_name&gt;, &lt;stat_value&gt;) instead of with_substat(SubStat(&lt;stat_name&gt;, &lt;stat_value&gt;)) ([`a3199d4`](https://github.com/trumully/artipy/commit/a3199d435e2e889bc3bc3791e7ca061d05bef900))
+
+
 ## v0.2.1 (2024-04-12)
+
+### Chore
+
+* chore(release): v0.2.1 [skip ci] ([`c34dfea`](https://github.com/trumully/artipy/commit/c34dfea5f060d0746d9c998c527d631309dcb434))
 
 ### Fix
 
