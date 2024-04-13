@@ -14,33 +14,45 @@ on:
   workflow_dispatch:
 
 jobs:
+  format: 
+    name: Run Black
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: psf/black@stable
+        with:
+          options: "--check --verbose"
+          src: "./src"
+          use_pyproject: true
+  lint:
+    name: Run Ruff
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v2
+      - uses: chartboost/ruff-action@v1
+        with:
+          args: check --fix
+
   test:
     name: Run Tests
     runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
-    strategy:
-      matrix:
-        python-version: [ 3.12.1 ]
-        poetry-version: [ 1.8.2 ]
 
     steps:
     - uses: actions/checkout@v4
-    - name: Setup Python, Poetry, and Dependencies
+    - name: Setup Python & Dependencies
       uses: packetcoders/action-setup-cache-python-poetry@main
       with:
-        python-version: ${{ matrix.python-version}}
-        poetry-version: ${{ matrix.poetry-version}}
+        python-version: 3.12.1
+        poetry-version: 1.8.2
 
     - name: Run Tests
       run: |
         poetry install --only-root
         poetry run pytest
-    
-    outputs:
-      python-version: ${{ matrix.python-version }}
-      poetry-version: ${{ matrix.poetry-version }}
 
   docs:
     name: Build Documentation
@@ -57,8 +69,8 @@ jobs:
     - name: Setup Python, Poetry, and Dependencies
       uses: packetcoders/action-setup-cache-python-poetry@main
       with:
-        python-version: ${{ needs.test.outputs.python-version }}
-        poetry-version: ${{ needs.test.outputs.poetry-version }}
+        python-version: 3.12.1
+        poetry-version: 1.8.2
     - name: Add Poetry's bin directory to the PATH
       run: echo "$(poetry env info --path)/bin" >> $GITHUB_PATH
     - name: Build HTML
