@@ -23,9 +23,15 @@ sphinx = "^7.2.6"
 sphinx-rtd-theme = "^2.0.0"
 ghp-import = "^2.1.0"
 
+[tool.black]
+line-length = 88
+required-version = [">=21.12b0"]
+target-version = ["py312"]
+
 [tool.ruff]
 line-length = 88
 fix = true
+select = ["F", "E", "W", "I001"]
 
 [tool.pytest.ini_options]
 minversion = "8.0.0"
