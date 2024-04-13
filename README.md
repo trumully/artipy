@@ -5,12 +5,13 @@
 <h3 align="center">artipy</h3>
 <div align="center">
 
-![GitHub Release](https://img.shields.io/github/v/release/trumully/artipy.svg?sort=semver&logo=python&logoColor=white)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/trumully/artipy/main.yml.svg?logo=githubactions&logoColor=white)
-![License](https://img.shields.io/github/license/trumully/artipy.svg)
+![GitHub Release](https://img.shields.io/github/v/release/trumully/artipy.svg?sort=semver&logo=github&logoColor=white)
+[![CI Status](https://img.shields.io/github/actions/workflow/status/trumully/artipy/main.yml.svg?logo=github&logoColor=white)](https://github.com/trumully/artipy/actions/workflows/main.yml)
+[![Docs Status](https://img.shields.io/github/actions/workflow/status/trumully/artipy/pages%2Fpages-build-deployment?branch=gh-pages&style=flat&logo=github&logoColor=white&label=docs)](https://github.com/trumully/artipy/actions/workflows/pages/pages-build-deployment)
+[![License](https://img.shields.io/github/license/trumully/artipy.svg)](LICENSE)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
-
+    
 </div>
 
 ---
