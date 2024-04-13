@@ -6,7 +6,7 @@ from artipy.stats import VALID_MAINSTATS
 
 
 def create_random_artifact(
-    slot: str = random.choice(("flower", "plume", "sands", "goblet")),
+    slot: str = random.choice(("flower", "plume", "sands", "goblet", "circlet")),
 ) -> Artifact:
     """Create a random artifact.
 
@@ -39,9 +39,7 @@ def upgrade_artifact_to_max(artifact: Artifact) -> Artifact:
     return artifact
 
 
-def create_multiple_random_artifacts(
-    amount: int = 1, slot: str = random.choice(("flower", "plume", "sands", "goblet"))
-) -> list[Artifact]:
+def create_multiple_random_artifacts(amount: int = 1) -> list[Artifact]:
     """Create multiple random artifacts.
 
     :param amount: The amount of artifacts to create, defaults to 1
@@ -49,4 +47,8 @@ def create_multiple_random_artifacts(
     :return: The list of random artifacts.
     :rtype: list[Artifact]
     """
-    return [create_random_artifact(slot) for _ in range(amount)]
+    result = []
+    for _ in range(amount):
+        slot = random.choice(("flower", "plume", "sands", "goblet", "circlet"))
+        result.append(create_random_artifact(slot))
+    return result

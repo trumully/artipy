@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 from artipy.artifacts import Artifact
-from artipy.stats import STAT_NAMES
+from artipy.stats import STAT_NAMES, VALID_MAINSTATS, StatType
 
 from .analyse import (
     RollMagnitude,
@@ -118,6 +118,58 @@ def plot_roll_value_distribution(iterations: int = 1000) -> None:
     fig = px.histogram(
         df, x="roll_value", title=f"Roll Value Distribution of {iterations:,} Artifacts"
     )
+    fig.show()
+
+
+def plot_expected_against_actual_mainstats(iterations: int = 1000) -> None:
+    for a in (artifacts := create_multiple_random_artifacts(iterations)):
+        upgrade_artifact_to_max(a)
+
+    expected_mainstats = {
+        k: v for k, v in VALID_MAINSTATS.items() if k not in ("flower", "plume")
+    }
+    actual_mainstats: dict[str, list[StatType]] = {k: [] for k in expected_mainstats}
+
+    for a in artifacts:
+        if (slot := a.get_artifact_slot()) in expected_mainstats:
+            actual_mainstats[slot].append(a.get_mainstat().name)
+
+    actual_mainstats_pct: dict[str, dict[StatType, float]] = {
+        k: {
+            stat: (actual_mainstats[k].count(stat) / len(actual_mainstats[k])) * 100
+            for stat in v
+        }
+        for k, v in actual_mainstats.items()
+    }
+
+    fig = make_subplots(
+        rows=1, cols=len(expected_mainstats), subplot_titles=list(expected_mainstats)
+    )
+
+    for i, slot in enumerate(expected_mainstats, start=1):
+        col = (i - 1) % len(expected_mainstats) + 1
+        fig.add_trace(
+            go.Bar(
+                x=list(expected_mainstats[slot]),
+                y=list(expected_mainstats[slot].values()),
+                name="Expected",
+                marker=dict(color="#FF6961"),
+            ),
+            row=1,
+            col=col,
+        )
+        fig.add_trace(
+            go.Bar(
+                x=list(actual_mainstats_pct[slot]),
+                y=list(actual_mainstats_pct[slot].values()),
+                name="Actual",
+                marker=dict(color="#B4D8E7"),
+            ),
+            row=1,
+            col=col,
+        )
+
+    fig.update_layout(barmode="overlay", showlegend=False)
     fig.show()
 
 
