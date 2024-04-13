@@ -56,9 +56,10 @@ jobs:
       with:
         python-version: ${{ needs.test.outputs.python-version }}
         poetry-version: ${{ needs.test.outputs.poetry-version }}
+    - name: Add Poetry's bin directory to the PATH
+      run: echo "$(poetry env info --path)/bin" >> $GITHUB_PATH
     - name: Build HTML
       run: |
-        poetry add sphinx sphinx-rtd-theme
         cd docs/
         make html
     - name: Run ghp-import
