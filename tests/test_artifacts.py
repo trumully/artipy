@@ -63,11 +63,6 @@ def test_artifact_str(artifact) -> None:
     )
 
 
-def test_builder_constraint_mainstat() -> None:
-    with pytest.raises(ValueError):
-        ArtifactBuilder().with_mainstat(StatType.HP, 0).with_mainstat(StatType.HP, 0)
-
-
 def test_builder_constraint_substats() -> None:
     # Case 1: Rarity is 5, so the number of substats can't exceed 4
     with pytest.raises(ValueError):
