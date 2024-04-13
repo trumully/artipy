@@ -58,6 +58,7 @@ jobs:
         poetry-version: ${{ needs.test.outputs.poetry-version }}
     - name: Build HTML
       run: |
+        poetry add sphinx sphinx-rtd-theme
         cd docs/
         make html
     - name: Run ghp-import
