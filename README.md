@@ -5,9 +5,11 @@
 <h3 align="center">artipy</h3>
 <div align="center">
 
-![GitHub Release](https://img.shields.io/github/v/release/trumully/artipy.svg?sort=semver&style=for-the-badge&logo=python&logoColor=white)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/trumully/artipy/main.yml.svg?style=for-the-badge&logo=githubactions&logoColor=white)
-![License](https://img.shields.io/github/license/trumully/artipy.svg?style=for-the-badge&logo=unlicense&logoColor=white)
+![GitHub Release](https://img.shields.io/github/v/release/trumully/artipy.svg?sort=semver&logo=python&logoColor=white)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/trumully/artipy/main.yml.svg?logo=githubactions&logoColor=white)
+![License](https://img.shields.io/github/license/trumully/artipy.svg)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+
 
 </div>
 
@@ -71,7 +73,9 @@ poetry run pytest
 ```
 
 ## ⚙️ Usage <a name ="usage" ></a>
-For example usage, look [here](example.py)
+For example usage, look [here](example.py).
+
+You can also check out the documentation [here](https://trumully.github.io/artipy/).
 
 ## 🚀 Deployment <a name ="deployment" ></a>
 Build the package using `poetry`:
