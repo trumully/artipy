@@ -85,14 +85,21 @@ def plot_crit_value_distribution(iterations: int = 1_000) -> None:
         upgrade_artifact_to_max(a)
 
     crit_values = [
-        calculate_artifact_crit_value(a).quantize(ROUND_TO)
-        for a in artifacts
-        if calculate_artifact_crit_value(a) > 0
+        calculate_artifact_crit_value(a).quantize(ROUND_TO) for a in artifacts
     ]
     df = pd.DataFrame(crit_values, columns=["crit_value"])
+
+    bins = [0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0]
+    labels = [f"{bins[i]}-{bins[i+1]}" for i in range(len(bins) - 1)]
+    df["crit_value_range"] = pd.cut(df["crit_value"], bins=bins, labels=labels)
+
     fig = px.histogram(
-        df, x="crit_value", title=f"Crit Rate Distribution of {iterations:,} Artifacts"
+        df,
+        x="crit_value",
+        color="crit_value_range",
+        title=f"Crit Rate Distribution of {iterations:,} Artifacts",
     )
+
     fig.show()
 
 
