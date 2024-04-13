@@ -21,6 +21,7 @@
 - [About](#about)
 - [Getting Started](#getting_started)
 - [Deployment](#deployment)
+- [Documentation](https://trumully.github.io/artipy/)
 - [Usage](#usage)
 - [License](LICENSE)
 - [Changelog](CHANGELOG.md)
