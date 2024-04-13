@@ -165,9 +165,5 @@ cython_debug/
 # Ruff
 .ruff_cache/
 
-# Sphinx
-_static/
-_templates/
-make.bat
-Makefile
-conf.py
+# Sphinx documentation
+docs/_build/
