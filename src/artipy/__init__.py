@@ -1,11 +1,5 @@
 from pathlib import Path
 
-import toml
-
-__name__ = toml.load("pyproject.toml")["tool"]["poetry"]["name"]
-__version__ = toml.load("pyproject.toml")["tool"]["poetry"]["version"]
-__authors__ = toml.load("pyproject.toml")["tool"]["poetry"]["authors"]
-
 __data__ = Path(__file__).parent / "data"
 
 # 4 decimal places
