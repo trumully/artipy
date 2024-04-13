@@ -18,6 +18,9 @@ ROLL_MULTIPLIERS: dict[int, tuple[float, ...]] = {
 
 
 class RollMagnitude(StrEnum):
+    """The roll magnitude of a substat. This is a measure of how much the substat has
+    been increased in relation to its maximum potential value."""
+
     LOW = auto()
     MEDIUM = auto()
     HIGH = auto()
@@ -25,6 +28,11 @@ class RollMagnitude(StrEnum):
 
     @property
     def magnitude(self) -> Decimal:
+        """Get the magnitude of the roll. This is a value between 0.7 and 1.0.
+
+        :return: The magnitude of the roll.
+        :rtype: Decimal
+        """
         if self == RollMagnitude.LOW:
             return Decimal("0.7")
         elif self == RollMagnitude.MEDIUM:
@@ -35,6 +43,13 @@ class RollMagnitude(StrEnum):
 
     @classmethod
     def closest(cls, value: Decimal | float | int) -> "RollMagnitude":
+        """Get the closest roll magnitude to a given value.
+
+        :param value: The value to get the closest roll magnitude to.
+        :type value: Decimal | float | int
+        :return: The closest roll magnitude to the given value.
+        :rtype: RollMagnitude
+        """
         return RollMagnitude(
             min(cls, key=lambda x: abs(RollMagnitude(x).magnitude - Decimal(value)))
         )

@@ -28,6 +28,11 @@ ATTRIBUTES: dict[str, Callable] = {
 
 
 def plot_artifact_substat_rolls(artifact: Artifact) -> None:
+    """Plot the substat rolls of an artifact.
+
+    :param artifact: The artifact to plot the substat rolls for.
+    :type artifact: Artifact
+    """
     substat_rolls = {
         STAT_NAMES[substat.name]: calculate_substat_rolls(substat)
         for substat in artifact.get_substats()
@@ -88,6 +93,11 @@ def plot_artifact_substat_rolls(artifact: Artifact) -> None:
 
 
 def plot_crit_value_distribution(iterations: int = 1000) -> None:
+    """Plot the crit value distribution of artifacts.
+
+    :param iterations: The number of artifacts to create, defaults to 1000
+    :type iterations: int, optional
+    """
     for a in (artifacts := create_multiple_random_artifacts(iterations)):
         upgrade_artifact_to_max(a)
 
@@ -111,6 +121,11 @@ def plot_crit_value_distribution(iterations: int = 1000) -> None:
 
 
 def plot_roll_value_distribution(iterations: int = 1000) -> None:
+    """Plot the roll value distribution of artifacts.
+
+    :param iterations: The number of artifacts to create, defaults to 1000
+    :type iterations: int, optional
+    """
     for a in (artifacts := create_multiple_random_artifacts(iterations)):
         upgrade_artifact_to_max(a)
     roll_values = [calculate_artifact_roll_value(a) for a in artifacts]
@@ -122,6 +137,13 @@ def plot_roll_value_distribution(iterations: int = 1000) -> None:
 
 
 def plot_expected_against_actual_mainstats(iterations: int = 1000) -> None:
+    """Plot the percentage of expected mainstats against the percentage actual
+    mainstats of artifacts.
+
+    :param iterations: The number of artifacts to create, defaults to 1000
+    :type iterations: int, optional
+    """
+
     for a in (artifacts := create_multiple_random_artifacts(iterations)):
         upgrade_artifact_to_max(a)
 
@@ -176,6 +198,14 @@ def plot_expected_against_actual_mainstats(iterations: int = 1000) -> None:
 def plot_multi_value_distribution(
     iterations: int = 1000, *, attributes: tuple[str]
 ) -> None:
+    """Plot the distribution of multiple attributes of artifacts.
+
+    :param attributes: The attributes to plot the distribution for.
+    :type attributes: tuple[str]
+    :param iterations: The number of artifacts to create, defaults to 1000
+    :type iterations: int, optional
+    :raises ValueError: If an invalid attribute is passed.
+    """
     for attr in attributes:
         if attr not in ATTRIBUTES:
             raise ValueError(

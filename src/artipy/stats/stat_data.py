@@ -28,13 +28,19 @@ class StatData:
     _data: list[SimpleNamespace] = []
 
     def __new__(cls, file_name: str) -> "StatData":
-        """Create a new instance of the StatData singleton class if it does not exist."""
+        """Create a new instance of the StatData class. If an instance with the same
+        file name already exists, return the existing instance.
+
+        :param file_name: The name of the JSON file to load.
+        :type file_name: str
+        :return: The StatData instance.
+        :rtype: StatData
+        """
         if file_name not in cls._instances:
             cls._instances[file_name] = super().__new__(cls)
         return cls._instances[file_name]
 
     def __init__(self, file_name: str) -> None:
-        """Initialize the StatData singleton class."""
         with open(Path(__data__ / file_name), "r", encoding="utf-8") as f:
             self._data = json.load(f, object_hook=recursive_namespace)
 

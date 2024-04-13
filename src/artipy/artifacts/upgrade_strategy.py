@@ -28,9 +28,11 @@ class UpgradeStrategy:
     """A base Strategy class for upgrading artifacts."""
 
     def upgrade(self, artifact: "Artifact") -> None:
-        """Upgrade the artifact.
+        """Upgrade the artifact; increase the artifact level by 1 and upgrade the
+        mainstat.
 
-        Increase the artifact level by 1 and upgrade the mainstat.
+        :param artifact: The artifact to upgrade.
+        :type artifact: Artifact
         """
         new_level = artifact.get_level() + 1
         artifact.set_level(new_level)
@@ -45,7 +47,14 @@ class AddStatStrategy(UpgradeStrategy):
     """
 
     def pick_stat(self, artifact: "Artifact") -> SubStat:
-        """Pick a new substat for the artifact."""
+        """Pick a new substat to add to the artifact. The substat is chosen randomly
+        based on the weights of the substats.
+
+        :param artifact: The artifact to add the substat to.
+        :type artifact: Artifact
+        :return: The new substat to add to the artifact.
+        :rtype: SubStat
+        """
         stats = [s.name for s in (artifact.get_mainstat(), *artifact.get_substats())]
         pool = {s: w for s, w in substat_weights.items() if s not in stats}
         population, weights = map(tuple, zip(*pool.items()))
@@ -54,9 +63,11 @@ class AddStatStrategy(UpgradeStrategy):
         return new_stat
 
     def upgrade(self, artifact: "Artifact") -> None:
-        """Upgrade the artifact.
+        """Upgrade the artifact. If the artifact level is divisible by the upgrade step,
+        add a new substat to the artifact.
 
-        Increase the artifact level by 1, upgrade the mainstat, and add a new substat.
+        :param artifact: The artifact to upgrade.
+        :type artifact: Artifact
         """
         if artifact.get_level() % UPGRADE_STEP == 0:
             new_stat = self.pick_stat(artifact)
@@ -72,9 +83,11 @@ class UpgradeStatStrategy(UpgradeStrategy):
     """
 
     def upgrade(self, artifact: "Artifact") -> None:
-        """Upgrade the artifact.
+        """Upgrade the artifact. If the artifact level is divisible by the upgrade step,
+        upgrade a random substat on the artifact.
 
-        Increase the artifact level by 1, upgrade the mainstat, and upgrade a substat.
+        :param artifact: The artifact to upgrade.
+        :type artifact: Artifact
         """
         if artifact.get_level() % UPGRADE_STEP == 0:
             substat = random.choice(artifact.get_substats())

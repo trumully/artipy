@@ -11,7 +11,13 @@ SUBSTAT_DATA = StatData("substat_data.json")
 
 
 def map_to_decimal(values: Iterable[float | int]) -> tuple[Decimal, ...]:
-    """Helper function to map float values to Decimal."""
+    """Map a list of values to Decimal.
+
+    :param values: The values to map.
+    :type values: Iterable[float  |  int]
+    :return: The values mapped to Decimal.
+    :rtype: tuple[Decimal, ...]
+    """
     return tuple(map(Decimal, values))
 
 

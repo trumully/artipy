@@ -107,28 +107,42 @@ VALID_MAINSTATS: dict[str, dict[StatType, float]] = {
 
 @dataclass
 class Stat:
+    """Dataclass for a stat in Genshin Impact."""
+
     name: StatType
     _value: float | int | Decimal = field(default=Decimal(0), repr=False)
 
     @property
     def value(self) -> Decimal:
+        """Get the value of the stat.
+
+        :return: The value of the stat.
+        :rtype: Decimal
+        """
         return Decimal(self._value)
 
     @value.setter
     def value(self, value: float | int | Decimal) -> None:
+        """Set the value of the stat.
+
+        :param value: The value to set the stat to.
+        :type value: float | int | Decimal
+        """
         if not isinstance(value, Decimal):
             value = Decimal(value)
         self._value = value
 
     @property
     def rounded_value(self) -> Decimal:
+        """Get the rounded value of the stat. This is the value rounded to the nearest
+        pre-defined decimal place.
+
+        :return: The rounded value of the stat.
+        :rtype: Decimal
+        """
         return self.value.quantize(Decimal(DECIMAL_PLACES))
 
     def __format__(self, format_spec: str) -> str:
-        """Format the stat value based on the format specifier.
-
-        If the format specifier is "v(erbose)", display stat type and unrounded value.
-        """
         if format_spec in ("v", "verbose"):
             return f"{self.name} = {self.value}"
         return str(self)
