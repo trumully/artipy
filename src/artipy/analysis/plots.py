@@ -1,4 +1,5 @@
 from decimal import Decimal
+from typing import Callable
 
 import pandas as pd
 import plotly.express as px
@@ -18,6 +19,12 @@ from .analyse import (
 from .simulate import create_multiple_random_artifacts, upgrade_artifact_to_max
 
 ROUND_TO = Decimal("1E-2")
+
+ATTRIBUTES: dict[str, Callable] = {
+    "rolls": calculate_substat_rolls,
+    "roll_value": calculate_artifact_roll_value,
+    "crit_value": calculate_artifact_crit_value,
+}
 
 
 def plot_artifact_substat_rolls(artifact: Artifact) -> None:
@@ -80,7 +87,7 @@ def plot_artifact_substat_rolls(artifact: Artifact) -> None:
     fig.show()
 
 
-def plot_crit_value_distribution(iterations: int = 1_000) -> None:
+def plot_crit_value_distribution(iterations: int = 1000) -> None:
     for a in (artifacts := create_multiple_random_artifacts(iterations)):
         upgrade_artifact_to_max(a)
 
@@ -103,7 +110,7 @@ def plot_crit_value_distribution(iterations: int = 1_000) -> None:
     fig.show()
 
 
-def plot_roll_value_distribution(iterations: int = 1_000) -> None:
+def plot_roll_value_distribution(iterations: int = 1000) -> None:
     for a in (artifacts := create_multiple_random_artifacts(iterations)):
         upgrade_artifact_to_max(a)
     roll_values = [calculate_artifact_roll_value(a) for a in artifacts]
@@ -111,4 +118,31 @@ def plot_roll_value_distribution(iterations: int = 1_000) -> None:
     fig = px.histogram(
         df, x="roll_value", title=f"Roll Value Distribution of {iterations:,} Artifacts"
     )
+    fig.show()
+
+
+def plot_multi_value_distribution(
+    iterations: int = 1000, *, attributes: tuple[str]
+) -> None:
+    for attr in attributes:
+        if attr not in ATTRIBUTES:
+            raise ValueError(
+                f"Invalid attribute: {attr}\nValid attributes: {ATTRIBUTES}"
+            )
+
+    for a in (artifacts := create_multiple_random_artifacts(iterations)):
+        upgrade_artifact_to_max(a)
+
+    concatted_df = pd.DataFrame()
+    for attr in attributes:
+        values = [ATTRIBUTES[attr](a) for a in artifacts if ATTRIBUTES[attr](a) > 0]
+        df = pd.DataFrame(values, columns=[attr])
+        concatted_df = pd.concat([concatted_df, df])
+
+    fig = px.histogram(
+        concatted_df,
+        x=concatted_df.columns,
+        title=f"Value Distribution of {iterations:,} Artifacts",
+    )
+
     fig.show()
