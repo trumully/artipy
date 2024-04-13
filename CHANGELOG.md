@@ -2,9 +2,72 @@
 
 
 
+## v1.0.0 (2024-04-13)
+
+### Chore
+
+* chore: merge pull request #2 from trumully/feature/analysis-module
+
+feature/analysis-module ([`678cfbe`](https://github.com/trumully/artipy/commit/678cfbe2f3eeeaff0c0021de9bd9c641c5982749))
+
+* chore: bump version to 0.3.0-beta.2 ([`975b67f`](https://github.com/trumully/artipy/commit/975b67fcff0bd45dbc6f48c01960ebb1a43624f8))
+
+### Feature
+
+* feat: add plot_expected_against_actual_mainstats method ([`1446bcb`](https://github.com/trumully/artipy/commit/1446bcbccf4540f0b91e6d7d1217769c80f9b26d))
+
+
+## v0.3.0-beta.2 (2024-04-13)
+
+### Feature
+
+* feat(analysis.plots): add plot_multi_value_distribution ([`5e6db3a`](https://github.com/trumully/artipy/commit/5e6db3a52c86ed9e783e41d813d57d21f634fb90))
+
+### Unknown
+
+* improvement: add colors to bin on plot_crit_value_distribution ([`5614309`](https://github.com/trumully/artipy/commit/5614309d0c9b372375e354a3037ff3cdb1b734c6))
+
+
+## v0.3.0-beta.1 (2024-04-13)
+
+### Breaking
+
+* feat!: add plots to analysis module
+
+BREAKING CHANGES: pandas, plotly new dependencies ([`9bf0acf`](https://github.com/trumully/artipy/commit/9bf0acf5d67ec874b1c8f0472f69cc9c4174677b))
+
+### Chore
+
+* chore: fix versioning in pyproject.toml ([`89d8d2a`](https://github.com/trumully/artipy/commit/89d8d2aed093c89864f25532b77e9057c2533937))
+
+* chore: bump version to 0.3.0.alpha ([`d731668`](https://github.com/trumully/artipy/commit/d7316687bed70f2cb83dc5b321c10bddcea50871))
+
+### Ci
+
+* ci: add support for test runs on feature branches ([`88f1815`](https://github.com/trumully/artipy/commit/88f181575f2ec72bb41ca500e57291197d6845fe))
+
+### Documentation
+
+* docs: update banner ([`8394353`](https://github.com/trumully/artipy/commit/8394353c9ab7b8d0b3bc22047c14d23111a188c2))
+
+### Feature
+
+* feat: calculate_substat_rolls method ([`586a763`](https://github.com/trumully/artipy/commit/586a763a4c2809917ba2f3dc5eae38ec2847a85f))
+
+### Unknown
+
+* Merge pull request #1 from trumully/main
+
+ci: add support for test runs on feature branches ([`988c04d`](https://github.com/trumully/artipy/commit/988c04d0665008adfc2effc11b52c19504ad2cbb))
+
+* initial commit ([`f770960`](https://github.com/trumully/artipy/commit/f770960557efd9c8a520ff1b966e02655ac93c74))
+
+
 ## v0.2.3 (2024-04-12)
 
 ### Chore
+
+* chore(release): v0.2.3 [skip ci] ([`82229d4`](https://github.com/trumully/artipy/commit/82229d47461b4bb3aee01c473c8a2f17c57d290d))
 
 * chore(merge): merge upstream changes ([`228cee0`](https://github.com/trumully/artipy/commit/228cee02376b3001b1a75ad72a4ca66f819843e1))
 
