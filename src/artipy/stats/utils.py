@@ -1,7 +1,7 @@
 from decimal import Decimal
 from functools import lru_cache
 from operator import attrgetter
-from typing import Generator
+from typing import Iterable
 
 from .stat_data import StatData
 from .stats import StatType
@@ -10,7 +10,7 @@ MAINSTAT_DATA = StatData("mainstat_data.json")
 SUBSTAT_DATA = StatData("substat_data.json")
 
 
-def map_to_decimal(values: Generator[float, None, None]) -> tuple[Decimal, ...]:
+def map_to_decimal(values: Iterable[float | int]) -> tuple[Decimal, ...]:
     """Helper function to map float values to Decimal."""
     return tuple(map(Decimal, values))
 
@@ -27,14 +27,15 @@ def possible_mainstat_values(stat_type: StatType, rarity: int) -> tuple[Decimal,
     :return: The possible values for the mainstat.
     :rtype: tuple[Decimal, ...]
     """
-    data = []
-    for d in MAINSTAT_DATA:
-        try:
-            if d.rank == rarity:
-                data.append(d.addProps)
-        except AttributeError:
-            continue
-    return map_to_decimal((j.value for i in data for j in i if j.propType == stat_type))
+    values = list(MAINSTAT_DATA)[1:]
+    data = [
+        j.value
+        for i in values
+        if i.rank == rarity
+        for j in i.addProps
+        if j.propType == stat_type
+    ]
+    return map_to_decimal(data)
 
 
 @lru_cache(maxsize=None)

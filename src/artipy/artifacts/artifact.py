@@ -1,8 +1,10 @@
 from typing import Optional
 
-from artipy.stats import MainStat, SubStat
+from artipy.stats import MainStat, StatType, SubStat
 
 from .upgrade_strategy import AddStatStrategy, UpgradeStatStrategy, UpgradeStrategy
+
+PLACEHOLDER_MAINSTAT = MainStat(StatType.HP, 0)
 
 
 class Artifact:
@@ -19,16 +21,19 @@ class Artifact:
         self._slot: str = ""
 
     def set_mainstat(self, mainstat: MainStat) -> None:
-        mainstat.rarity = self.get_rarity()
+        if (rarity := self.get_rarity()) > 0:
+            mainstat.rarity = rarity
         self._mainstat = mainstat
 
     def set_substats(self, substats: list[SubStat]) -> None:
-        for substat in substats:
-            substat.rarity = self.get_rarity()
+        if (rarity := self.get_rarity()) > 0:
+            for substat in substats:
+                substat.rarity = rarity
         self._substats = substats
 
     def add_substat(self, substat: SubStat) -> None:
-        substat.rarity = self.get_rarity()
+        if (rarity := self.get_rarity()) > 0:
+            substat.rarity = rarity
         self._substats.append(substat)
 
     def set_level(self, level: int) -> None:
@@ -38,7 +43,10 @@ class Artifact:
         self._rarity = rarity
         stats: list[MainStat | SubStat] = [self.get_mainstat(), *self.get_substats()]
         for stat in stats:
-            stat.rarity = rarity
+            try:
+                stat.rarity = rarity
+            except AttributeError:
+                continue
 
     def set_artifact_set(self, set: str) -> None:
         self._set = set
@@ -48,7 +56,7 @@ class Artifact:
 
     def get_mainstat(self) -> MainStat:
         if self._mainstat is None:
-            raise ValueError("MainStat is not set.")
+            return PLACEHOLDER_MAINSTAT
         return self._mainstat
 
     def get_substats(self) -> list[SubStat]:
@@ -76,6 +84,7 @@ class Artifact:
 
     def __str__(self) -> str:
         return (
-            f"{self._slot} [+{self._level}]\n{'★' * self._rarity}\n"
-            f"{self._mainstat}\n{'\n'.join(str(s) for s in self._substats)}"
+            f"{self.get_artifact_slot()} [+{self.get_level()}]\n"
+            f"{'★' * self.get_rarity()}\n"
+            f"{self.get_mainstat()}\n{'\n'.join(str(s) for s in self.get_substats())}"
         )

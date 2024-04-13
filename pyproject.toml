@@ -11,6 +11,8 @@ authors = [ "Truman Mulholland <truman.mulholland@gmail.com>" ]
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0.0"
 toml = "^0.10.2"
+plotly = "^5.20.0"
+pandas = "^2.2.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.1.1"

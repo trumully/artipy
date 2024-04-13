@@ -1,10 +1,43 @@
+import itertools
+import math
 from decimal import Decimal
-from math import ceil
+from enum import StrEnum, auto
 
 from artipy.artifacts import Artifact
 from artipy.artifacts.upgrade_strategy import UPGRADE_STEP
 from artipy.stats import StatType, SubStat
 from artipy.stats.utils import possible_substat_values
+
+ROLL_MULTIPLIERS: dict[int, tuple[float, ...]] = {
+    1: (0.8, 1.0),
+    2: (0.7, 0.85, 1.0),
+    3: (0.7, 0.8, 0.9, 1.0),
+    4: (0.7, 0.8, 0.9, 1.0),
+    5: (0.7, 0.8, 0.9, 1.0),
+}
+
+
+class RollMagnitude(StrEnum):
+    LOW = auto()
+    MEDIUM = auto()
+    HIGH = auto()
+    MAX = auto()
+
+    @property
+    def magnitude(self) -> Decimal:
+        if self == RollMagnitude.LOW:
+            return Decimal("0.7")
+        elif self == RollMagnitude.MEDIUM:
+            return Decimal("0.8")
+        elif self == RollMagnitude.HIGH:
+            return Decimal("0.9")
+        return Decimal("1.0")
+
+    @classmethod
+    def closest(cls, value: Decimal | float | int) -> "RollMagnitude":
+        return RollMagnitude(
+            min(cls, key=lambda x: abs(RollMagnitude(x).magnitude - Decimal(value)))
+        )
 
 
 def calculate_substat_roll_value(substat: SubStat) -> Decimal:
@@ -37,7 +70,33 @@ def calculate_substat_rolls(substat: SubStat) -> int:
     """
     possible_rolls = possible_substat_values(substat.name, substat.rarity)
     average_roll = Decimal(sum(possible_rolls) / len(possible_rolls))
-    return ceil((substat.value - average_roll) / average_roll)
+    return math.ceil((substat.value - average_roll) / average_roll)
+
+
+def calculate_substat_roll_magnitudes(substat: SubStat) -> tuple[RollMagnitude, ...]:
+    """Get the roll magnitudes for a substat. This is a tuple of the roll magnitudes
+    for each roll the substat has gone through.
+
+    :param substat: The substat to get the roll magnitudes for.
+    :type substat: SubStat
+    :return: The roll magnitudes for the substat.
+    :rtype: tuple[RollMagnitude]
+    """
+
+    def get_magnitude(
+        values: tuple[Decimal, ...], value_to_index: Decimal
+    ) -> RollMagnitude:
+        index = values.index(value_to_index)
+        return RollMagnitude.closest(ROLL_MULTIPLIERS[substat.rarity][index])
+
+    possible_rolls = possible_substat_values(substat.name, substat.rarity)
+    rolls_actual = calculate_substat_rolls(substat)
+
+    combinations = list(
+        itertools.combinations_with_replacement(possible_rolls, rolls_actual)
+    )
+    combination = min(combinations, key=lambda x: abs(sum(x) - substat.value))
+    return tuple(get_magnitude(possible_rolls, value) for value in combination)
 
 
 def calculate_artifact_roll_value(artifact: Artifact) -> Decimal:
@@ -80,18 +139,24 @@ def calculate_artifact_crit_value(artifact: Artifact) -> Decimal:
     :return: The crit value of the artifact.
     :rtype: Decimal
     """
-    crit_dmg = sum(
-        [
-            substat.value
-            for substat in artifact.get_substats()
-            if substat.name == StatType.CRIT_DMG
-        ]
+    crit_dmg = (
+        sum(
+            [
+                substat.value
+                for substat in artifact.get_substats()
+                if substat.name == StatType.CRIT_DMG
+            ]
+        )
+        * 100
     )
-    crit_rate = sum(
-        [
-            substat.value
-            for substat in artifact.get_substats()
-            if substat.name == StatType.CRIT_RATE
-        ]
+    crit_rate = (
+        sum(
+            [
+                substat.value
+                for substat in artifact.get_substats()
+                if substat.name == StatType.CRIT_RATE
+            ]
+        )
+        * 100
     )
-    return Decimal((crit_dmg + crit_rate * 2) * 100)
+    return Decimal(crit_dmg + crit_rate * 2)

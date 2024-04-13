@@ -1,4 +1,4 @@
-from artipy import UPGRADE_STEP
+from artipy import MAX_RARITY, UPGRADE_STEP
 from artipy.stats import MainStat, StatType, SubStat
 
 from .artifact import Artifact
@@ -22,15 +22,13 @@ class ArtifactBuilder:
     def __init__(self) -> None:
         self._artifact: Artifact = Artifact()
 
-    def with_mainstat(self, stat: StatType, value: float | int) -> "ArtifactBuilder":
+    def with_mainstat(
+        self, stat: StatType, value: float | int = 0
+    ) -> "ArtifactBuilder":
         """Set the mainstat of the artifact."""
-        try:
-            self._artifact.get_mainstat()
-        except ValueError:
-            self._artifact.set_mainstat(MainStat(stat, value))
-            return self
-        # Constraint: The mainstat can only be set once
-        raise ValueError("MainStat is already set.")
+        self._artifact.set_mainstat(MainStat(stat, value))
+        self._artifact.get_mainstat().set_value_by_level(self._artifact.get_level())
+        return self
 
     def with_substat(self, stat: StatType, value: float | int) -> "ArtifactBuilder":
         """Add a substat to the artifact."""
@@ -54,26 +52,22 @@ class ArtifactBuilder:
         :type amount: int, optional
         :raises ValueError: If the amount is not within the valid range
         """
+        rarity = self._artifact.get_rarity()
         if not substats:
             # Constraint: The number of substats cannot exceed artifact rarity - 1
-            valid_range = range(1, self._artifact.get_rarity())
+            valid_range = range(1, rarity)
             if amount not in valid_range:
                 raise ValueError(
                     f"Amount must be between {min(valid_range)} and {max(valid_range)}"
                 )
 
-            # Generate random substats
-            strategy = AddStatStrategy()
             for _ in range(amount):
-                new_stat = strategy.pick_stat(self._artifact)
+                new_stat = AddStatStrategy().pick_stat(self._artifact)
                 self._artifact.add_substat(new_stat)
+        elif len(substats) > rarity - 1 and rarity > 0:
+            # Constraint: The number of substats cannot exceed artifact rarity
+            raise ValueError("Too many substats provided.")
         else:
-            if (rarity := self._artifact.get_rarity()) > 0:
-                # Constraint: The number of substats cannot exceed artifact rarity
-                if len(substats) > rarity - 1:
-                    raise ValueError("Too many substats provided.")
-
-            # Add the provided substats to the artifact
             self._artifact.set_substats([SubStat(*spec) for spec in substats])
 
         return self
@@ -96,6 +90,7 @@ class ArtifactBuilder:
                     f"Substat length mismatch with rarity '{rarity}' "
                     f"(Expected {rarity} substats, got {substat_length})"
                 )
+            self._artifact.get_mainstat().set_value_by_level(level)
 
         self._artifact.set_level(level)
         return self
@@ -111,6 +106,10 @@ class ArtifactBuilder:
                     f"Invalid rarity '{rarity}' for current level '{level}'. "
                     f"(Expected {min(expected_range)}-{max(expected_range)})"
                 )
+        if rarity not in range(1, MAX_RARITY + 1):
+            raise ValueError(f"Invalid rarity '{rarity}' for artifact.")
+        if len(self._artifact.get_substats()) >= rarity:
+            raise ValueError("Substats are already full.")
         self._artifact.set_rarity(rarity)
         return self
 

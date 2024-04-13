@@ -41,7 +41,7 @@ def test_possible_mainstat_values() -> None:
 
 def test_mainstat_set_value_by_level(mainstat) -> None:
     mainstat.set_value_by_level(1)
-    assert mainstat.value == possible_mainstat_values(StatType.HP, 5)[0]
+    assert mainstat.value == possible_mainstat_values(StatType.HP, 5)[1]
 
 
 def test_mainstat_str(mainstat) -> None:

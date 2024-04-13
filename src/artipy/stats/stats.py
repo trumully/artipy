@@ -69,6 +69,41 @@ VALID_SUBSTATS: list[StatType] = [
     StatType.CRIT_DMG,
 ]
 
+VALID_MAINSTATS: dict[str, dict[StatType, float]] = {
+    "flower": {StatType.HP: 100},
+    "plume": {StatType.ATK: 100},
+    "sands": {
+        StatType.HP_PERCENT: 26.68,
+        StatType.ATK_PERCENT: 26.66,
+        StatType.DEF_PERCENT: 26.66,
+        StatType.ENERGY_RECHARGE: 10.0,
+        StatType.ELEMENTAL_MASTERY: 10.0,
+    },
+    "circlet": {
+        StatType.HP_PERCENT: 22.0,
+        StatType.ATK_PERCENT: 22.0,
+        StatType.DEF_PERCENT: 22.0,
+        StatType.CRIT_RATE: 10.0,
+        StatType.CRIT_DMG: 10.0,
+        StatType.HEALING_BONUS: 10.0,
+        StatType.ELEMENTAL_MASTERY: 4.0,
+    },
+    "goblet": {
+        StatType.HP_PERCENT: 19.25,
+        StatType.ATK_PERCENT: 19.25,
+        StatType.DEF_PERCENT: 19.0,
+        StatType.PHYSICAL_DMG: 5.0,
+        StatType.ANEMO_DMG: 5.0,
+        StatType.CRYO_DMG: 5.0,
+        StatType.DENDRO_DMG: 5.0,
+        StatType.ELECTRO_DMG: 5.0,
+        StatType.GEO_DMG: 5.0,
+        StatType.HYDRO_DMG: 5.0,
+        StatType.PYRO_DMG: 5.0,
+        StatType.ELEMENTAL_MASTERY: 2.5,
+    },
+}
+
 
 @dataclass
 class Stat:
