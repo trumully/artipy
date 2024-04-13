@@ -1,7 +1,7 @@
-artipy
-======
+src
+===
 
 .. toctree::
    :maxdepth: 4
 
-   example
+   artipy
