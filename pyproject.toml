@@ -25,7 +25,7 @@ ghp-import = "^2.1.0"
 
 [tool.black]
 line-length = 88
-required-version = [">=21.12b0"]
+required-version = ["24.4.0"]
 target-version = ["py312"]
 
 [tool.ruff]
