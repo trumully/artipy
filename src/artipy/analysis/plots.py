@@ -38,7 +38,11 @@ def plot_artifact_substat_rolls(artifact: Artifact) -> None:
         for substat in artifact.get_substats()
     }
     df = pd.DataFrame(substat_rolls.items(), columns=["stat", "rolls"])
-    pie_figure = px.pie(df, values="rolls", names="stat")
+
+    colors = px.colors.qualitative.Plotly
+
+    pie_figure = px.pie(
+        df, values="rolls", names="stat", color_discrete_sequence=colors,)
 
     magnitudes_flat = [
         tuple(i.value for i in calculate_substat_roll_magnitudes(substat))
@@ -57,7 +61,7 @@ def plot_artifact_substat_rolls(artifact: Artifact) -> None:
     ]
     df_long = pd.DataFrame(magnitudes_to_long_form)
     bar_traces = []
-    for stat_name in df_long["stat_name"].unique():
+    for idx, stat_name in enumerate(df_long["stat_name"].unique()):
         df_filtered = df_long[df_long["stat_name"] == stat_name]
         bar_traces.append(
             go.Bar(
@@ -66,6 +70,7 @@ def plot_artifact_substat_rolls(artifact: Artifact) -> None:
                 name=stat_name,
                 text=df_filtered["count"],
                 textposition="auto",
+                marker_color=colors[idx % len(colors)]
             )
         )
 
