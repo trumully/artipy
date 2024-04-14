@@ -1,0 +1,38 @@
+name: Format & Lint
+
+on:
+  push:
+    branches: 
+      - main
+      - 'feature/**'
+    paths: [ 'src/**.py', 'tests/**.py' ]
+  pull_request:
+    branches: 
+      - main
+      - 'feature/**'
+    paths: [ 'src/**.py', 'tests/**.py' ]
+  workflow_dispatch:
+
+jobs:
+  format: 
+    name: Run Black
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.12.1
+      - uses: psf/black@stable
+        with:
+          options: "--check --verbose"
+          src: "./src"
+          use_pyproject: true
+  lint:
+    name: Run Ruff
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v2
+      - uses: chartboost/ruff-action@v1
+        with:
+          args: check --fix
