@@ -98,8 +98,8 @@ jobs:
     - name: Setup Python, Poetry, and Dependencies
       uses: packetcoders/action-setup-cache-python-poetry@main
       with:
-        python-version: ${{ needs.test.outputs.python-version }}
-        poetry-version: ${{ needs.test.outputs.poetry-version }}
+        python-version: 3.12.1
+        poetry-version: 1.8.2
     
     - name: Python Semantic Release
       id: release
