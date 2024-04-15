@@ -28,11 +28,18 @@ jobs:
           src: "./src"
           use_pyproject: true
   lint:
-    name: Run Ruff
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-      - uses: chartboost/ruff-action@v1
+      - name: Setup Python & Dependencies
+        uses: packetcoders/action-setup-cache-python-poetry@main
         with:
-          args: check --fix
+          python-version: 3.12.1
+          poetry-version: 1.8.2
+      - name: Run Linters
+        run: |
+          poetry install --only-root
+          poetry run pylint src
+          poetry run mypy src
+          poetry run isort --check-only src
+          poetry run black --check src
