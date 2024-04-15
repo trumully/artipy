@@ -2,9 +2,104 @@
 
 
 
+## v1.0.1 (2024-04-15)
+
+### Build
+
+* build: add black config to pyproject.toml ([`bc81ec7`](https://github.com/trumully/artipy/commit/bc81ec71fea87891d142229c13f5fce71657debe))
+
+### Chore
+
+* chore: add ruff to dev dependencies ([`63ef475`](https://github.com/trumully/artipy/commit/63ef4755c88d370b9305093ceb94066e09c6e6e9))
+
+* chore(README): add https to doc badge ([`880ef71`](https://github.com/trumully/artipy/commit/880ef719b84ab94b3216b0c9776b7d3d4e890c50))
+
+* chore(README): update doc status badge hyperlink ([`bf4f141`](https://github.com/trumully/artipy/commit/bf4f141c67bcc79795aaf64492e3a21471b7c850))
+
+* chore(pyproject.toml): change black version to 24.4.0 ([`f479656`](https://github.com/trumully/artipy/commit/f47965608eccbeec3e4e60a1ee1ef2e8f3b36b28))
+
+* chore: update badges in README ([`8bdfe31`](https://github.com/trumully/artipy/commit/8bdfe31740808c56fb114f3995145124ce859092))
+
+* chore: add ruff badge to README ([`9726026`](https://github.com/trumully/artipy/commit/97260264660bb9c97a59c68fb2582d6df83ebee4))
+
+* chore: add docs ref to README ([`8e240be`](https://github.com/trumully/artipy/commit/8e240be415952e01ac8d87cb4a7c8918943c2e2e))
+
+* chore: add ghp-import to dev dependencies ([`dd19826`](https://github.com/trumully/artipy/commit/dd19826d98500185644fe04e0422ac12ada2235f))
+
+* chore: add sphinx for doc building ([`727753c`](https://github.com/trumully/artipy/commit/727753c21ca4e166cf978574a1456d26a86b4f41))
+
+* chore: fix docs gitignore ([`7359e92`](https://github.com/trumully/artipy/commit/7359e926f2635459d2efc11a903349bf59a37e9e))
+
+* chore: remove docs (for now) ([`62a620e`](https://github.com/trumully/artipy/commit/62a620ef596886d056971ce6decb0afac974b897))
+
+### Ci
+
+* ci: change release job condition ([`18c54ef`](https://github.com/trumully/artipy/commit/18c54ef0bc92736dd2af0a177785fbb512f8edb8))
+
+* ci: consistent naming of lint.yml job across workflows ([`4075bba`](https://github.com/trumully/artipy/commit/4075bba1086355440248bd5add0c1747bda42af3))
+
+* ci: add ruff to lint &amp; format job ([`a7f637a`](https://github.com/trumully/artipy/commit/a7f637a5276f0e908f2de2d84db1bef261268629))
+
+* ci: add pylint linting; adherence to Google styling ([`5094ace`](https://github.com/trumully/artipy/commit/5094acec7ed0ba3c0ca99b641c4c32767fc03054))
+
+* ci: use latest black version ([`033ec16`](https://github.com/trumully/artipy/commit/033ec16c55f63d489fd4a5a9418723fe438e629c))
+
+* ci: separate lint and test jobs ([`35e2931`](https://github.com/trumully/artipy/commit/35e29310af3566de28bc07d5c4c16f2b3ab4e86e))
+
+* ci: use python 3.12.1 for black format job ([`3bab8c9`](https://github.com/trumully/artipy/commit/3bab8c930b7dc75511e15a91c17854ef2d60987c))
+
+* ci: specify python &amp; poetry version for release job ([`5b8edea`](https://github.com/trumully/artipy/commit/5b8edea01e6f08c684e4c38c9b9b7336a834139d))
+
+* ci: add format and lint job ([`9d12ea0`](https://github.com/trumully/artipy/commit/9d12ea0a5975981b408d1a0d6b25d9e5d2d1a3fd))
+
+* ci: grant permission to docs job ([`3a298a1`](https://github.com/trumully/artipy/commit/3a298a12b9a2a9ac6bbf824692cff39aeb4d0cbb))
+
+* ci: im no good at ci :( ([`40234de`](https://github.com/trumully/artipy/commit/40234dee7ec44d5049e08de569cd4e0d6b6783d8))
+
+* ci: fix missing sphinx ([`f6f76d9`](https://github.com/trumully/artipy/commit/f6f76d9efa186c4250a3785401ed72a4de3e2b32))
+
+* ci: remove if statement from documentation job ([`df64d2b`](https://github.com/trumully/artipy/commit/df64d2b9fe2ff050eaa874fa16871fca1b817fd6))
+
+* ci: prepare ci for building documentation ([`25c5f30`](https://github.com/trumully/artipy/commit/25c5f30e19f3c25d0d4477417cf16c3b61ef4940))
+
+### Documentation
+
+* docs: thoroughly explain package usage in README with accompanying examples ([`f936c13`](https://github.com/trumully/artipy/commit/f936c13d84d933d0055b1bcb40094d6dbd684ab9))
+
+* docs: add docs (pray) ([`1937d1e`](https://github.com/trumully/artipy/commit/1937d1e934444fa3066881fc121af88b907f5c31))
+
+* docs: fix deployed docs ([`cdb5dab`](https://github.com/trumully/artipy/commit/cdb5dab04a933c28723e5970231a1bb2a2457f81))
+
+* docs: auto generate w/ Sphinx ([`5f1a095`](https://github.com/trumully/artipy/commit/5f1a0955a063c7cb2e91c790f0cd63a378161c57))
+
+* docs: add docstrings to any public methods missing one ([`e3337b3`](https://github.com/trumully/artipy/commit/e3337b3ec74d7ea30021a16f3cffa44478b80d4a))
+
+### Fix
+
+* fix(SubStat): use Stat.__str__() method driectly to avoid TypeError using super() ([`48d9354`](https://github.com/trumully/artipy/commit/48d9354db6a786cb94b5447c08d915fae951c86e))
+
+### Performance
+
+* perf: add slots to Stat superclass and inheriters ([`3d94bea`](https://github.com/trumully/artipy/commit/3d94bea0fcc7f7d3f18a773734a763f1b322f565))
+
+### Style
+
+* style: adhere to Google styling ([`68c890e`](https://github.com/trumully/artipy/commit/68c890e503aae3ef38662cfbfe1a8a1c3f359a9c))
+
+### Unknown
+
+* improvement(plot_artifact_substat_rolls): use matching color sequence for pie and bar chart ([`ccb1733`](https://github.com/trumully/artipy/commit/ccb1733ca4676adc838dc72809b9301ff7204b52))
+
+* Delete CNAME ([`c35660e`](https://github.com/trumully/artipy/commit/c35660e3f03f192aa3df2eba3901a37354ceaf53))
+
+* Create CNAME ([`4d77db5`](https://github.com/trumully/artipy/commit/4d77db5ffb618f725f4a882d7841ee32d4949928))
+
+
 ## v1.0.0 (2024-04-13)
 
 ### Chore
+
+* chore(release): v1.0.0 [skip ci] ([`84a7e30`](https://github.com/trumully/artipy/commit/84a7e30bc0fc847d1df4a2f27f6c26c251d47cae))
 
 * chore: merge pull request #2 from trumully/feature/analysis-module
 
