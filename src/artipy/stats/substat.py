@@ -8,7 +8,7 @@ from .stats import VALID_SUBSTATS, Stat, StatType
 from .utils import possible_substat_values as possible_values
 
 
-@dataclass
+@dataclass(slots=True)
 class SubStat(Stat):
     """Substat dataclass for a Genshin Impact artifact."""
 

@@ -34,8 +34,10 @@ target-version = ["py312"]
 [tool.ruff]
 line-length = 88
 fix = true
+preview = true
 
 [tool.ruff.format]
+preview = true
 quote-style = "double"
 
 [tool.ruff.lint]
@@ -84,7 +86,6 @@ extend-select = [
   "PLW0129",  # assert-on-string-literal
   "B033",  # duplicate-value
   "PLW0131",  # named-expr-without-context
-  "PLW0177",  # nan-comparison
   "PLW0211",  # bad-staticmethod-argument
   "PLW0245",  # super-without-brackets
   "PLW0602",  # global-variable-not-assigned

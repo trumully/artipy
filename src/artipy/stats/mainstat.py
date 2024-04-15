@@ -6,7 +6,7 @@ from .stats import Stat
 from .utils import possible_mainstat_values
 
 
-@dataclass
+@dataclass(slots=True)
 class MainStat(Stat):
     """Mainstat dataclass for a Genshin Impact artifact."""
 

@@ -107,7 +107,7 @@ VALID_MAINSTATS: dict[str, dict[StatType, float]] = {
 }
 
 
-@dataclass
+@dataclass(slots=True)
 class Stat:
     """Dataclass for a stat in Genshin Impact."""
 
