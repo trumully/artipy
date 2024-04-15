@@ -2,7 +2,6 @@ import math
 from decimal import Decimal
 
 import pytest
-
 from artipy.analysis import (
     calculate_artifact_crit_value,
     calculate_artifact_maximum_roll_value,

@@ -1,3 +1,5 @@
+"""Stat types and data for Genshin Impact artifacts."""
+
 from dataclasses import dataclass, field
 from decimal import Decimal
 from enum import StrEnum

@@ -1,3 +1,5 @@
+"""Utility functions for the artifacts module."""
+
 import random
 from typing import Any
 

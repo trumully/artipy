@@ -1,3 +1,5 @@
+"""artipy: A Python package for analysing artifacts in Genshin Impact."""
+
 from pathlib import Path
 
 __data__ = Path(__file__).parent / "data"

@@ -1,3 +1,5 @@
+"""Module for handling stats and their data."""
+
 from .mainstat import MainStat
 from .stat_data import StatData
 from .stats import STAT_NAMES, VALID_MAINSTATS, StatType

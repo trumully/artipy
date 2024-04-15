@@ -1,3 +1,5 @@
+"""This module contains functions for analysing artifacts and their rolls."""
+
 import itertools
 import math
 from decimal import Decimal

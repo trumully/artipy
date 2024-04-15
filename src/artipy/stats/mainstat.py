@@ -1,3 +1,5 @@
+"""Mainstat dataclass for a Genshin Impact artifact."""
+
 from dataclasses import dataclass
 
 from .stats import Stat

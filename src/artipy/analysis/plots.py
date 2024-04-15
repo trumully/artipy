@@ -1,3 +1,5 @@
+"""This module contains functions to plot various statistics of artifacts."""
+
 from decimal import Decimal
 from typing import Callable
 
@@ -42,7 +44,11 @@ def plot_artifact_substat_rolls(artifact: Artifact) -> None:
     colors = px.colors.qualitative.Plotly
 
     pie_figure = px.pie(
-        df, values="rolls", names="stat", color_discrete_sequence=colors,)
+        df,
+        values="rolls",
+        names="stat",
+        color_discrete_sequence=colors,
+    )
 
     magnitudes_flat = [
         tuple(i.value for i in calculate_substat_roll_magnitudes(substat))
@@ -70,7 +76,7 @@ def plot_artifact_substat_rolls(artifact: Artifact) -> None:
                 name=stat_name,
                 text=df_filtered["count"],
                 textposition="auto",
-                marker_color=colors[idx % len(colors)]
+                marker_color=colors[idx % len(colors)],
             )
         )
 
@@ -112,7 +118,7 @@ def plot_crit_value_distribution(iterations: int = 1000) -> None:
     df = pd.DataFrame(crit_values, columns=["crit_value"])
 
     bins = [0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0]
-    labels = [f"{bins[i]}-{bins[i+1]}" for i in range(len(bins) - 1)]
+    labels = [f"{bins[i]}-{bins[i + 1]}" for i in range(len(bins) - 1)]
     df["crit_value_range"] = pd.cut(df["crit_value"], bins=bins, labels=labels)
 
     fig = px.histogram(

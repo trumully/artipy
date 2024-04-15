@@ -1,7 +1,6 @@
 from copy import deepcopy
 
 import pytest
-
 from artipy.artifacts import (
     AddStatStrategy,
     Artifact,

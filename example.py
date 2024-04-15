@@ -10,12 +10,14 @@ def main() -> None:
         .with_level(8)
         .with_rarity(5)
         .with_mainstat(StatType.ATK_PERCENT, 0.228)
-        .with_substats([
-            (StatType.ATK, 19),
-            (StatType.CRIT_RATE, 0.039),
-            (StatType.HP_PERCENT, 0.053),
-            (StatType.HP, 568)
-        ])
+        .with_substats(
+            [
+                (StatType.ATK, 19),
+                (StatType.CRIT_RATE, 0.039),
+                (StatType.HP_PERCENT, 0.053),
+                (StatType.HP, 568),
+            ]
+        )
         .with_set("Gladiator's Finale")
         .with_slot("Sands of Eon")
         .build()

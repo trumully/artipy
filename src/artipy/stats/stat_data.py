@@ -1,3 +1,5 @@
+"""Module that handles JSON data for the stats module."""
+
 import json
 from pathlib import Path
 from types import SimpleNamespace

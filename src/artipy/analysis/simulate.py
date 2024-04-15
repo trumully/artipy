@@ -1,3 +1,5 @@
+"""This module contains functions to simulate artifacts."""
+
 import random
 
 from artipy.artifacts import Artifact, ArtifactBuilder

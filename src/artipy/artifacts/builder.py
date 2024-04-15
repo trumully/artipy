@@ -1,3 +1,7 @@
+"""Builder class for creating an Artifact object."""
+
+from typing import Optional
+
 from artipy import MAX_RARITY, UPGRADE_STEP
 from artipy.stats import MainStat, StatType, SubStat
 
@@ -58,12 +62,15 @@ class ArtifactBuilder:
         return self
 
     def with_substats(
-        self, substats: list[tuple[StatType, float | int]] = [], *, amount: int = 0
+        self,
+        substats: Optional[list[tuple[StatType, float | int]]] = None,
+        *,
+        amount: int = 0,
     ) -> "ArtifactBuilder":
         """Add multiple substats to the artifact. If substats is not provided and an
         amount is provided, random substats will be generated.
 
-        :param substats: The substats to add, defaults to []
+        :param substats: The substats to add, defaults to None
         :type substats: list[tuple[StatType, float | int]], optional
         :param amount: The amount of substats to add (if none are provided),
                        defaults to 0
@@ -73,7 +80,8 @@ class ArtifactBuilder:
         :rtype: ArtifactBuilder
         """
         rarity = self._artifact.get_rarity()
-        if not substats:
+        if substats is None:
+            substats = []
             # Constraint: The number of substats cannot exceed artifact rarity - 1
             valid_range = range(1, rarity)
             if amount not in valid_range:
@@ -152,7 +160,7 @@ class ArtifactBuilder:
         self._artifact.set_rarity(rarity)
         return self
 
-    def with_set(self, set: str) -> "ArtifactBuilder":
+    def with_set(self, artifact_set: str) -> "ArtifactBuilder":
         """Set the artifact set.
 
         :param set: The set to set.
@@ -160,7 +168,7 @@ class ArtifactBuilder:
         :return: The artifact builder object
         :rtype: ArtifactBuilder
         """
-        self._artifact.set_artifact_set(set)
+        self._artifact.set_artifact_set(artifact_set)
         return self
 
     def with_slot(self, slot: str) -> "ArtifactBuilder":

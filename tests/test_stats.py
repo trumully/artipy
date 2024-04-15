@@ -2,7 +2,6 @@ import math
 from decimal import Decimal
 
 import pytest
-
 from artipy import DECIMAL_PLACES
 from artipy.stats import MainStat, StatType, SubStat
 from artipy.stats.utils import possible_mainstat_values, possible_substat_values

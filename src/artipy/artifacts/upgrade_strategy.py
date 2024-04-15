@@ -1,3 +1,5 @@
+"""This module contains classes for upgrading artifacts."""
+
 import random
 from typing import TYPE_CHECKING
 

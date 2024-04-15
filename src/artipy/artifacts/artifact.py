@@ -1,3 +1,5 @@
+"""Module containing the Artifact class."""
+
 from typing import Optional
 
 from artipy.stats import MainStat, StatType, SubStat
@@ -73,13 +75,13 @@ class Artifact:
             except AttributeError:
                 continue
 
-    def set_artifact_set(self, set: str) -> None:
+    def set_artifact_set(self, artifact_set: str) -> None:
         """Set the artifact set of the artifact.
 
         :param set: The set to set.
         :type set: str
         """
-        self._set = set
+        self._set = artifact_set
 
     def set_artifact_slot(self, slot: str) -> None:
         """Set the artifact slot of the artifact.
@@ -157,8 +159,9 @@ class Artifact:
         self.get_strategy().upgrade(self)
 
     def __str__(self) -> str:
+        # Black can't format f-strings with double quotes in them
         return (
             f"{self.get_artifact_slot()} [+{self.get_level()}]\n"
-            f"{'★' * self.get_rarity()}\n"
-            f"{self.get_mainstat()}\n{'\n'.join(str(s) for s in self.get_substats())}"
+            f"{'★' * self.get_rarity()}\n"  # pylint: disable=inconsistent-quotes
+            f"{self.get_mainstat()}\n{'\n'.join(str(s) for s in self.get_substats())}"  # pylint: disable=inconsistent-quotes
         )

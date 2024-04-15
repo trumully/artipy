@@ -1,3 +1,5 @@
+"""Substats for Genshin Impact artifacts."""
+
 import random
 from dataclasses import dataclass
 from decimal import Decimal
