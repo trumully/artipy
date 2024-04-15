@@ -30,5 +30,4 @@ jobs:
           poetry run ruff check --fix src
           poetry run pylint src
           poetry run mypy src
-          poetry run isort src
           poetry run black src
