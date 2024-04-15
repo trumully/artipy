@@ -2,7 +2,7 @@ name: Test & Release
 
 on:
   workflow_run:
-    workflows: ["Format & Lint"]
+    workflows: ["Lint"]
     types:
       - completed
   workflow_dispatch:

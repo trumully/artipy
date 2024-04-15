@@ -1,4 +1,4 @@
-name: Lint & Format
+name: Lint
 
 on:
   push:
@@ -14,8 +14,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  lint_and_format:
-    name: Lint & Format
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
