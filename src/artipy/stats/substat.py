@@ -28,7 +28,7 @@ class SubStat(Stat):
         self.value += self.roll()
 
     def __str__(self) -> str:
-        return f"• {super().__str__()}"
+        return f"• {Stat.__str__(self)}"
 
 
 def create_substat(
