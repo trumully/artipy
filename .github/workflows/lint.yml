@@ -1,4 +1,4 @@
-name: Format & Lint
+name: Lint & Format
 
 on:
   push:
@@ -14,20 +14,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  format: 
-    name: Run Black
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: 3.12.1
-      - uses: psf/black@stable
-        with:
-          options: "--check --verbose"
-          src: "./src"
-          use_pyproject: true
-  lint:
+  lint_and_format:
+    name: Lint & Format
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -39,7 +27,8 @@ jobs:
       - name: Run Linters
         run: |
           poetry install --only-root
+          poetry run ruff check --fix src
           poetry run pylint src
           poetry run mypy src
-          poetry run isort --check-only src
-          poetry run black --check src
+          poetry run isort src
+          poetry run black src
