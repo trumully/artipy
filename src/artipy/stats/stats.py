@@ -4,8 +4,6 @@ from dataclasses import dataclass, field
 from decimal import Decimal
 from enum import StrEnum
 
-from artipy import DECIMAL_PLACES
-
 
 class StatType(StrEnum):
     """Enumeration of stat types in Genshin Impact."""
@@ -133,16 +131,6 @@ class Stat:
         if not isinstance(value, Decimal):
             value = Decimal(value)
         self._value = value
-
-    @property
-    def rounded_value(self) -> Decimal:
-        """Get the rounded value of the stat. This is the value rounded to the nearest
-        pre-defined decimal place.
-
-        :return: The rounded value of the stat.
-        :rtype: Decimal
-        """
-        return self.value.quantize(Decimal(DECIMAL_PLACES))
 
     def __format__(self, format_spec: str) -> str:
         if format_spec in ("v", "verbose"):

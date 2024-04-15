@@ -24,4 +24,5 @@ repos:
           [
             "-rn",
             "--rcfile=pylintrc",
+            "--ignore-paths=^tests/.*$"
           ]
