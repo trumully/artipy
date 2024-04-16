@@ -14,6 +14,20 @@ from hypothesis import assume, given
 from hypothesis import strategies as st
 
 
+@pytest.fixture
+def artifact() -> Artifact:
+    return (
+        ArtifactBuilder()
+        .with_mainstat(StatType.HP, 0)
+        .with_substat(StatType.HP_PERCENT, 5)
+        .with_rarity(5)
+        .with_level(0)
+        .with_set("Gladiator's Finale")
+        .with_slot("Flower of Life")
+        .build()
+    )
+
+
 @given(
     level=st.integers(min_value=0, max_value=20),
     rarity=st.integers(min_value=1, max_value=5),
