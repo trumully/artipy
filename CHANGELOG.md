@@ -2,6 +2,62 @@
 
 
 
+## v1.1.0 (2024-04-16)
+
+### Build
+
+* build: update dev dependencies
+
+Dependencies:
+python-semantic-release (9.4.1 -&gt; 9.4.2) ([`5c4f7b6`](https://github.com/trumully/artipy/commit/5c4f7b66fe8f9d0f59c92f58a2c71205b0e140af))
+
+### Ci
+
+* ci: remove push condition on semver, docs jobs ([`b594fb8`](https://github.com/trumully/artipy/commit/b594fb8b62ab43398aadebb65c908b3a329f8e31))
+
+* ci: release and doc job only on push to main ([`e456599`](https://github.com/trumully/artipy/commit/e4565995004237236c164059be3f15e4d9ab4fff))
+
+* ci: modify concurrency ([`52dc4c7`](https://github.com/trumully/artipy/commit/52dc4c705c536c0bf6cab004f9a63361b3981252))
+
+* ci: run doc job only on release ([`8edaa65`](https://github.com/trumully/artipy/commit/8edaa65469600bfe8896d24746d16a69c516112f))
+
+* ci: fix pylint on pre-commit. ([`73583c9`](https://github.com/trumully/artipy/commit/73583c91900bf7b802124dc10718ed89acbd4764))
+
+* ci: phase out isort in favor of ruff ([`70f6e10`](https://github.com/trumully/artipy/commit/70f6e10c0da968d5c742ee62b7b8db3b43b7a468))
+
+### Feature
+
+* feat(Artifact): type for artifact&#39;s slot ArtifactSlot ([`71d764a`](https://github.com/trumully/artipy/commit/71d764a809a6c43ff7b41329598e9cd0a3945e4f))
+
+### Fix
+
+* fix(artipy.analysis.plots): TypeError when indexing ArtifactSlot as str instead of ArtifactSlot ([`1c3a0ad`](https://github.com/trumully/artipy/commit/1c3a0ad3ca36000906b898eb98dc5fd73ed37f2b))
+
+### Refactor
+
+* refactor: StatData -&gt; DataGen at base module level ([`d887371`](https://github.com/trumully/artipy/commit/d887371a3c92a6dd9aaf33d1cfff20ef1a383467))
+
+### Test
+
+* test: re-add artifact fixture ([`b05a26f`](https://github.com/trumully/artipy/commit/b05a26f30e3387ce357587a1cde800bfd708e8da))
+
+* test: add property based testing for artifact module ([`a5adbf3`](https://github.com/trumully/artipy/commit/a5adbf366c1bb15d8808cdbf732c54bee018efa7))
+
+* test: refactor testing for artipy.stats module to use property testing
+
+shadow removal of rounded_value property ([`2124f05`](https://github.com/trumully/artipy/commit/2124f050be29561b6c4eec0678e9318e7ae2741d))
+
+### Unknown
+
+* initial commit ([`5a11ed1`](https://github.com/trumully/artipy/commit/5a11ed1074a13421d0b50954f4fb530773691d01))
+
+* improvement(Artifact): enhance getter and setter syntax
+
+You can now do `artifact.level = level` instead of `artifact.set_level(level)` ([`27bebbc`](https://github.com/trumully/artipy/commit/27bebbc7ce82493aac6b4262fa86f7c6c8916311))
+
+* improvement(Artifact): max_level property ([`efd100d`](https://github.com/trumully/artipy/commit/efd100d8d634f9b7493e334eb90792f681ae0161))
+
+
 ## v1.0.1 (2024-04-15)
 
 ### Build
@@ -9,6 +65,8 @@
 * build: add black config to pyproject.toml ([`bc81ec7`](https://github.com/trumully/artipy/commit/bc81ec71fea87891d142229c13f5fce71657debe))
 
 ### Chore
+
+* chore(release): v1.0.1 [skip ci] ([`05c8b7f`](https://github.com/trumully/artipy/commit/05c8b7f5d72a9c1c0bd383306c449b95be4dffa2))
 
 * chore: add ruff to dev dependencies ([`63ef475`](https://github.com/trumully/artipy/commit/63ef4755c88d370b9305093ceb94066e09c6e6e9))
 
