@@ -9,7 +9,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 from artipy.artifacts import Artifact
-from artipy.stats import STAT_NAMES, VALID_MAINSTATS, StatType
+from artipy.types import STAT_NAMES, VALID_MAINSTATS, ArtifactSlot, StatType
 
 from .analyse import (
     RollMagnitude,
@@ -158,16 +158,21 @@ def plot_expected_against_actual_mainstats(iterations: int = 1000) -> None:
     for a in (artifacts := create_multiple_random_artifacts(iterations)):
         upgrade_artifact_to_max(a)
 
-    expected_mainstats = {
-        k: v for k, v in VALID_MAINSTATS.items() if k not in ("flower", "plume")
+    expected_mainstats: dict[ArtifactSlot, dict[StatType, float]] = {
+        ArtifactSlot(k): v
+        for k, v in VALID_MAINSTATS.items()
+        if k not in (ArtifactSlot.FLOWER, ArtifactSlot.PLUME)
     }
-    actual_mainstats: dict[str, list[StatType]] = {k: [] for k in expected_mainstats}
+    actual_mainstats: dict[ArtifactSlot, list[StatType]] = {
+        k: [] for k in expected_mainstats
+    }
 
     for a in artifacts:
-        if (slot := a.artifact_slot) in expected_mainstats:
+        slot: ArtifactSlot = ArtifactSlot(a.artifact_slot)
+        if slot in expected_mainstats:
             actual_mainstats[slot].append(a.mainstat.name)
 
-    actual_mainstats_pct: dict[str, dict[StatType, float]] = {
+    actual_mainstats_pct: dict[ArtifactSlot, dict[StatType, float]] = {
         k: {
             stat: (actual_mainstats[k].count(stat) / len(actual_mainstats[k])) * 100
             for stat in v

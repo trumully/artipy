@@ -6,8 +6,7 @@ from operator import attrgetter
 from typing import Iterable
 
 from artipy.data_gen import DataGen
-
-from .stats import StatType
+from artipy.types import StatType
 
 MAINSTAT_DATA = DataGen("ReliquaryLevelExcelConfigData.json")
 SUBSTAT_DATA = DataGen("ReliquaryAffixExcelConfigData.json")

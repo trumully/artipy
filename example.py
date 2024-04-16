@@ -1,7 +1,9 @@
+"""The example script for the artipy package."""
+
 import artipy.analysis as analysis
 from artipy.analysis import plots
 from artipy.artifacts import ArtifactBuilder
-from artipy.stats import StatType
+from artipy.types import ArtifactSlot, StatType
 
 
 def main() -> None:
@@ -10,16 +12,14 @@ def main() -> None:
         .with_level(8)
         .with_rarity(5)
         .with_mainstat(StatType.ATK_PERCENT, 0.228)
-        .with_substats(
-            [
-                (StatType.ATK, 19),
-                (StatType.CRIT_RATE, 0.039),
-                (StatType.HP_PERCENT, 0.053),
-                (StatType.HP, 568),
-            ]
-        )
+        .with_substats([
+            (StatType.ATK, 19),
+            (StatType.CRIT_RATE, 0.039),
+            (StatType.HP_PERCENT, 0.053),
+            (StatType.HP, 568),
+        ])
         .with_set("Gladiator's Finale")
-        .with_slot("Sands of Eon")
+        .with_slot(ArtifactSlot.SANDS)
         .build()
     )
 

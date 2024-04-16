@@ -3,7 +3,8 @@
 from typing import Optional
 
 from artipy import UPGRADE_STEP
-from artipy.stats import MainStat, StatType, SubStat
+from artipy.stats import MainStat, SubStat
+from artipy.types import ArtifactSlot, StatType
 
 from .upgrade_strategy import AddStatStrategy, UpgradeStatStrategy, UpgradeStrategy
 
@@ -21,7 +22,7 @@ class Artifact:
         self._level: int = 0
         self._rarity: int = 0
         self._set: str = ""
-        self._slot: str = ""
+        self._slot: ArtifactSlot | str = ""
 
     @property
     def mainstat(self) -> MainStat:
@@ -139,20 +140,20 @@ class Artifact:
         self._set = artifact_set
 
     @property
-    def artifact_slot(self) -> str:
+    def artifact_slot(self) -> str | ArtifactSlot:
         """The artifact slot of the artifact.
 
         Returns:
-            str: The artifact slot of the artifact.
+            str | ArtifactSlot: The artifact slot of the artifact.
         """
         return self._slot
 
     @artifact_slot.setter
-    def artifact_slot(self, slot: str) -> None:
+    def artifact_slot(self, slot: str | ArtifactSlot) -> None:
         """Set the artifact slot of the artifact.
 
         Args:
-            slot (str): The artifact slot to set.
+            slot (str | ArtifactSlot): The artifact slot to set.
         """
         self._slot = slot
 

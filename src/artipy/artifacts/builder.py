@@ -1,9 +1,12 @@
 """Builder class for creating an Artifact object."""
 
+from __future__ import annotations
+
 from typing import Optional
 
 from artipy import MAX_RARITY, UPGRADE_STEP
-from artipy.stats import MainStat, StatType, SubStat
+from artipy.stats import MainStat, SubStat
+from artipy.types import ArtifactSlot, StatType
 
 from .artifact import Artifact
 from .upgrade_strategy import AddStatStrategy
@@ -171,7 +174,7 @@ class ArtifactBuilder:
         self._artifact.artifact_set = artifact_set
         return self
 
-    def with_slot(self, slot: str) -> "ArtifactBuilder":
+    def with_slot(self, artifact_slot: ArtifactSlot) -> "ArtifactBuilder":
         """Set the artifact slot.
 
         :param slot: The slot to set.
@@ -179,7 +182,7 @@ class ArtifactBuilder:
         :return: The artifact builder object
         :rtype: ArtifactBuilder
         """
-        self._artifact.artifact_slot = slot
+        self._artifact.artifact_slot = artifact_slot
         return self
 
     def build(self) -> Artifact:
