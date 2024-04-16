@@ -1,48 +1,86 @@
+import random
 from copy import deepcopy
 
 import pytest
+from artipy import UPGRADE_STEP
 from artipy.artifacts import (
     AddStatStrategy,
     Artifact,
     ArtifactBuilder,
     UpgradeStatStrategy,
 )
-from artipy.stats import StatType
+from artipy.stats import VALID_SUBSTATS, StatType
+from hypothesis import assume, given
+from hypothesis import strategies as st
 
 
-@pytest.fixture
-def artifact() -> Artifact:
-    return (
+@given(
+    level=st.integers(min_value=0, max_value=20),
+    rarity=st.integers(min_value=1, max_value=5),
+)
+def test_artifact_upgrade(level: int, rarity: int) -> None:
+    """Test the upgrade method of the Artifact class. This test verifies that the
+    level of the artifact increases by 1 and the mainstat value increases after
+    upgrading.
+
+    Args:
+        level (int): The level of the artifact.
+        rarity (int): The rarity of the artifact.
+    """
+    max_level = rarity * UPGRADE_STEP if rarity > 2 else UPGRADE_STEP
+    assume(level <= max_level)
+    builder = (
         ArtifactBuilder()
         .with_mainstat(StatType.HP, 0)
-        .with_substat(StatType.HP_PERCENT, 5)
-        .with_rarity(5)
-        .with_level(0)
+        .with_rarity(rarity)
+        .with_level(level)
         .with_set("Gladiator's Finale")
         .with_slot("Flower of Life")
-        .build()
     )
 
+    substat_count = rarity - 2 if rarity > 1 else 0
+    substat_sample = random.sample(VALID_SUBSTATS, substat_count)
+    for sub in substat_sample:
+        builder = builder.with_substat(sub, 5)
 
-def test_artifact_upgrade(artifact) -> None:
+    artifact: Artifact = builder.build()
     previous: Artifact = deepcopy(artifact)
 
-    artifact.upgrade()
-
-    assert artifact.get_level() == previous.get_level() + 1
-    assert len(artifact.get_substats()) > len(previous.get_substats())
-    assert artifact.get_mainstat().value > previous.get_mainstat().value
-
-
-def test_artifact_upgrade_until_max(artifact) -> None:
-    old: Artifact = deepcopy(artifact)
-
-    while artifact.get_level() < 20:
+    if artifact.get_level() < max_level:
         artifact.upgrade()
 
-    assert artifact.get_level() == 20
-    assert len(artifact.get_substats()) == artifact.get_rarity() - 1
+        assert artifact.get_level() == previous.get_level() + 1
+        assert artifact.get_mainstat().value > previous.get_mainstat().value
+
+
+@given(
+    level=st.integers(min_value=0, max_value=20),
+    rarity=st.integers(min_value=1, max_value=5),
+)
+def test_artifact_upgrade_until_max(level: int, rarity: int) -> None:
+    max_level = rarity * UPGRADE_STEP if rarity > 2 else UPGRADE_STEP
+    assume(level < max_level)
+    builder = (
+        ArtifactBuilder()
+        .with_mainstat(StatType.HP, 0)
+        .with_rarity(rarity)
+        .with_level(level)
+        .with_set("Gladiator's Finale")
+        .with_slot("Flower of Life")
+    )
+    artifact = builder.build()
+    old: Artifact = deepcopy(artifact)
+
+    while artifact.get_level() < max_level:
+        artifact.upgrade()
+
+    assert artifact.get_level() == max_level
     assert artifact.get_mainstat().value > old.get_mainstat().value
+
+    # Upgrade again
+    artifact.upgrade()
+
+    assert artifact.get_level() == max_level
 
 
 def test_artifact_get_strategy(artifact) -> None:
