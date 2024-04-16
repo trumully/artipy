@@ -2,6 +2,7 @@
 
 from typing import Optional
 
+from artipy import UPGRADE_STEP
 from artipy.stats import MainStat, StatType, SubStat
 
 from .upgrade_strategy import AddStatStrategy, UpgradeStatStrategy, UpgradeStrategy
@@ -150,13 +151,21 @@ class Artifact:
         :return: The upgrade strategy for the artifact.
         :rtype: UpgradeStrategy
         """
+        if self.get_rarity() == 1:
+            return UpgradeStrategy()
         if len(self.get_substats()) < self.get_rarity() - 1:
             return AddStatStrategy()
         return UpgradeStatStrategy()
 
+    @property
+    def max_level(self) -> int:
+        rarity = self.get_rarity()
+        return rarity * UPGRADE_STEP if rarity > 2 else UPGRADE_STEP
+
     def upgrade(self) -> None:
         """Upgrade the artifact."""
-        self.get_strategy().upgrade(self)
+        if self.get_level() < self.max_level:
+            self.get_strategy().upgrade(self)
 
     def __str__(self) -> str:
         # Black can't format f-strings with double quotes in them
