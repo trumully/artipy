@@ -4,7 +4,9 @@ import random
 from dataclasses import dataclass
 from decimal import Decimal
 
-from .stats import VALID_SUBSTATS, Stat, StatType
+from artipy.types import VALID_SUBSTATS, StatType
+
+from .stats import Stat
 from .utils import possible_substat_values as possible_values
 
 

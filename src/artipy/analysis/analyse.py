@@ -7,8 +7,9 @@ from enum import StrEnum, auto
 
 from artipy.artifacts import Artifact
 from artipy.artifacts.upgrade_strategy import UPGRADE_STEP
-from artipy.stats import StatType, SubStat
+from artipy.stats import SubStat
 from artipy.stats.utils import possible_substat_values
+from artipy.types import StatType
 
 ROLL_MULTIPLIERS: dict[int, tuple[float, ...]] = {
     1: (0.8, 1.0),

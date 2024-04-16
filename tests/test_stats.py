@@ -9,12 +9,12 @@ from hypothesis import strategies as st
 
 
 @given(
-    name=st.sampled_from(artipy.stats.stats.StatType),
+    name=st.sampled_from(artipy.types.StatType),
     _value=st.one_of(st.decimals(), st.floats(), st.integers()),
     rarity=st.integers(1, 5),
 )
 def test_fuzz_MainStat(
-    name: artipy.stats.StatType,
+    name: artipy.types.StatType,
     _value: Union[float, int, decimal.Decimal],
     rarity: int,
 ) -> None:
@@ -22,7 +22,7 @@ def test_fuzz_MainStat(
     instantiated with the given parameters.
 
     Args:
-        name (artipy.stats.StatType): The name of the stat.
+        name (artipy.types.StatType): The name of the stat.
         _value (Union[float, int, decimal.Decimal]): The value of the stat.
         rarity (int): The rarity of the stat.
     """
@@ -30,13 +30,13 @@ def test_fuzz_MainStat(
 
 
 @given(
-    name=st.sampled_from(artipy.stats.stats.StatType),
+    name=st.sampled_from(artipy.types.StatType),
     _value=st.one_of(st.decimals(), st.floats(), st.integers()),
     rarity=st.integers(1, 5),
     level=st.integers(0, 20),
 )
 def test_fuzz_MainStat_set_value_by_level(
-    name: artipy.stats.stats.StatType,
+    name: artipy.types.StatType,
     _value: Union[float, int, decimal.Decimal],
     rarity: int,
     level: int,
@@ -59,13 +59,13 @@ def test_fuzz_MainStat_set_value_by_level(
 
 
 @given(
-    name=st.sampled_from(artipy.stats.stats.StatType),
+    name=st.sampled_from(artipy.types.StatType),
     _value=st.one_of(st.decimals(), st.floats(), st.integers()),
     rarity=st.integers(1, 5),
     level=st.integers(0, 20),
 )
 def test_fuzz_MainStat_str(
-    name: artipy.stats.stats.StatType,
+    name: artipy.types.StatType,
     _value: Union[float, int, decimal.Decimal],
     rarity: int,
     level: int,
@@ -80,7 +80,7 @@ def test_fuzz_MainStat_str(
         level (int): The level of the artifact.
     """
     mainstat = artipy.stats.MainStat(name=name, _value=_value, rarity=rarity)
-    stat_name = artipy.stats.STAT_NAMES[mainstat.name].split("%")
+    stat_name = artipy.types.STAT_NAMES[mainstat.name].split("%")
     if mainstat.name.is_pct:
         assert str(mainstat) == f"{stat_name[0]}+{mainstat.value:.1%}"
     else:
@@ -88,12 +88,12 @@ def test_fuzz_MainStat_str(
 
 
 @given(
-    name=st.sampled_from(artipy.stats.stats.StatType),
+    name=st.sampled_from(artipy.types.StatType),
     _value=st.one_of(st.decimals(), st.floats(), st.integers()),
     rarity=st.integers(1, 5),
 )
 def test_fuzz_SubStat(
-    name: artipy.stats.StatType,
+    name: artipy.types.StatType,
     _value: Union[float, int, decimal.Decimal],
     rarity: int,
 ) -> None:
@@ -101,53 +101,47 @@ def test_fuzz_SubStat(
     instantiated with the given parameters.
 
     Args:
-        name (artipy.stats.StatType): The name of the stat.
+        name (artipy.types.StatType): The name of the stat.
         _value (Union[float, int, decimal.Decimal]): The value of the stat.
         rarity (int): The rarity of the stat.
     """
     artipy.stats.SubStat(name=name, _value=_value, rarity=rarity)
 
 
-@given(
-    name=st.sampled_from(artipy.stats.stats.VALID_SUBSTATS), rarity=st.integers(1, 5)
-)
-def test_fuzz_create_substat(name: artipy.stats.StatType, rarity: int) -> None:
+@given(name=st.sampled_from(artipy.types.VALID_SUBSTATS), rarity=st.integers(1, 5))
+def test_fuzz_create_substat(name: artipy.types.StatType, rarity: int) -> None:
     """This function tests the create_substat function. It creates a substat with the
     given name and rarity and also creates a substat with just the given rarity. This
     verifies that the function can create specified substats and that it can create
     random substats.
 
     Args:
-        name (artipy.stats.StatType): The name of the substat.
+        name (artipy.types.StatType): The name of the substat.
         rarity (int): The rarity of the substat.
     """
     artipy.stats.create_substat(name=name, rarity=rarity)
     artipy.stats.create_substat(rarity=rarity)
 
 
-@given(
-    name=st.sampled_from(artipy.stats.stats.VALID_SUBSTATS), rarity=st.integers(1, 5)
-)
-def test_fuzz_possible_substat_values(name: artipy.stats.StatType, rarity: int) -> None:
+@given(name=st.sampled_from(artipy.types.VALID_SUBSTATS), rarity=st.integers(1, 5))
+def test_fuzz_possible_substat_values(name: artipy.types.StatType, rarity: int) -> None:
     """This function tests the possible_substat_values function. It verifies that the
     function can return the correct values for the given substat name and rarity.
 
     Args:
-        name (artipy.stats.StatType): The name of the substat.
+        name (artipy.types.StatType): The name of the substat.
         rarity (int): The rarity of the substat.
     """
     artipy.stats.utils.possible_substat_values(stat=name, rarity=rarity)
 
 
-@given(
-    name=st.sampled_from(artipy.stats.stats.VALID_SUBSTATS), rarity=st.integers(1, 5)
-)
-def test_fuzz_SubStat_roll(name: artipy.stats.StatType, rarity: int) -> None:
+@given(name=st.sampled_from(artipy.types.VALID_SUBSTATS), rarity=st.integers(1, 5))
+def test_fuzz_SubStat_roll(name: artipy.types.StatType, rarity: int) -> None:
     """This function tests the roll method of the SubStat class. It verifies that the
     roll method can generate a random value for the substat.
 
     Args:
-        name (artipy.stats.StatType): The name of the substat.
+        name (artipy.types.StatType): The name of the substat.
         rarity (int): The rarity of the substat.
     """
     substat = artipy.stats.create_substat(name=name, rarity=rarity)
@@ -155,19 +149,17 @@ def test_fuzz_SubStat_roll(name: artipy.stats.StatType, rarity: int) -> None:
     assert roll in artipy.stats.utils.possible_substat_values(stat=name, rarity=rarity)
 
 
-@given(
-    name=st.sampled_from(artipy.stats.stats.VALID_SUBSTATS), rarity=st.integers(1, 5)
-)
-def test_fuzz_SubStat_str(name: artipy.stats.StatType, rarity: int) -> None:
+@given(name=st.sampled_from(artipy.types.VALID_SUBSTATS), rarity=st.integers(1, 5))
+def test_fuzz_SubStat_str(name: artipy.types.StatType, rarity: int) -> None:
     """This function tests the __str__ method of the SubStat class. It verifies that the
     method can return a string representation of the substat.
 
     Args:
-        name (artipy.stats.StatType): The name of the substat.
+        name (artipy.types.StatType): The name of the substat.
         rarity (int): The rarity of the substat.
     """
     substat = artipy.stats.create_substat(name=name, rarity=rarity)
-    stat_name = artipy.stats.STAT_NAMES[substat.name].split("%")
+    stat_name = artipy.types.STAT_NAMES[substat.name].split("%")
     if substat.name.is_pct:
         assert str(substat) == f"• {stat_name[0]}+{substat.value:.1%}"
     else:

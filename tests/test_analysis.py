@@ -10,7 +10,8 @@ from artipy.analysis import (
     calculate_substat_rolls,
 )
 from artipy.artifacts import Artifact, ArtifactBuilder
-from artipy.stats import StatType, SubStat
+from artipy.stats import SubStat
+from artipy.types import StatType
 
 
 @pytest.fixture

@@ -4,7 +4,8 @@ import random
 from typing import TYPE_CHECKING
 
 from artipy import UPGRADE_STEP
-from artipy.stats import StatType, SubStat, create_substat
+from artipy.stats import SubStat, create_substat
+from artipy.types import StatType
 
 from .utils import choose
 

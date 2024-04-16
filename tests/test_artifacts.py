@@ -7,9 +7,10 @@ from artipy.artifacts import (
     AddStatStrategy,
     Artifact,
     ArtifactBuilder,
+    ArtifactSlot,
     UpgradeStatStrategy,
 )
-from artipy.stats import VALID_SUBSTATS, StatType
+from artipy.types import VALID_SUBSTATS, StatType
 from hypothesis import assume, given
 from hypothesis import strategies as st
 
@@ -23,7 +24,7 @@ def artifact() -> Artifact:
         .with_rarity(5)
         .with_level(0)
         .with_set("Gladiator's Finale")
-        .with_slot("Flower of Life")
+        .with_slot(ArtifactSlot.FLOWER)
         .build()
     )
 
@@ -49,7 +50,7 @@ def test_artifact_upgrade(level: int, rarity: int) -> None:
         .with_rarity(rarity)
         .with_level(level)
         .with_set("Gladiator's Finale")
-        .with_slot("Flower of Life")
+        .with_slot(ArtifactSlot.FLOWER)
     )
 
     substat_count = rarity - 2 if rarity > 1 else 0
@@ -72,6 +73,13 @@ def test_artifact_upgrade(level: int, rarity: int) -> None:
     rarity=st.integers(min_value=1, max_value=5),
 )
 def test_artifact_upgrade_until_max(level: int, rarity: int) -> None:
+    """Test the upgrade method of the Artifact class. This test verifies that the
+    artifact will not upgrade if it is already at the maximum level.
+
+    Args:
+        level (int): The level of the artifact.
+        rarity (int): The rarity of the artifact.
+    """
     max_level = rarity * UPGRADE_STEP if rarity > 2 else UPGRADE_STEP
     assume(level < max_level)
     builder = (
@@ -80,7 +88,7 @@ def test_artifact_upgrade_until_max(level: int, rarity: int) -> None:
         .with_rarity(rarity)
         .with_level(level)
         .with_set("Gladiator's Finale")
-        .with_slot("Flower of Life")
+        .with_slot(ArtifactSlot.FLOWER)
     )
     artifact = builder.build()
     old: Artifact = deepcopy(artifact)

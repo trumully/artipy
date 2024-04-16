@@ -4,16 +4,17 @@ import random
 
 from artipy.artifacts import Artifact, ArtifactBuilder
 from artipy.artifacts.utils import choose
-from artipy.stats import VALID_MAINSTATS
+from artipy.types import VALID_MAINSTATS, ArtifactSlot
 
 
-def create_random_artifact(
-    slot: str = random.choice(("flower", "plume", "sands", "goblet", "circlet")),
-) -> Artifact:
+def create_random_artifact(slot: ArtifactSlot) -> Artifact:
     """Create a random artifact.
 
-    :return: The random artifact.
-    :rtype: Artifact
+    Args:
+        slot (ArtifactSlot): The slot of the artifact.
+
+    Returns:
+        Artifact: The random artifact.
     """
 
     substat_count = 4 if random.random() < 0.2 else 3
@@ -51,6 +52,6 @@ def create_multiple_random_artifacts(amount: int = 1) -> list[Artifact]:
     """
     result = []
     for _ in range(amount):
-        slot = random.choice(("flower", "plume", "sands", "goblet", "circlet"))
+        slot: ArtifactSlot = ArtifactSlot(random.choice(list(ArtifactSlot)))
         result.append(create_random_artifact(slot))
     return result
