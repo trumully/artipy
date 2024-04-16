@@ -39,14 +39,12 @@ def artifact() -> Artifact:
     return (
         ArtifactBuilder()
         .with_mainstat(StatType.ATK_PERCENT, 0.228)
-        .with_substats(
-            [
-                (StatType.ATK, 19),
-                (StatType.CRIT_RATE, 0.039),
-                (StatType.HP_PERCENT, 0.053),
-                (StatType.HP, 568),
-            ]
-        )
+        .with_substats([
+            (StatType.ATK, 19),
+            (StatType.CRIT_RATE, 0.039),
+            (StatType.HP_PERCENT, 0.053),
+            (StatType.HP, 568),
+        ])
         .with_level(8)
         .with_rarity(5)
         .with_set("Gladiator's Finale")
@@ -66,8 +64,8 @@ def test_calculate_substat_rolls(substat, artifact) -> None:
     assert calculate_substat_rolls(substat) == 2
 
     expected_rolls = (1, 1, 1, 2)
-    for substat, roll in zip(artifact.get_substats(), expected_rolls):
-        assert calculate_substat_rolls(substat) == roll
+    for idx, sub in enumerate(artifact.substats):
+        assert calculate_substat_rolls(sub) == expected_rolls[idx]
 
 
 def test_calcualte_artifact_roll_value(artifact) -> None:

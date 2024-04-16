@@ -126,9 +126,7 @@ def calculate_artifact_roll_value(artifact: Artifact) -> Decimal:
     :rtype: Decimal
     """
     return Decimal(
-        sum(
-            calculate_substat_roll_value(substat) for substat in artifact.get_substats()
-        )
+        sum(calculate_substat_roll_value(substat) for substat in artifact.substats)
     )
 
 
@@ -142,8 +140,8 @@ def calculate_artifact_maximum_roll_value(artifact: Artifact) -> Decimal:
     :return: The maximum roll value of the artifact roll.
     :rtype: Decimal
     """
-    artifact_max_level = artifact.get_rarity() * 4
-    remaining_rolls = (artifact_max_level - artifact.get_level()) // UPGRADE_STEP
+    artifact_max_level = artifact.rarity * 4
+    remaining_rolls = (artifact_max_level - artifact.level) // UPGRADE_STEP
     return Decimal(calculate_artifact_roll_value(artifact) + remaining_rolls)
 
 
@@ -157,23 +155,19 @@ def calculate_artifact_crit_value(artifact: Artifact) -> Decimal:
     :rtype: Decimal
     """
     crit_dmg = (
-        sum(
-            [
-                substat.value
-                for substat in artifact.get_substats()
-                if substat.name == StatType.CRIT_DMG
-            ]
-        )
+        sum([
+            substat.value
+            for substat in artifact.substats
+            if substat.name == StatType.CRIT_DMG
+        ])
         * 100
     )
     crit_rate = (
-        sum(
-            [
-                substat.value
-                for substat in artifact.get_substats()
-                if substat.name == StatType.CRIT_RATE
-            ]
-        )
+        sum([
+            substat.value
+            for substat in artifact.substats
+            if substat.name == StatType.CRIT_RATE
+        ])
         * 100
     )
     return Decimal(crit_dmg + crit_rate * 2)

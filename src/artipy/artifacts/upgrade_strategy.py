@@ -36,9 +36,9 @@ class UpgradeStrategy:
         :param artifact: The artifact to upgrade.
         :type artifact: Artifact
         """
-        new_level = artifact.get_level() + 1
-        artifact.set_level(new_level)
-        artifact.get_mainstat().set_value_by_level(new_level)
+        new_level = artifact.level + 1
+        artifact.level = new_level
+        artifact.mainstat.set_value_by_level(new_level)
 
 
 class AddStatStrategy(UpgradeStrategy):
@@ -57,11 +57,11 @@ class AddStatStrategy(UpgradeStrategy):
         :return: The new substat to add to the artifact.
         :rtype: SubStat
         """
-        stats = [s.name for s in (artifact.get_mainstat(), *artifact.get_substats())]
+        stats = [s.name for s in (artifact.mainstat, *artifact.substats)]
         pool = {s: w for s, w in substat_weights.items() if s not in stats}
         population, weights = map(tuple, zip(*pool.items()))
         new_stat_name = choose(population, weights)
-        new_stat = create_substat(name=new_stat_name, rarity=artifact.get_rarity())
+        new_stat = create_substat(name=new_stat_name, rarity=artifact.rarity)
         return new_stat
 
     def upgrade(self, artifact: "Artifact") -> None:
@@ -71,7 +71,7 @@ class AddStatStrategy(UpgradeStrategy):
         :param artifact: The artifact to upgrade.
         :type artifact: Artifact
         """
-        if artifact.get_level() % UPGRADE_STEP == 0:
+        if artifact.level % UPGRADE_STEP == 0:
             new_stat = self.pick_stat(artifact)
             artifact.add_substat(new_stat)
         super().upgrade(artifact)
@@ -91,7 +91,7 @@ class UpgradeStatStrategy(UpgradeStrategy):
         :param artifact: The artifact to upgrade.
         :type artifact: Artifact
         """
-        if artifact.get_level() % UPGRADE_STEP == 0:
-            substat = random.choice(artifact.get_substats())
+        if artifact.level % UPGRADE_STEP == 0:
+            substat = random.choice(artifact.substats)
             substat.upgrade()
         super().upgrade(artifact)

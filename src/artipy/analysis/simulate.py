@@ -36,7 +36,7 @@ def upgrade_artifact_to_max(artifact: Artifact) -> Artifact:
     :return: The upgraded artifact.
     :rtype: Artifact
     """
-    while artifact.get_level() < artifact.get_rarity() * 4:
+    while artifact.level < artifact.rarity * 4:
         artifact.upgrade()
     return artifact
 

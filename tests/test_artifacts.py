@@ -60,11 +60,11 @@ def test_artifact_upgrade(level: int, rarity: int) -> None:
     artifact: Artifact = builder.build()
     previous: Artifact = deepcopy(artifact)
 
-    if artifact.get_level() < max_level:
+    if artifact.level < max_level:
         artifact.upgrade()
 
-        assert artifact.get_level() == previous.get_level() + 1
-        assert artifact.get_mainstat().value > previous.get_mainstat().value
+        assert artifact.level == previous.level + 1
+        assert artifact.mainstat.value > previous.mainstat.value
 
 
 @given(
@@ -85,32 +85,32 @@ def test_artifact_upgrade_until_max(level: int, rarity: int) -> None:
     artifact = builder.build()
     old: Artifact = deepcopy(artifact)
 
-    while artifact.get_level() < max_level:
+    while artifact.level < max_level:
         artifact.upgrade()
 
-    assert artifact.get_level() == max_level
-    assert artifact.get_mainstat().value > old.get_mainstat().value
+    assert artifact.level == max_level
+    assert artifact.mainstat.value > old.mainstat.value
 
     # Upgrade again
     artifact.upgrade()
 
-    assert artifact.get_level() == max_level
+    assert artifact.level == max_level
 
 
 def test_artifact_get_strategy(artifact) -> None:
-    while len(artifact.get_substats()) < artifact.get_rarity() - 1:
+    while len(artifact.substats) < artifact.rarity - 1:
         artifact.upgrade()
-        if len(artifact.get_substats()) < artifact.get_rarity() - 1:
-            assert isinstance(artifact.get_strategy(), AddStatStrategy)
+        if len(artifact.substats) < artifact.rarity - 1:
+            assert isinstance(artifact.strategy, AddStatStrategy)
 
-    assert isinstance(artifact.get_strategy(), UpgradeStatStrategy)
+    assert isinstance(artifact.strategy, UpgradeStatStrategy)
 
 
 def test_artifact_str(artifact) -> None:
     assert str(artifact) == (
-        f"{artifact.get_artifact_slot()} [+{artifact.get_level()}]\n"
-        f"{'★' * artifact.get_rarity()}\n{artifact.get_mainstat()}\n"
-        f"{'\n'.join(str(s) for s in artifact.get_substats())}"
+        f"{artifact.artifact_slot} [+{artifact.level}]\n"
+        f"{'★' * artifact.rarity}\n{artifact.mainstat}\n"
+        f"{'\n'.join(str(s) for s in artifact.substats)}"
     )
 
 

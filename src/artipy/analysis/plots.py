@@ -37,7 +37,7 @@ def plot_artifact_substat_rolls(artifact: Artifact) -> None:
     """
     substat_rolls = {
         STAT_NAMES[substat.name]: calculate_substat_rolls(substat)
-        for substat in artifact.get_substats()
+        for substat in artifact.substats
     }
     df = pd.DataFrame(substat_rolls.items(), columns=["stat", "rolls"])
 
@@ -52,13 +52,13 @@ def plot_artifact_substat_rolls(artifact: Artifact) -> None:
 
     magnitudes_flat = [
         tuple(i.value for i in calculate_substat_roll_magnitudes(substat))
-        for substat in artifact.get_substats()
+        for substat in artifact.substats
     ]
     magnitudes_to_dict = {
         STAT_NAMES[substat.name]: {
             i.value: magnitudes_flat[idx].count(i.value) for i in RollMagnitude
         }
-        for idx, substat in enumerate(artifact.get_substats())
+        for idx, substat in enumerate(artifact.substats)
     }
     magnitudes_to_long_form = [
         {"stat_name": stat_name, "magnitude": magnitude, "count": count}
@@ -89,7 +89,7 @@ def plot_artifact_substat_rolls(artifact: Artifact) -> None:
             f"Substat rolls on Artifact with {sum(substat_rolls.values())} total rolls",
             *(
                 f"{stat} ({substat_rolls[STAT_NAMES[stat.name]]} rolls)"
-                for stat in artifact.get_substats()
+                for stat in artifact.substats
             ),
         ],
     )
@@ -164,8 +164,8 @@ def plot_expected_against_actual_mainstats(iterations: int = 1000) -> None:
     actual_mainstats: dict[str, list[StatType]] = {k: [] for k in expected_mainstats}
 
     for a in artifacts:
-        if (slot := a.get_artifact_slot()) in expected_mainstats:
-            actual_mainstats[slot].append(a.get_mainstat().name)
+        if (slot := a.artifact_slot) in expected_mainstats:
+            actual_mainstats[slot].append(a.mainstat.name)
 
     actual_mainstats_pct: dict[str, dict[StatType, float]] = {
         k: {

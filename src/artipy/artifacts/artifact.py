@@ -23,154 +23,168 @@ class Artifact:
         self._set: str = ""
         self._slot: str = ""
 
-    def set_mainstat(self, mainstat: MainStat) -> None:
-        """Set the mainstat of the artifact.
+    @property
+    def mainstat(self) -> MainStat:
+        """The mainstat of the artifact. Return a placeholder mainstat if the mainstat
+        is None.
 
-        :param mainstat: The mainstat to set.
-        :type mainstat: MainStat
+        Returns:
+            MainStat: The mainstat of the artifact.
         """
-        if (rarity := self.get_rarity()) > 0:
-            mainstat.rarity = rarity
+        if self._mainstat is None:
+            return PLACEHOLDER_MAINSTAT
+        return self._mainstat
+
+    @mainstat.setter
+    def mainstat(self, mainstat: MainStat) -> None:
+        """Set the mainstat of the artifact. If the rarity of the artifact is greater
+        than 0, set the rarity of the mainstat.
+
+        Args:
+            mainstat (MainStat): The mainstat to set.
+        """
+        if self.rarity > 0:
+            mainstat.rarity = self.rarity
         self._mainstat = mainstat
 
-    def set_substats(self, substats: list[SubStat]) -> None:
-        """Set the substats of the artifact.
+    @property
+    def substats(self) -> list[SubStat]:
+        """The substats of the artifact.
 
-        :param substats: The substats to set.
-        :type substats: list[SubStat]
+        Returns:
+            list[SubStat]: The substats of the artifact.
         """
-        if (rarity := self.get_rarity()) > 0:
+        return self._substats
+
+    @substats.setter
+    def substats(self, substats: list[SubStat]) -> None:
+        """Set the substats of the artifact. If the rarity of the artifact is greater
+        than 0, set the rarity of the substats.
+        """
+        if self.rarity > 0:
             for substat in substats:
-                substat.rarity = rarity
+                substat.rarity = self.rarity
         self._substats = substats
 
     def add_substat(self, substat: SubStat) -> None:
-        """Add a substat to the artifact.
+        """Add a substat to the artifact. If the rarity of the artifact is greater
+        than 0, set the rarity of the substat.
 
-        :param substat: The substat to add.
-        :type substat: SubStat
+        Args:
+            substat (SubStat): The substat to add.
         """
-        if (rarity := self.get_rarity()) > 0:
-            substat.rarity = rarity
+        if self.rarity > 0:
+            substat.rarity = self.rarity
         self._substats.append(substat)
 
-    def set_level(self, level: int) -> None:
+    @property
+    def level(self) -> int:
+        """The level of the artifact.
+
+        Returns:
+            int: The level of the artifact.
+        """
+        return self._level
+
+    @level.setter
+    def level(self, level: int) -> None:
         """Set the level of the artifact.
 
-        :param level: The level to set.
-        :type level: int
+        Args:
+            level (int): The level to set.
         """
         self._level = level
 
-    def set_rarity(self, rarity: int) -> None:
-        """Set the rarity of the artifact.
+    @property
+    def rarity(self) -> int:
+        """The rarity of the artifact.
 
-        :param rarity: The rarity to set.
-        :type rarity: int
+        Returns:
+            int: The rarity of the artifact.
+        """
+        return self._rarity
+
+    @rarity.setter
+    def rarity(self, rarity: int) -> None:
+        """Set the rarity of the artifact. If the rarity of the artifact is greater
+        than 0, set the rarity of the mainstat and substats.
+
+        Args:
+            rarity (int): The rarity to set.
         """
         self._rarity = rarity
-        stats: list[MainStat | SubStat] = [self.get_mainstat(), *self.get_substats()]
+        stats: list[MainStat | SubStat] = [self.mainstat, *self.substats]
         for stat in stats:
             try:
                 stat.rarity = rarity
             except AttributeError:
                 continue
 
-    def set_artifact_set(self, artifact_set: str) -> None:
-        """Set the artifact set of the artifact.
+    @property
+    def artifact_set(self) -> str:
+        """The artifact set of the artifact.
 
-        :param set: The set to set.
-        :type set: str
-        """
-        self._set = artifact_set
-
-    def set_artifact_slot(self, slot: str) -> None:
-        """Set the artifact slot of the artifact.
-
-        :param slot: The slot to set.
-        :type slot: str
-        """
-        self._slot = slot
-
-    def get_mainstat(self) -> MainStat:
-        """Get the mainstat of the artifact. If the mainstat is None, return a
-        placeholder.
-
-        :return: The mainstat of the artifact.
-        :rtype: MainStat
-        """
-        if self._mainstat is None:
-            return PLACEHOLDER_MAINSTAT
-        return self._mainstat
-
-    def get_substats(self) -> list[SubStat]:
-        """Get the substats of the artifact.
-
-        :return: The substats of the artifact.
-        :rtype: list[SubStat]
-        """
-        return self._substats
-
-    def get_level(self) -> int:
-        """Get the level of the artifact.
-
-        :return: The level of the artifact.
-        :rtype: int
-        """
-        return self._level
-
-    def get_rarity(self) -> int:
-        """Get the rarity of the artifact.
-
-        :return: The rarity of the artifact.
-        :rtype: int
-        """
-        return self._rarity
-
-    def get_artifact_set(self) -> str:
-        """Get the artifact set of the artifact.
-
-        :return: The artifact set of the artifact.
-        :rtype: str
+        Returns:
+            str: The artifact set of the artifact.
         """
         return self._set
 
-    def get_artifact_slot(self) -> str:
-        """Get the artifact slot of the artifact.
+    @artifact_set.setter
+    def artifact_set(self, artifact_set: str) -> None:
+        """Set the artifact set of the artifact.
 
-        :return: The artifact slot of the artifact.
-        :rtype: str
+        Args:
+            artifact_set (str): The artifact set to set.
+        """
+        self._set = artifact_set
+
+    @property
+    def artifact_slot(self) -> str:
+        """The artifact slot of the artifact.
+
+        Returns:
+            str: The artifact slot of the artifact.
         """
         return self._slot
 
-    def get_strategy(self) -> UpgradeStrategy:
-        """Get the upgrade strategy for the artifact. If the number of substats
-        is less than the rarity, return an AddStatStrategy, otherwise return an
-        UpgradeStatStrategy.
+    @artifact_slot.setter
+    def artifact_slot(self, slot: str) -> None:
+        """Set the artifact slot of the artifact.
 
-        :return: The upgrade strategy for the artifact.
-        :rtype: UpgradeStrategy
+        Args:
+            slot (str): The artifact slot to set.
         """
-        if self.get_rarity() == 1:
+        self._slot = slot
+
+    @property
+    def strategy(self) -> UpgradeStrategy:
+        """The upgrade strategy of the artifact. If the rarity is 1, the strategy
+        inheriters are skipped in favor of the default strategy. Otherwise, if the
+        number of substats is less than the rarity - 1, the add stat strategy is
+        returned. Otherwise, the upgrade stat strategy is returned.
+
+        Returns:
+            UpgradeStrategy: The upgrade strategy of the artifact.
+        """
+        if self.rarity == 1:
             return UpgradeStrategy()
-        if len(self.get_substats()) < self.get_rarity() - 1:
+        if len(self.substats) < self.rarity - 1:
             return AddStatStrategy()
         return UpgradeStatStrategy()
 
     @property
     def max_level(self) -> int:
-        rarity = self.get_rarity()
-        return rarity * UPGRADE_STEP if rarity > 2 else UPGRADE_STEP
+        return self.rarity * UPGRADE_STEP if self.rarity > 2 else UPGRADE_STEP
 
     def upgrade(self) -> None:
         """Upgrade the artifact."""
-        if self.get_level() < self.max_level:
-            self.get_strategy().upgrade(self)
+        if self.level < self.max_level:
+            self.strategy.upgrade(self)
 
     def __str__(self) -> str:
         # Black can't format f-strings with double quotes in them
         return (
-            f"{self.get_artifact_slot()} [+{self.get_level()}]\n"
-            f"{'★' * self.get_rarity()}\n"  # pylint: disable=inconsistent-quotes
-            f"{self.get_mainstat()}\n{'\n'.join(str(s) for s in self.get_substats())}"  # pylint: disable=inconsistent-quotes
+            f"{self.artifact_slot} [+{self.level}]\n"
+            f"{'★' * self.rarity}\n"  # pylint: disable=inconsistent-quotes
+            f"{self.mainstat}\n{'\n'.join(str(s) for s in self.substats)}"  # pylint: disable=inconsistent-quotes
         )

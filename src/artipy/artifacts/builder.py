@@ -39,8 +39,8 @@ class ArtifactBuilder:
         :return: The artifact builder object
         :rtype: ArtifactBuilder
         """
-        self._artifact.set_mainstat(MainStat(stat, value))
-        self._artifact.get_mainstat().set_value_by_level(self._artifact.get_level())
+        self._artifact.mainstat = MainStat(stat, value)
+        self._artifact.mainstat.set_value_by_level(self._artifact.level)
         return self
 
     def with_substat(self, stat: StatType, value: float | int) -> "ArtifactBuilder":
@@ -54,9 +54,9 @@ class ArtifactBuilder:
         :return: The artifact builder object
         :rtype: ArtifactBuilder
         """
-        if (rarity := self._artifact.get_rarity()) > 0:
+        if (rarity := self._artifact.rarity) > 0:
             # Constraint: The number of substats can't exceed the rarity of the artifact
-            if len(self._artifact.get_substats()) >= rarity - 1:
+            if len(self._artifact.substats) >= rarity - 1:
                 raise ValueError("Substats are already full.")
         self._artifact.add_substat(SubStat(stat, value))
         return self
@@ -79,7 +79,7 @@ class ArtifactBuilder:
         :return: The artifact builder object
         :rtype: ArtifactBuilder
         """
-        rarity = self._artifact.get_rarity()
+        rarity = self._artifact.rarity
         if substats is None:
             substats = []
             # Constraint: The number of substats cannot exceed artifact rarity - 1
@@ -96,7 +96,7 @@ class ArtifactBuilder:
             # Constraint: The number of substats cannot exceed artifact rarity
             raise ValueError("Too many substats provided.")
         else:
-            self._artifact.set_substats([SubStat(*spec) for spec in substats])
+            self._artifact.substats = [SubStat(*spec) for spec in substats]
 
         return self
 
@@ -111,7 +111,7 @@ class ArtifactBuilder:
         :return: The artifact builder object
         :rtype: ArtifactBuilder
         """
-        if (rarity := self._artifact.get_rarity()) > 0:
+        if (rarity := self._artifact.rarity) > 0:
             # Constraint: The level cannot exceed the max level for the artifact rarity
             max_level = rarity * UPGRADE_STEP
             expected_range = range(0, max_level + 1)
@@ -122,14 +122,14 @@ class ArtifactBuilder:
                 )
 
             # Constraint: The number of substats must be less than the rarity.
-            if (substat_length := len(self._artifact.get_substats())) >= rarity:
+            if (substat_length := len(self._artifact.substats)) >= rarity:
                 raise ValueError(
                     f"Substat length mismatch with rarity '{rarity}' "
                     f"(Expected {rarity} substats, got {substat_length})"
                 )
-            self._artifact.get_mainstat().set_value_by_level(level)
+            self._artifact.mainstat.set_value_by_level(level)
 
-        self._artifact.set_level(level)
+        self._artifact.level = level
         return self
 
     def with_rarity(self, rarity: int) -> "ArtifactBuilder":
@@ -144,7 +144,7 @@ class ArtifactBuilder:
         :return: The artifact builder object
         :rtype: ArtifactBuilder
         """
-        if (level := self._artifact.get_level()) > 0:
+        if (level := self._artifact.level) > 0:
             # Constraint: The level cannot exceed the max level for the artifact rarity
             max_level = rarity * UPGRADE_STEP
             expected_range = range(0, max_level + 1)
@@ -155,9 +155,9 @@ class ArtifactBuilder:
                 )
         if rarity not in range(1, MAX_RARITY + 1):
             raise ValueError(f"Invalid rarity '{rarity}' for artifact.")
-        if len(self._artifact.get_substats()) >= rarity:
+        if len(self._artifact.substats) >= rarity:
             raise ValueError("Substats are already full.")
-        self._artifact.set_rarity(rarity)
+        self._artifact.rarity = rarity
         return self
 
     def with_set(self, artifact_set: str) -> "ArtifactBuilder":
@@ -168,7 +168,7 @@ class ArtifactBuilder:
         :return: The artifact builder object
         :rtype: ArtifactBuilder
         """
-        self._artifact.set_artifact_set(artifact_set)
+        self._artifact.artifact_set = artifact_set
         return self
 
     def with_slot(self, slot: str) -> "ArtifactBuilder":
@@ -179,7 +179,7 @@ class ArtifactBuilder:
         :return: The artifact builder object
         :rtype: ArtifactBuilder
         """
-        self._artifact.set_artifact_slot(slot)
+        self._artifact.artifact_slot = slot
         return self
 
     def build(self) -> Artifact:
