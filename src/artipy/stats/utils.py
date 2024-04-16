@@ -5,11 +5,12 @@ from functools import lru_cache
 from operator import attrgetter
 from typing import Iterable
 
-from .stat_data import StatData
+from artipy.data_gen import DataGen
+
 from .stats import StatType
 
-MAINSTAT_DATA = StatData("mainstat_data.json")
-SUBSTAT_DATA = StatData("substat_data.json")
+MAINSTAT_DATA = DataGen("ReliquaryLevelExcelConfigData.json")
+SUBSTAT_DATA = DataGen("ReliquaryAffixExcelConfigData.json")
 
 
 def map_to_decimal(values: Iterable[float | int]) -> tuple[Decimal, ...]:

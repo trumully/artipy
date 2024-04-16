@@ -22,21 +22,21 @@ def recursive_namespace(data: Any) -> Any | SimpleNamespace:
     return data
 
 
-class StatData:
-    """Singleton class that handles JSON data for the stats module."""
+class DataGen:
+    """Singleton class that handles JSON data."""
 
-    _instances: ClassVar[dict[str, "StatData"]] = {}
+    _instances: ClassVar[dict[str, "DataGen"]] = {}
 
     _data: list[SimpleNamespace] = []
 
-    def __new__(cls, file_name: str) -> "StatData":
-        """Create a new instance of the StatData class. If an instance with the same
+    def __new__(cls, file_name: str) -> "DataGen":
+        """Create a new instance of the DataGen class. If an instance with the same
         file name already exists, return the existing instance.
 
         :param file_name: The name of the JSON file to load.
         :type file_name: str
-        :return: The StatData instance.
-        :rtype: StatData
+        :return: The DataGen instance.
+        :rtype: DataGen
         """
         if file_name not in cls._instances:
             cls._instances[file_name] = super().__new__(cls)
