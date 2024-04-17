@@ -10,6 +10,7 @@ from artipy.artifacts import (
     UpgradeStatStrategy,
 )
 from artipy.types import (
+    VALID_ARTIFACT_SETS,
     VALID_SUBSTATS,
     ArtifactSet,
     ArtifactSlot,
@@ -119,10 +120,11 @@ def test_artifact_get_strategy(artifact) -> None:
 
 
 def test_artifact_str(artifact) -> None:
+    set_data = VALID_ARTIFACT_SETS[artifact.artifact_set]
     assert str(artifact) == (
         f"{artifact.artifact_slot} [+{artifact.level}]\n"
-        f"{'★' * artifact.rarity}\n{artifact.mainstat}\n"
-        f"{'\n'.join(str(s) for s in artifact.substats)}"
+        f"{set_data.set_name} {'★' * artifact.rarity}\n"
+        f"{artifact.mainstat}\n{'\n'.join(str(s) for s in artifact.substats)}"
     )
 
 

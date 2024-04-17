@@ -6,7 +6,7 @@ from typing import Optional
 
 from artipy import MAX_RARITY, UPGRADE_STEP
 from artipy.stats import MainStat, SubStat
-from artipy.types import ArtifactSet, ArtifactSlot, StatType
+from artipy.types import VALID_ARTIFACT_SETS, ArtifactSet, ArtifactSlot, StatType
 
 from .artifact import Artifact
 from .upgrade_strategy import AddStatStrategy
@@ -178,12 +178,12 @@ class ArtifactBuilder:
         Returns:
             ArtifactBuilder: The artifact builder object
         """
-        set_data = artifact_set.value
+        set_data = VALID_ARTIFACT_SETS[artifact_set]
         if self._artifact.artifact_slot is not None:
-            if self._artifact.artifact_slot not in set_data.slots:
+            if self._artifact.artifact_slot not in set_data.pieces:
                 raise ValueError(
                     f"Invalid slot '{self._artifact.artifact_slot}' for set "
-                    f"'{artifact_set}' (expected: {set_data.slots})"
+                    f"'{artifact_set}' (expected: {set_data.pieces})"
                 )
         self._artifact.artifact_set = artifact_set
         return self

@@ -1,9 +1,11 @@
 """Module containing the types used in the artipy package."""
 
+import re
 from dataclasses import dataclass
 from enum import Enum, StrEnum, auto
+from typing import Iterator
 
-from artipy.data_gen import DataGen
+from artipy.data_gen import camel_to_snake_case, json_to_dict
 
 
 # -------- Artifact Types -------- #
@@ -17,20 +19,50 @@ class ArtifactSlot(StrEnum):
     CIRCLET = auto()
 
 
-@dataclass(kw_only=True, frozen=True, slots=True)
-class ArtifactSetData:
-    """A dataclass representing an artifact set in Genshin Impact."""
+def key_to_constant(key: str) -> str:
+    """Get a constant name from a key.
 
-    set_num: list[int]
-    rarities: list[int]
-    slots: list[ArtifactSlot]
+    PascalCase -> PASCAL_CASE
+
+    Args:
+        key (str): The key to convert.
+
+    Returns:
+        str: The converted key.
+    """
+    return re.sub(r"(?<!^)(?=[A-Z])", "_", key).upper()
 
 
-set_data = DataGen("artifact_set.json").as_dict()
 ArtifactSet = Enum(  # type: ignore
     "ArtifactSet",
-    {k.upper(): ArtifactSetData(**v) for k, v in set_data.items()},
+    {
+        key_to_constant(k): v
+        for k, v in json_to_dict("artifacts/artifactNames_gen.json").items()
+    },
 )
+
+
+@dataclass(frozen=True, kw_only=True, slots=True)
+class ArtifactSetData:
+    """Data class representing an artifact set in Genshin Impact."""
+
+    set_name: str
+    set_effects: dict[str, str]
+    pieces: dict[ArtifactSlot, dict[str, str]]
+
+
+def make_artifact_sets() -> Iterator[ArtifactSetData]:
+    for key in ArtifactSet:
+        data = json_to_dict(
+            f"artifacts/artifact_{key.name.title().replace("_", "")}_gen.json"
+        )
+        data = {camel_to_snake_case(k): v for k, v in data.items()}
+        yield ArtifactSetData(**data)
+
+
+VALID_ARTIFACT_SETS: dict[ArtifactSet, ArtifactSetData] = {
+    ArtifactSet(key): value for value in make_artifact_sets() for key in ArtifactSet
+}
 
 
 # ---------- Stat Types ---------- #
