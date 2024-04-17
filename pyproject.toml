@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "artipy"
-version = "1.1.0"
+version = "1.2.0"
 description = "Easily generate Genshin Impact artifacts"
 authors = [ "Truman Mulholland <truman.mulholland@gmail.com>" ]
 

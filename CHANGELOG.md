@@ -2,6 +2,59 @@
 
 
 
+## v1.2.0 (2024-04-17)
+
+### Chore
+
+* chore: edit README.md and example.py to reflect ArtifactSet type ([`a40234d`](https://github.com/trumully/artipy/commit/a40234db7772b9bbf41c63e64590a4d8df0fc70c))
+
+* chore: fix test badge in readme ([`a502d04`](https://github.com/trumully/artipy/commit/a502d0410709cf1954658d896ec5176bb31c7e03))
+
+* chore: change workflow badge ([`340c09d`](https://github.com/trumully/artipy/commit/340c09d820c2ad929dcb41b1d68ee37cb0ee940d))
+
+* chore: revert 7b5daa2f2f97563c2e143b98ea5cd36880187b84
+
+This reverts commit 7b5daa2f2f97563c2e143b98ea5cd36880187b84. ([`2786a53`](https://github.com/trumully/artipy/commit/2786a532812b44b9eaf8af197a2bb2924b8092fa))
+
+### Ci
+
+* ci: change requirement for release job ([`569433b`](https://github.com/trumully/artipy/commit/569433bba7a64101b159f753259deaacefa77d40))
+
+* ci: change workflow order to facilitate feature branch dev ([`3bdace4`](https://github.com/trumully/artipy/commit/3bdace4cbf14834057cc5ef16e8144b67c4bfb4e))
+
+* ci: add missing setup for steps ([`ec088fb`](https://github.com/trumully/artipy/commit/ec088fb2c669af26f6763317ea76021b88d68ab9))
+
+* ci: depdendency setup before anything else ([`514ee42`](https://github.com/trumully/artipy/commit/514ee424bf9bde2b4bd5af0381997d35b337ea52))
+
+* ci: change workflow order ([`7b5daa2`](https://github.com/trumully/artipy/commit/7b5daa2f2f97563c2e143b98ea5cd36880187b84))
+
+### Documentation
+
+* docs: add favicon ([`3b73e1b`](https://github.com/trumully/artipy/commit/3b73e1ba81c012325b9910392436784311a7ebab))
+
+### Feature
+
+* feat(Artifact): add ArtifactSet type
+
+This is an Enum of ArtifactSetData instances containing data for the set_num (set bonuses), rarities, and valid slots for the set (this is for special cases like the Prayers sets that are only circlets). ([`1918b1a`](https://github.com/trumully/artipy/commit/1918b1a28c0886815a263520f085d28caabfa2cf))
+
+### Fix
+
+* fix(plots): correct type of slot &amp; account for None mainstat ([`0948acb`](https://github.com/trumully/artipy/commit/0948acb6e9b589f2f98f96e6ec8dc2bcd7b59fe8))
+
+### Refactor
+
+* refactor: change data format of ArtifactSet
+
+This facilitates the generation of artifact set bonuses. ([`db570bb`](https://github.com/trumully/artipy/commit/db570bb1152a8ff8dae49fe6d220e97a1c5ed47d))
+
+* refactor(DataGen): init with snake_case attrs ([`756e1da`](https://github.com/trumully/artipy/commit/756e1da55a91dfcfcfc2bf388fd0943201728304))
+
+### Style
+
+* style: black no like double quotes in f-string ([`acc18e0`](https://github.com/trumully/artipy/commit/acc18e0b516bc9a8a2bfc411175e59c232465b8a))
+
+
 ## v1.1.0 (2024-04-16)
 
 ### Build
@@ -10,6 +63,10 @@
 
 Dependencies:
 python-semantic-release (9.4.1 -&gt; 9.4.2) ([`5c4f7b6`](https://github.com/trumully/artipy/commit/5c4f7b66fe8f9d0f59c92f58a2c71205b0e140af))
+
+### Chore
+
+* chore(release): v1.1.0 [skip ci] ([`e127859`](https://github.com/trumully/artipy/commit/e127859ae8d7f4c45c54f7b5402537bbb0fb88d6))
 
 ### Ci
 
