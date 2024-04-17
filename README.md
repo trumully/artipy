@@ -6,7 +6,7 @@
 <div align="center">
 
 ![GitHub Release](https://img.shields.io/github/v/release/trumully/artipy.svg?sort=semver&logo=github&logoColor=white)
-[![CI Status](https://img.shields.io/github/actions/workflow/status/trumully/artipy/main.yml.svg?logo=github&logoColor=white)](https://github.com/trumully/artipy/actions/workflows/test.yml)
+[![CI Status](https://img.shields.io/github/actions/workflow/status/trumully/artipy/test.yml.svg?logo=github&logoColor=white)](https://github.com/trumully/artipy/actions/workflows/test.yml)
 [![Docs Status](https://img.shields.io/github/actions/workflow/status/trumully/artipy/pages%2Fpages-build-deployment?branch=gh-pages&style=flat&logo=github&logoColor=white&label=docs)](https://trumully.github.io/artipy/)
 [![License](https://img.shields.io/github/license/trumully/artipy.svg)](LICENSE)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
