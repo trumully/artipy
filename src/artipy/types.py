@@ -1,6 +1,9 @@
 """Module containing the types used in the artipy package."""
 
-from enum import StrEnum, auto
+from dataclasses import dataclass
+from enum import Enum, StrEnum, auto
+
+from artipy.data_gen import DataGen
 
 
 # -------- Artifact Types -------- #
@@ -12,6 +15,22 @@ class ArtifactSlot(StrEnum):
     SANDS = auto()
     GOBLET = auto()
     CIRCLET = auto()
+
+
+@dataclass(kw_only=True, frozen=True, slots=True)
+class ArtifactSetData:
+    """A dataclass representing an artifact set in Genshin Impact."""
+
+    set_num: list[int]
+    rarities: list[int]
+    slots: list[ArtifactSlot]
+
+
+set_data = DataGen("artifact_set.json").as_dict()
+ArtifactSet = Enum(  # type: ignore
+    "ArtifactSet",
+    {k.upper(): ArtifactSetData(**v) for k, v in set_data.items()},
+)
 
 
 # ---------- Stat Types ---------- #

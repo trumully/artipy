@@ -82,6 +82,17 @@ class DataGen:
         with open(Path(__data__ / file_name), mode="r", encoding="utf-8") as f:
             self._data = json.load(f, object_hook=recursive_namespace)
 
+    def as_dict(self) -> dict[str, dict[str, Any]]:
+        """Convert the data to a dictionary.
+
+        Sometimes we don't want to use the SimpleNamespace objects, so this method
+        converts the data to a dictionary.
+
+        Returns:
+            dict[str, dict[str, Any]]: The data as a dictionary.
+        """
+        return {k: vars(v) for k, v in vars(self._data).items()}
+
     def __iter__(self) -> Iterator[SimpleNamespace]:
         return iter(self._data)
 
