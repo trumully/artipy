@@ -4,7 +4,7 @@ from typing import Optional
 
 from artipy import UPGRADE_STEP
 from artipy.stats import MainStat, SubStat
-from artipy.types import ArtifactSet, ArtifactSlot
+from artipy.types import VALID_ARTIFACT_SETS, ArtifactSet, ArtifactSlot
 
 from .upgrade_strategy import AddStatStrategy, UpgradeStatStrategy, UpgradeStrategy
 
@@ -180,9 +180,13 @@ class Artifact:
             self.strategy.upgrade(self)
 
     def __str__(self) -> str:
+        if self.artifact_set is not None:
+            set_name = VALID_ARTIFACT_SETS[self.artifact_set].set_name
+        else:
+            set_name = "Example"
         # Black can't format f-strings with double quotes in them
         return (
             f"{self.artifact_slot} [+{self.level}]\n"
-            f"{'★' * self.rarity}\n"  # pylint: disable=inconsistent-quotes
+            f"{set_name} {'★' * self.rarity}\n"  # pylint: disable=inconsistent-quotes
             f"{self.mainstat}\n{'\n'.join(str(s) for s in self.substats)}"  # pylint: disable=inconsistent-quotes
         )
