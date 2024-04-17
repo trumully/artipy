@@ -54,7 +54,7 @@ def test_fuzz_MainStat_set_value_by_level(
     assume(level <= (4 * rarity if rarity >= 3 else 4))
     mainstat = artipy.stats.MainStat(name=name, _value=_value, rarity=rarity)
     mainstat.set_value_by_level(level)
-    values = artipy.stats.utils.possible_mainstat_values(stat_type=name, rarity=rarity)
+    values = artipy.stats.utils.possible_mainstat_values(stat=name, rarity=rarity)
     assert mainstat.value in values
 
 

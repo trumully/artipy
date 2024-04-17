@@ -13,35 +13,36 @@ SUBSTAT_DATA = DataGen("ReliquaryAffixExcelConfigData.json")
 
 
 def map_to_decimal(values: Iterable[float | int]) -> tuple[Decimal, ...]:
-    """Map a list of values to Decimal.
+    """Map the values to Decimal.
 
-    :param values: The values to map.
-    :type values: Iterable[float  |  int]
-    :return: The values mapped to Decimal.
-    :rtype: tuple[Decimal, ...]
+    Args:
+        values (Iterable[float  |  int]): The values to map.
+
+    Returns:
+        tuple[Decimal, ...]: The mapped values.
     """
     return tuple(map(Decimal, values))
 
 
 @lru_cache(maxsize=None)
-def possible_mainstat_values(stat_type: StatType, rarity: int) -> tuple[Decimal, ...]:
+def possible_mainstat_values(stat: StatType, rarity: int) -> tuple[Decimal, ...]:
     """Get the possible values for a mainstat based on the stat type and rarity.
     Map the values to Decimal.
 
-    :param stat_type: The stat to get the values for.
-    :type stat_type: StatType
-    :param rarity: The rarity of the artifact.
-    :type rarity: int
-    :return: The possible values for the mainstat.
-    :rtype: tuple[Decimal, ...]
+    Args:
+        stat (StatType): The stat type to get the values for.
+        rarity (int): The rarity of the artifact.
+
+    Returns:
+        tuple[Decimal, ...]: The possible values for the mainstat.
     """
     values = list(MAINSTAT_DATA)[1:]
     data = [
         j.value
         for i in values
         if i.rank == rarity
-        for j in i.addProps
-        if j.propType == stat_type
+        for j in i.add_props
+        if j.prop_type == stat
     ]
     return map_to_decimal(data)
 
@@ -51,17 +52,17 @@ def possible_substat_values(stat: StatType, rarity: int) -> tuple[Decimal, ...]:
     """Get the possible values for a substat based on the stat type and rarity.
     Map the values to Decimal.
 
-    :param stat: The stat to get the values for.
-    :type stat: StatType
-    :param rarity: The rarity of the artifact.
-    :type rarity: int
-    :return: The possible values for the substat.
-    :rtype: tuple[Decimal, ...]
+    Args:
+        stat (StatType): The stat type to get the values for.
+        rarity (int): The rarity of the artifact.
+
+    Returns:
+        tuple[Decimal, ...]: The possible values for the substat.
     """
     data = [
         d
         for d in SUBSTAT_DATA
-        if d.depotId == int(f"{rarity}01") and d.propType == stat
+        if d.depot_id == int(f"{rarity}01") and d.prop_type == stat
     ]
-    sorted_data = sorted(data, key=attrgetter("propValue"))
-    return map_to_decimal((d.propValue for d in sorted_data))
+    sorted_data = sorted(data, key=attrgetter("prop_value"))
+    return map_to_decimal((d.prop_value for d in sorted_data))
