@@ -54,7 +54,7 @@ class ArtifactSetData:
 def make_artifact_sets() -> Iterator[ArtifactSetData]:
     for key in ArtifactSet:
         data = json_to_dict(
-            f"artifacts/artifact_{key.name.title().replace("_", "")}_gen.json"
+            f"artifacts/artifact_{key.name.title().replace('_', '')}_gen.json"  # pylint: disable=inconsistent-quotes
         )
         data = {camel_to_snake_case(k): v for k, v in data.items()}
         yield ArtifactSetData(**data)
