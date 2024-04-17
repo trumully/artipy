@@ -277,4 +277,5 @@ python -m pip install -U dist/artipy-(version).tar.gz
 ```
 
 ## 🎉 Acknowledgements <a name = "acknowledgements"></a>
-* Original header image belongs to HoYoverse
+✨ Original header image belongs to HoYoverse
+✨ The [Genshin Optimizer](https://github.com/frzyc/genshin-optimizer) project for hugely inspiring this project.
