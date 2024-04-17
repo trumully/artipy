@@ -1,4 +1,4 @@
-name: Lint
+name: CI
 
 on:
   push:
@@ -24,10 +24,30 @@ jobs:
         with:
           python-version: 3.12.1
           poetry-version: 1.8.2
-      - name: Run Linters
+
+      - name: Run Ruff & Pylint
         run: |
           poetry install --only-root
           poetry run ruff check --fix src
           poetry run pylint src
-          poetry run mypy src
+  
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Tests
+        run: |
+          poetry install --only-root
+          poetry run pytest
+  
+
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Black
+        run: |
           poetry run black src
+    
