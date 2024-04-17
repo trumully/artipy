@@ -1,0 +1,33 @@
+name: Lint
+
+on:
+  push:
+    branches: 
+      - main
+      - 'feature/**'
+    paths: [ 'src/**.py', 'tests/**.py' ]
+  pull_request:
+    branches: 
+      - main
+      - 'feature/**'
+    paths: [ 'src/**.py', 'tests/**.py' ]
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python & Dependencies
+        uses: packetcoders/action-setup-cache-python-poetry@main
+        with:
+          python-version: 3.12.1
+          poetry-version: 1.8.2
+      - name: Run Linters
+        run: |
+          poetry install --only-root
+          poetry run ruff check --fix src
+          poetry run pylint src
+          poetry run mypy src
+          poetry run black src
