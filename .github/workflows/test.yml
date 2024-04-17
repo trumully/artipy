@@ -1,0 +1,31 @@
+name: Test
+
+on:
+  workflow_run:
+    workflows: ["Lint"]
+    types:
+      - completed
+  workflow_dispatch:
+
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Python & Dependencies
+      uses: packetcoders/action-setup-cache-python-poetry@main
+      with:
+        python-version: 3.12.1
+        poetry-version: 1.8.2
+
+    - name: Run Tests
+      run: |
+        poetry install --only-root
+        poetry run pytest
