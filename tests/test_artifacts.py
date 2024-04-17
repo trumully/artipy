@@ -7,10 +7,14 @@ from artipy.artifacts import (
     AddStatStrategy,
     Artifact,
     ArtifactBuilder,
-    ArtifactSlot,
     UpgradeStatStrategy,
 )
-from artipy.types import VALID_SUBSTATS, StatType
+from artipy.types import (
+    VALID_SUBSTATS,
+    ArtifactSet,
+    ArtifactSlot,
+    StatType,
+)
 from hypothesis import assume, given
 from hypothesis import strategies as st
 
@@ -23,8 +27,8 @@ def artifact() -> Artifact:
         .with_substat(StatType.HP_PERCENT, 5)
         .with_rarity(5)
         .with_level(0)
-        .with_set("Gladiator's Finale")
         .with_slot(ArtifactSlot.FLOWER)
+        .with_set(ArtifactSet.GLADIATORS_FINALE)
         .build()
     )
 
@@ -49,8 +53,8 @@ def test_artifact_upgrade(level: int, rarity: int) -> None:
         .with_mainstat(StatType.HP, 0)
         .with_rarity(rarity)
         .with_level(level)
-        .with_set("Gladiator's Finale")
         .with_slot(ArtifactSlot.FLOWER)
+        .with_set(ArtifactSet.GLADIATORS_FINALE)
     )
 
     substat_count = rarity - 2 if rarity > 1 else 0
@@ -87,8 +91,8 @@ def test_artifact_upgrade_until_max(level: int, rarity: int) -> None:
         .with_mainstat(StatType.HP, 0)
         .with_rarity(rarity)
         .with_level(level)
-        .with_set("Gladiator's Finale")
         .with_slot(ArtifactSlot.FLOWER)
+        .with_set(ArtifactSet.GLADIATORS_FINALE)
     )
     artifact = builder.build()
     old: Artifact = deepcopy(artifact)

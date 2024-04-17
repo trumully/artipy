@@ -4,11 +4,9 @@ from typing import Optional
 
 from artipy import UPGRADE_STEP
 from artipy.stats import MainStat, SubStat
-from artipy.types import ArtifactSlot, StatType
+from artipy.types import ArtifactSet, ArtifactSlot
 
 from .upgrade_strategy import AddStatStrategy, UpgradeStatStrategy, UpgradeStrategy
-
-PLACEHOLDER_MAINSTAT = MainStat(StatType.HP, 0)
 
 
 class Artifact:
@@ -21,19 +19,17 @@ class Artifact:
         self._substats: list[SubStat] = []
         self._level: int = 0
         self._rarity: int = 0
-        self._set: str = ""
-        self._slot: ArtifactSlot | str = ""
+        self._set: Optional[ArtifactSet] = None
+        self._slot: Optional[ArtifactSlot] = None
 
     @property
-    def mainstat(self) -> MainStat:
+    def mainstat(self) -> Optional[MainStat]:
         """The mainstat of the artifact. Return a placeholder mainstat if the mainstat
         is None.
 
         Returns:
-            MainStat: The mainstat of the artifact.
+            Optional[MainStat]: The mainstat of the artifact.
         """
-        if self._mainstat is None:
-            return PLACEHOLDER_MAINSTAT
         return self._mainstat
 
     @mainstat.setter
@@ -114,46 +110,47 @@ class Artifact:
             rarity (int): The rarity to set.
         """
         self._rarity = rarity
-        stats: list[MainStat | SubStat] = [self.mainstat, *self.substats]
+        stats: list[Optional[MainStat] | SubStat] = [self.mainstat, *self.substats]
         for stat in stats:
             try:
-                stat.rarity = rarity
+                if stat is not None:
+                    stat.rarity = rarity
             except AttributeError:
                 continue
 
     @property
-    def artifact_set(self) -> str:
+    def artifact_set(self) -> Optional[ArtifactSet]:
         """The artifact set of the artifact.
 
         Returns:
-            str: The artifact set of the artifact.
+            Optional[ArtifactSet]: The artifact set of the artifact.
         """
         return self._set
 
     @artifact_set.setter
-    def artifact_set(self, artifact_set: str) -> None:
+    def artifact_set(self, artifact_set: ArtifactSet) -> None:
         """Set the artifact set of the artifact.
 
         Args:
-            artifact_set (str): The artifact set to set.
+            artifact_set (ArtifactSet): The artifact set to set.
         """
         self._set = artifact_set
 
     @property
-    def artifact_slot(self) -> str | ArtifactSlot:
+    def artifact_slot(self) -> Optional[ArtifactSlot]:
         """The artifact slot of the artifact.
 
         Returns:
-            str | ArtifactSlot: The artifact slot of the artifact.
+            Optional[ArtifactSlot]: The artifact slot of the artifact.
         """
         return self._slot
 
     @artifact_slot.setter
-    def artifact_slot(self, slot: str | ArtifactSlot) -> None:
+    def artifact_slot(self, slot: ArtifactSlot) -> None:
         """Set the artifact slot of the artifact.
 
         Args:
-            slot (str | ArtifactSlot): The artifact slot to set.
+            slot (ArtifactSlot): The artifact slot to set.
         """
         self._slot = slot
 

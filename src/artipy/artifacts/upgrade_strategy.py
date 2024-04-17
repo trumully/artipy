@@ -39,7 +39,8 @@ class UpgradeStrategy:
         """
         new_level = artifact.level + 1
         artifact.level = new_level
-        artifact.mainstat.set_value_by_level(new_level)
+        if artifact.mainstat is not None:
+            artifact.mainstat.set_value_by_level(new_level)
 
 
 class AddStatStrategy(UpgradeStrategy):
@@ -58,7 +59,9 @@ class AddStatStrategy(UpgradeStrategy):
         :return: The new substat to add to the artifact.
         :rtype: SubStat
         """
-        stats = [s.name for s in (artifact.mainstat, *artifact.substats)]
+        stats = [
+            s.name for s in (artifact.mainstat, *artifact.substats) if s is not None
+        ]
         pool = {s: w for s, w in substat_weights.items() if s not in stats}
         population, weights = map(tuple, zip(*pool.items()))
         new_stat_name = choose(population, weights)

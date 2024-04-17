@@ -11,7 +11,7 @@ from artipy.analysis import (
 )
 from artipy.artifacts import Artifact, ArtifactBuilder
 from artipy.stats import SubStat
-from artipy.types import StatType
+from artipy.types import ArtifactSet, ArtifactSlot, StatType
 
 
 @pytest.fixture
@@ -48,8 +48,8 @@ def artifact() -> Artifact:
         ])
         .with_level(8)
         .with_rarity(5)
-        .with_set("Gladiator's Finale")
-        .with_slot("sands")
+        .with_slot(ArtifactSlot.SANDS)
+        .with_set(ArtifactSet.GLADIATORS_FINALE)
         .build()
     )
 
