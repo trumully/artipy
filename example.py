@@ -3,7 +3,7 @@
 import artipy.analysis as analysis
 from artipy.analysis import plots
 from artipy.artifacts import ArtifactBuilder
-from artipy.types import ArtifactSlot, StatType
+from artipy.types import ArtifactSet, ArtifactSlot, StatType
 
 
 def main() -> None:
@@ -18,8 +18,8 @@ def main() -> None:
             (StatType.HP_PERCENT, 0.053),
             (StatType.HP, 568),
         ])
-        .with_set("Gladiator's Finale")
         .with_slot(ArtifactSlot.SANDS)
+        .with_set(ArtifactSet.GLADIATORS_FINALE)
         .build()
     )
 

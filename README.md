@@ -81,7 +81,7 @@ For a broader exploration of the usage of the package be sure to checkout the [d
 
 Here we use the [`ArtifactBuilder`](https://trumully.github.io/artipy/artipy.artifacts.html#artipy.artifacts.ArtifactBuilder) class to create an [`Artifact`](https://trumully.github.io/artipy/artipy.artifacts.html#artipy.artifacts.ArtifactBuilder). 
 ```python
-from artipy.artifacts import ArtifactBuilder, ArtifactSlot
+from artipy.artifacts import ArtifactBuilder, ArtifactSlot, ArtifactSet
 from artipy.stats import StatType
 
 
@@ -97,8 +97,8 @@ def main() -> None:
             (StatType.HP_PERCENT, 0.053),
             (StatType.HP, 568)
         ])
-        .with_set("Gladiator's Finale")
         .with_slot(ArtifactSlot.SANDS)
+        .with_set(ArtifactSet.GLADIATORS_FINALE)
         .build()
     )
     print(artifact)
@@ -164,7 +164,7 @@ ATK+30.8%
 Firstly we'll need to import the `artipy.analysis` package to get started.
 ```python
 import artipy.analysis as analysis
-from artipy.artifacts import ArtifactBuilder, ArtifactSlot
+from artipy.artifacts import ArtifactBuilder, ArtifactSlot, ArtifactSet
 from artipy.stats import StatType
 
 
@@ -218,7 +218,7 @@ To start plotting let's go ahead and import the `artipy.analysis.plots` sub-pack
 ```python
 import artipy.analysis as analysis
 from artipy.analysis import plots
-from artipy.artifacts import ArtifactBuilder, ArtifactSlot
+from artipy.artifacts import ArtifactBuilder, ArtifactSlot, ArtifactSet
 from artipy.stats import StatType
 
 
