@@ -168,8 +168,8 @@ def plot_expected_against_actual_mainstats(iterations: int = 1000) -> None:
     }
 
     for a in artifacts:
-        slot: ArtifactSlot = ArtifactSlot(a.artifact_slot)
-        if slot in expected_mainstats:
+        slot: ArtifactSlot = ArtifactSlot(str(a.artifact_slot))
+        if slot in expected_mainstats and a.mainstat is not None:
             actual_mainstats[slot].append(a.mainstat.name)
 
     actual_mainstats_pct: dict[ArtifactSlot, dict[StatType, float]] = {
