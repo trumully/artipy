@@ -48,10 +48,7 @@ jobs:
       
       - name: Format with ruff
         run: |
-          poetry run ruff check src/ \
-            --diff
-            --show-source
-            --exit-non-zero-on-fix
+          poetry run ruff check src/ --diff --output-format=full --exit-non-zero-on-fix
 
       - name: Typecheck with mypy
         run: poetry run mypy --ignore-missing-imports src/
