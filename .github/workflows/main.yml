@@ -1,0 +1,151 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+      - "feature/**"
+    paths:
+      - 'src/**.py'
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python & Dependencies
+        uses: packetcoders/action-setup-cache-python-poetry@main
+        with:
+          python-version: 3.12.1
+          poetry-version: 1.8.2
+  
+      - name: Run Tests
+        run: |
+          poetry install --only-root
+          poetry run pytest
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python 3.12
+        uses: packetcoders/action-setup-cache-python-poetry@main
+        with:
+          python-version: 3.12.1
+          poetry-version: 1.8.2
+        
+      - name: Install dev dependencies
+        run: poetry install --only-root
+      
+      - name: Format with ruff
+        run: |
+          poetry run ruff check src/ \
+            --diff
+            --show-source
+            --exit-non-zero-on-fix
+
+      - name: Typecheck with mypy
+        run: poetry run mypy --ignore-missing-imports src/
+  
+  beautify:
+    name: Beautify
+    runs-on: ubuntu-latest
+    needs: [test, lint]
+    concurrency: push
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Setup Python 3.12
+        uses: packetcoders/action-setup-cache-python-poetry@main
+        with:
+          python-version: 3.12.1
+          poetry-version: 1.8.2
+      - name: Install dev dependencies
+        run: poetry install --only-root
+
+      - name: Format with ruff
+        run: poetry run ruff format src/
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        id: auto-commit-action
+        with:
+          commit_message: "style: beautify ${{ github.sha }}"
+
+  release:
+    name: Semantic Release
+    runs-on: ubuntu-latest
+    concurrency: push 
+    needs: [test, lint, beautify]
+    if: github.ref == 'refs/heads/main'
+    permissions:
+        id-token: write
+        contents: write
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Setup Python 3.12
+      uses: packetcoders/action-setup-cache-python-poetry@main
+      with:
+        python-version: 3.12.1
+        poetry-version: 1.8.2
+    
+    - name: Python Semantic Release
+      id: release
+      uses: python-semantic-release/python-semantic-release@composite-github-action
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        root_options: "-vv"
+    
+    - name: Publish GitHub Release
+      uses: python-semantic-release/upload-to-gh-release@main
+      if: ${{ steps.release.outputs.released }} == 'true'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ steps.release.outputs.version }}
+  
+    outputs:
+      released: ${{ steps.release.outputs.released }}
+
+  docs:
+    name: Build Documentation
+    runs-on: ubuntu-latest
+    needs: [release]
+    if: needs.release.outputs.released == 'true' && github.ref == 'refs/heads/main'
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Python 3.12
+      uses: packetcoders/action-setup-cache-python-poetry@main
+      with:
+        python-version: 3.12.1
+        poetry-version: 1.8.2
+    - name: Add Poetry's bin directory to the PATH
+      run: echo "$(poetry env info --path)/bin" >> $GITHUB_PATH
+
+    - name: Build HTML
+      run: |
+        cd docs/
+        make html
+    - name: Run ghp-import
+      run: |
+        ghp-import -n -p -f docs/_build/html
