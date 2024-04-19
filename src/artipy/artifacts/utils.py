@@ -5,14 +5,14 @@ from typing import Any
 
 
 def choose(population: tuple[Any], weights: tuple[float | int]) -> Any:
-    """Shortcut function for random.choices to choose an individual item from a
-    population based on weights.
+    """Helper function to choose a random element from a population with weights.
+    This skips having to do slicing of the result of random.choices.
 
-    :param population: The population to choose from.
-    :type population: tuple[Any]
-    :param weights: The weights of the population.
-    :type weights: tuple[float  |  int]
-    :return: The chosen item.
-    :rtype: Any
+    Args:
+        population (tuple[Any]): The population to choose from.
+        weights (tuple[float  |  int]): The weights of the population.
+
+    Returns:
+        Any: The chosen element.
     """
     return random.choices(population, weights)[0]

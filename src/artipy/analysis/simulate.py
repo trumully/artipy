@@ -2,27 +2,28 @@
 
 import random
 
-from artipy.artifacts import Artifact, ArtifactBuilder
-from artipy.artifacts.utils import choose
+from artipy.artifacts import Artifact, ArtifactBuilder, utils
 from artipy.types import VALID_MAINSTATS, ArtifactSlot
 
 
-def create_random_artifact(slot: ArtifactSlot) -> Artifact:
+def create_random_artifact(slot: ArtifactSlot, rarity: int = 5) -> Artifact:
     """Create a random artifact.
 
     Args:
         slot (artipy.types.ArtifactSlot): The slot of the artifact.
+        rarity (int, optional): The rarity of the artifact. Defaults to 5.
 
     Returns:
         artipy.artifacts.Artifact: The random artifact.
     """
 
-    substat_count = 4 if random.random() < 0.2 else 3
+    max_substats = rarity - 1
+    substat_count = max(0, max_substats if random.random() < 0.2 else max_substats - 1)
     mainstats, mainstat_weights = zip(*VALID_MAINSTATS[slot].items())
     return (
         ArtifactBuilder()
-        .with_mainstat(choose(mainstats, mainstat_weights))
-        .with_rarity(5)
+        .with_mainstat(utils.choose(mainstats, mainstat_weights))
+        .with_rarity(rarity)
         .with_substats(amount=substat_count)
         .with_slot(slot)
         .build()

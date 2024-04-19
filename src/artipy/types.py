@@ -2,6 +2,7 @@
 
 import re
 from dataclasses import dataclass
+from decimal import Decimal
 from enum import Enum, StrEnum, auto
 from typing import Iterator
 
@@ -63,6 +64,45 @@ def make_artifact_sets() -> Iterator[ArtifactSetData]:
 VALID_ARTIFACT_SETS: dict[ArtifactSet, ArtifactSetData] = {
     ArtifactSet(key): value for value in make_artifact_sets() for key in ArtifactSet
 }
+
+
+class RollMagnitude(StrEnum):
+    """The roll magnitude of a substat. This is a measure of how much the substat has
+    been increased in relation to its maximum potential value."""
+
+    LOW = auto()
+    MEDIUM = auto()
+    HIGH = auto()
+    MAX = auto()
+
+    @property
+    def magnitude(self) -> Decimal:
+        """Get the magnitude of the roll magnitude.
+
+        Returns:
+            Decimal: The magnitude of the roll magnitude.
+        """
+        if self == RollMagnitude.LOW:
+            return Decimal("0.7")
+        elif self == RollMagnitude.MEDIUM:
+            return Decimal("0.8")
+        elif self == RollMagnitude.HIGH:
+            return Decimal("0.9")
+        return Decimal("1.0")
+
+    @classmethod
+    def closest(cls, value: Decimal | float | int) -> "RollMagnitude":
+        """The closest roll magnitude to a value.
+
+        Args:
+            value (Decimal | float | int): The value to find the closest roll magnitude
+
+        Returns:
+            RollMagnitude: The closest roll magnitude to the value.
+        """
+        return RollMagnitude(
+            min(cls, key=lambda x: abs(RollMagnitude(x).magnitude - Decimal(value)))
+        )
 
 
 # ---------- Stat Types ---------- #

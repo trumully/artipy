@@ -1,6 +1,7 @@
 import math
 from decimal import Decimal
 
+import artipy.analysis.simulate as simulate
 import pytest
 from artipy.analysis import (
     calculate_artifact_crit_value,
@@ -11,7 +12,7 @@ from artipy.analysis import (
 )
 from artipy.artifacts import Artifact, ArtifactBuilder
 from artipy.stats import SubStat
-from artipy.types import ArtifactSet, ArtifactSlot, StatType
+from artipy.types import ArtifactSet, ArtifactSlot, RollMagnitude, StatType
 
 
 @pytest.fixture
@@ -85,3 +86,39 @@ def test_calculate_artifact_crit_value(artifact) -> None:
     """This test verifies the crit value of the artifact"""
     crit_value = calculate_artifact_crit_value(artifact)
     assert math.isclose(crit_value, Decimal(7.8), rel_tol=1e-2)
+
+
+def test_create_random_artifact() -> None:
+    """This test verifies the creation of a random artifact"""
+    artifact_a = simulate.create_random_artifact(ArtifactSlot.SANDS)
+    assert artifact_a.artifact_slot == ArtifactSlot.SANDS
+    assert artifact_a.rarity == 5
+
+    artifact_b = simulate.create_random_artifact(ArtifactSlot.PLUME, 4)
+    assert artifact_b.artifact_slot == ArtifactSlot.PLUME
+    assert artifact_b.rarity == 4
+
+
+def test_upgrade_artifact_to_max(artifact) -> None:
+    """This test verifies the upgrade of an artifact to its maximum level"""
+    artifact = simulate.upgrade_artifact_to_max(artifact)
+    assert artifact.level == 20
+
+
+def test_create_multiple_random_artifacts() -> None:
+    """This test verifies the creation of multiple random artifacts"""
+    artifacts = simulate.create_multiple_random_artifacts(5)
+    assert len(artifacts) == 5
+    for artifact in artifacts:
+        assert artifact.artifact_slot in list(ArtifactSlot)
+        assert artifact.rarity == 5
+
+
+def test_RollMagnitude() -> None:
+    """This test verifies the RollMagnitude class functionality"""
+    assert RollMagnitude.closest(0.7) == RollMagnitude.LOW
+    assert RollMagnitude.closest(1) == RollMagnitude.MAX
+    assert RollMagnitude.closest(0.85) == RollMagnitude.MEDIUM
+    assert RollMagnitude.closest(0.8) == RollMagnitude.MEDIUM
+    assert RollMagnitude.closest(0.9) == RollMagnitude.HIGH
+    assert RollMagnitude.closest(0.94) == RollMagnitude.HIGH

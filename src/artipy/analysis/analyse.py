@@ -3,13 +3,12 @@
 import itertools
 import math
 from decimal import Decimal
-from enum import StrEnum, auto
 
 from artipy.artifacts import Artifact
 from artipy.artifacts.upgrade_strategy import UPGRADE_STEP
 from artipy.stats import SubStat
 from artipy.stats.utils import possible_substat_values
-from artipy.types import StatType
+from artipy.types import RollMagnitude, StatType
 
 ROLL_MULTIPLIERS: dict[int, tuple[float, ...]] = {
     1: (0.8, 1.0),
@@ -18,45 +17,6 @@ ROLL_MULTIPLIERS: dict[int, tuple[float, ...]] = {
     4: (0.7, 0.8, 0.9, 1.0),
     5: (0.7, 0.8, 0.9, 1.0),
 }
-
-
-class RollMagnitude(StrEnum):
-    """The roll magnitude of a substat. This is a measure of how much the substat has
-    been increased in relation to its maximum potential value."""
-
-    LOW = auto()
-    MEDIUM = auto()
-    HIGH = auto()
-    MAX = auto()
-
-    @property
-    def magnitude(self) -> Decimal:
-        """Get the magnitude of the roll magnitude.
-
-        Returns:
-            Decimal: The magnitude of the roll magnitude.
-        """
-        if self == RollMagnitude.LOW:
-            return Decimal("0.7")
-        elif self == RollMagnitude.MEDIUM:
-            return Decimal("0.8")
-        elif self == RollMagnitude.HIGH:
-            return Decimal("0.9")
-        return Decimal("1.0")
-
-    @classmethod
-    def closest(cls, value: Decimal | float | int) -> "RollMagnitude":
-        """The closest roll magnitude to a value.
-
-        Args:
-            value (Decimal | float | int): The value to find the closest roll magnitude
-
-        Returns:
-            RollMagnitude: The closest roll magnitude to the value.
-        """
-        return RollMagnitude(
-            min(cls, key=lambda x: abs(RollMagnitude(x).magnitude - Decimal(value)))
-        )
 
 
 def calculate_substat_roll_value(substat: SubStat) -> Decimal:
