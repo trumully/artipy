@@ -11,10 +11,10 @@ def create_random_artifact(slot: ArtifactSlot) -> Artifact:
     """Create a random artifact.
 
     Args:
-        slot (ArtifactSlot): The slot of the artifact.
+        slot (artipy.types.ArtifactSlot): The slot of the artifact.
 
     Returns:
-        Artifact: The random artifact.
+        artipy.artifacts.Artifact: The random artifact.
     """
 
     substat_count = 4 if random.random() < 0.2 else 3
@@ -32,10 +32,11 @@ def create_random_artifact(slot: ArtifactSlot) -> Artifact:
 def upgrade_artifact_to_max(artifact: Artifact) -> Artifact:
     """Upgrade an artifact to its maximum level.
 
-    :param artifact: The artifact to upgrade.
-    :type artifact: Artifact
-    :return: The upgraded artifact.
-    :rtype: Artifact
+    Args:
+        artifact (artipy.artifacts.Artifact): The artifact to upgrade.
+
+    Returns:
+        artipy.artifacts.Artifact: The upgraded artifact.
     """
     while artifact.level < artifact.rarity * 4:
         artifact.upgrade()
@@ -45,10 +46,11 @@ def upgrade_artifact_to_max(artifact: Artifact) -> Artifact:
 def create_multiple_random_artifacts(amount: int = 1) -> list[Artifact]:
     """Create multiple random artifacts.
 
-    :param amount: The amount of artifacts to create, defaults to 1
-    :type amount: int, optional
-    :return: The list of random artifacts.
-    :rtype: list[Artifact]
+    Args:
+        amount (int, optional): The amount of artifacts to generate. Defaults to 1.
+
+    Returns:
+        list[artipy.artifacts.Artifact]: The list of random artifacts.
     """
     result = []
     for _ in range(amount):

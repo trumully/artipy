@@ -28,7 +28,7 @@ class Artifact:
         is None.
 
         Returns:
-            Optional[MainStat]: The mainstat of the artifact.
+            Optional[artipy.stats.MainStat]: The mainstat of the artifact.
         """
         return self._mainstat
 
@@ -38,7 +38,7 @@ class Artifact:
         than 0, set the rarity of the mainstat.
 
         Args:
-            mainstat (MainStat): The mainstat to set.
+            mainstat (artipy.stats.MainStat): The mainstat to set.
         """
         if self.rarity > 0:
             mainstat.rarity = self.rarity
@@ -49,7 +49,7 @@ class Artifact:
         """The substats of the artifact.
 
         Returns:
-            list[SubStat]: The substats of the artifact.
+            list[artipy.stats.SubStat]: The substats of the artifact.
         """
         return self._substats
 
@@ -57,6 +57,9 @@ class Artifact:
     def substats(self, substats: list[SubStat]) -> None:
         """Set the substats of the artifact. If the rarity of the artifact is greater
         than 0, set the rarity of the substats.
+
+        Args:
+            substats (list[artipy.stats.SubStat]): _description_
         """
         if self.rarity > 0:
             for substat in substats:
@@ -68,7 +71,7 @@ class Artifact:
         than 0, set the rarity of the substat.
 
         Args:
-            substat (SubStat): The substat to add.
+            substat (artipy.stats.SubStat): The substat to add.
         """
         if self.rarity > 0:
             substat.rarity = self.rarity
@@ -123,7 +126,7 @@ class Artifact:
         """The artifact set of the artifact.
 
         Returns:
-            Optional[ArtifactSet]: The artifact set of the artifact.
+            Optional[artipy.types.ArtifactSet]: The artifact set of the artifact.
         """
         return self._set
 
@@ -132,7 +135,7 @@ class Artifact:
         """Set the artifact set of the artifact.
 
         Args:
-            artifact_set (ArtifactSet): The artifact set to set.
+            artifact_set (artipy.types.ArtifactSet): The artifact set to set.
         """
         self._set = artifact_set
 
@@ -141,7 +144,7 @@ class Artifact:
         """The artifact slot of the artifact.
 
         Returns:
-            Optional[ArtifactSlot]: The artifact slot of the artifact.
+            Optional[artipy.types.ArtifactSlot]: The artifact slot of the artifact.
         """
         return self._slot
 
@@ -150,7 +153,7 @@ class Artifact:
         """Set the artifact slot of the artifact.
 
         Args:
-            slot (ArtifactSlot): The artifact slot to set.
+            slot (artipy.types.ArtifactSlot): The artifact slot to set.
         """
         self._slot = slot
 
@@ -162,7 +165,7 @@ class Artifact:
         returned. Otherwise, the upgrade stat strategy is returned.
 
         Returns:
-            UpgradeStrategy: The upgrade strategy of the artifact.
+            artipy.artifacts.UpgradeStrategy: The upgrade strategy of the artifact.
         """
         if self.rarity == 1:
             return UpgradeStrategy()

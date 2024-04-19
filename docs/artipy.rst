@@ -1,20 +1,26 @@
-artipy package
+artipy
 ==============
-
-Subpackages
------------
 
 .. toctree::
    :maxdepth: 4
 
-   artipy.analysis
-   artipy.artifacts
-   artipy.stats
+   modules
 
-Module contents
----------------
+Submodules
+===================
 
-.. automodule:: artipy
+artipy.data\_gen
+-----------------------
+
+.. automodule:: artipy.data_gen
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+artipy.types
+-------------------
+
+.. automodule:: artipy.types
    :members:
    :undoc-members:
    :show-inheritance:

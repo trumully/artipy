@@ -1,4 +1,4 @@
-artipy.artifacts package
+artipy.artifacts
 ========================
 
 Submodules

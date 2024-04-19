@@ -1,4 +1,4 @@
-artipy.stats package
+artipy.stats
 ====================
 
 Submodules
@@ -8,14 +8,6 @@ artipy.stats.mainstat module
 ----------------------------
 
 .. automodule:: artipy.stats.mainstat
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-artipy.stats.stat\_data module
-------------------------------
-
-.. automodule:: artipy.stats.stat_data
    :members:
    :undoc-members:
    :show-inheritance:

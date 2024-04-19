@@ -16,7 +16,7 @@
 
 ---
 
-<p align="center"> Easily generate Genshin Impact artifacts.
+<p align="center">Easily generate Genshin Impact artifacts.
     <br>
 </p>
 

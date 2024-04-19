@@ -31,10 +31,10 @@ class RollMagnitude(StrEnum):
 
     @property
     def magnitude(self) -> Decimal:
-        """Get the magnitude of the roll. This is a value between 0.7 and 1.0.
+        """Get the magnitude of the roll magnitude.
 
-        :return: The magnitude of the roll.
-        :rtype: Decimal
+        Returns:
+            Decimal: The magnitude of the roll magnitude.
         """
         if self == RollMagnitude.LOW:
             return Decimal("0.7")
@@ -46,12 +46,13 @@ class RollMagnitude(StrEnum):
 
     @classmethod
     def closest(cls, value: Decimal | float | int) -> "RollMagnitude":
-        """Get the closest roll magnitude to a given value.
+        """The closest roll magnitude to a value.
 
-        :param value: The value to get the closest roll magnitude to.
-        :type value: Decimal | float | int
-        :return: The closest roll magnitude to the given value.
-        :rtype: RollMagnitude
+        Args:
+            value (Decimal | float | int): The value to find the closest roll magnitude
+
+        Returns:
+            RollMagnitude: The closest roll magnitude to the value.
         """
         return RollMagnitude(
             min(cls, key=lambda x: abs(RollMagnitude(x).magnitude - Decimal(value)))
@@ -59,13 +60,14 @@ class RollMagnitude(StrEnum):
 
 
 def calculate_substat_roll_value(substat: SubStat) -> Decimal:
-    """Get the substat roll value. This is a percentage of the current value over the
-    highest potential value.
+    """Calculate the substat roll value. This is the value of the substat divided by the
+    highest possible value of the substat.
 
-    :param substat: The substat to get the roll value for.
-    :type substat: SubStat
-    :return: The roll value of the substat.
-    :rtype: Decimal
+    Args:
+        substat (artipy.stats.SubStat): The substat to calculate the roll value for.
+
+    Returns:
+        Decimal: The roll value of the substat.
     """
     stat_value = substat.value
     highest_value = max(possible_substat_values(substat.name, substat.rarity))
@@ -78,13 +80,14 @@ def calculate_substat_roll_value(substat: SubStat) -> Decimal:
 
 
 def calculate_substat_rolls(substat: SubStat) -> int:
-    """Calculate the number of rolls a substat has gone through. This is the difference
-    between the current value and the average value divided by the average value.
+    """Calculate the number of rolls of a substat. This is the difference between the
+    actual roll value and the average roll value divided by the average roll value.
 
-    :param substat: The substat to get the rolls for.
-    :type substat: SubStat
-    :return: The number of rolls the substat has gone through.
-    :rtype: int
+    Args:
+        substat (artipy.stats.SubStat): The substat to calculate the rolls for.
+
+    Returns:
+        int: The number of rolls of the substat.
     """
     possible_rolls = possible_substat_values(substat.name, substat.rarity)
     average_roll = Decimal(sum(possible_rolls) / len(possible_rolls))
@@ -92,13 +95,15 @@ def calculate_substat_rolls(substat: SubStat) -> int:
 
 
 def calculate_substat_roll_magnitudes(substat: SubStat) -> tuple[RollMagnitude, ...]:
-    """Get the roll magnitudes for a substat. This is a tuple of the roll magnitudes
-    for each roll the substat has gone through.
+    """Calculate the roll magnitudes of a substat. This is the closest roll magnitude
+    to the actual roll value for each roll.
 
-    :param substat: The substat to get the roll magnitudes for.
-    :type substat: SubStat
-    :return: The roll magnitudes for the substat.
-    :rtype: tuple[RollMagnitude]
+    Args:
+        substat (artipy.stats.SubStat): The substat to calculate the roll magnitudes
+                                        for.
+
+    Returns:
+        tuple[RollMagnitude, ...]: The roll magnitudes of the substat.
     """
 
     def get_magnitude(
@@ -118,13 +123,14 @@ def calculate_substat_roll_magnitudes(substat: SubStat) -> tuple[RollMagnitude, 
 
 
 def calculate_artifact_roll_value(artifact: Artifact) -> Decimal:
-    """Get the current roll value of a given artifact. This is the sum of the roll
-    values for all substats.
+    """Calculate the roll value of an artifact. This is the sum of the roll values of
+    all substats.
 
-    :param artifact: The artifact to get the roll value for.
-    :type artifact: Artifact
-    :return: The roll value of the artifact roll.
-    :rtype: Decimal
+    Args:
+        artifact (artipy.artifacts.Artifact): The artifact to calculate the roll value
+
+    Returns:
+        Decimal: The roll value of the artifact.
     """
     return Decimal(
         sum(calculate_substat_roll_value(substat) for substat in artifact.substats)
@@ -132,14 +138,14 @@ def calculate_artifact_roll_value(artifact: Artifact) -> Decimal:
 
 
 def calculate_artifact_maximum_roll_value(artifact: Artifact) -> Decimal:
-    """Get the maximum roll value of a given artifact. This differs from the regular
-    roll value by assuming remaining rolls are the highest possible value (i.e 100%
-    roll value).
+    """Calculate the maximum roll value of an artifact. This is the roll value of the
+    artifact with all remaining rolls being maximum rolls.
 
-    :param artifact: The artifact to get the maximum roll value for.
-    :type artifact: Artifact
-    :return: The maximum roll value of the artifact roll.
-    :rtype: Decimal
+    Args:
+        artifact (artipy.artifacts.Artifact): The artifact to calculate the maximum
+
+    Returns:
+        Decimal: The maximum roll value of the artifact.
     """
     artifact_max_level = artifact.rarity * 4
     remaining_rolls = (artifact_max_level - artifact.level) // UPGRADE_STEP
@@ -147,13 +153,14 @@ def calculate_artifact_maximum_roll_value(artifact: Artifact) -> Decimal:
 
 
 def calculate_artifact_crit_value(artifact: Artifact) -> Decimal:
-    """Get the crit value of a given artifact. This is the crit damage value plus
-    the two times the crit rate.
+    """Calculate the crit value of an artifact. This is the sum of the crit damage and
+    the crit rate times two.
 
-    :param artifact: The artifact to get the crit value for.
-    :type artifact: Artifact
-    :return: The crit value of the artifact.
-    :rtype: Decimal
+    Args:
+        artifact (artipy.artifacts.Artifact): The artifact to calculate the crit value
+
+    Returns:
+        Decimal: The crit value of the artifact.
     """
     crit_dmg = (
         sum([

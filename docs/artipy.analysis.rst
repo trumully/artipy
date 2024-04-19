@@ -1,4 +1,4 @@
-artipy.analysis package
+artipy.analysis
 =======================
 
 Submodules

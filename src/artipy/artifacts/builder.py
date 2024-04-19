@@ -38,7 +38,7 @@ class ArtifactBuilder:
         """Set the mainstat of the artifact.
 
         Args:
-            stat (StatType): The mainstat to set.
+            stat (artipy.types.StatType): The mainstat to set.
             value (float | int, optional): The value of the mainstat. Defaults to 0.
 
         Returns:
@@ -52,7 +52,7 @@ class ArtifactBuilder:
         """Set a single substat of the artifact.
 
         Args:
-            stat (StatType): The substat to set.
+            stat (artipy.types.StatType): The substat to set.
             value (float | int): The value of the substat.
 
         Raises:
@@ -77,7 +77,7 @@ class ArtifactBuilder:
         random substats based on the rarity of the artifact.
 
         Args:
-            substats (Optional[list[tuple[StatType, float  |  int]]], optional): The
+            substats (list[tuple[artipy.types.StatType, float  |  int]], optional): The
                 substats to set. Defaults to None.
             amount (int, optional): The amount of stats to generate. Defaults to 0.
 
@@ -173,7 +173,7 @@ class ArtifactBuilder:
         """Set the artifact set.
 
         Args:
-            artifact_set (ArtifactSet): The artifact set to set.
+            artifact_set (artipy.types.ArtifactSet): The artifact set to set.
 
         Returns:
             ArtifactBuilder: The artifact builder object
@@ -192,7 +192,7 @@ class ArtifactBuilder:
         """Set the artifact slot.
 
         Args:
-            artifact_slot (ArtifactSlot): The artifact slot to set.
+            artifact_slot (artipy.types.ArtifactSlot): The artifact slot to set.
 
         Returns:
             ArtifactBuilder: The artifact builder object
@@ -204,6 +204,6 @@ class ArtifactBuilder:
         """Build the artifact object based on the parameters passed into the builder.
 
         Returns:
-            Artifact: The artifact object
+            artipy.artifacts.Artifact: The artifact object
         """
         return self._artifact
