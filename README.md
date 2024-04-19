@@ -1,6 +1,5 @@
 <p align="center">
-<a href="" rel="noopener">
-<img src="assets/artipy_logo.svg" alt="artipy logo"></a>
+<a href="" rel="noopener"><img src="assets/banner.svg" alt="artipy logo"></a>
 </p>
 <h3 align="center">artipy</h3>
 <div align="center">
