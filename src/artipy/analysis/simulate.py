@@ -1,12 +1,15 @@
 """This module contains functions to simulate artifacts."""
 
 import random
+from typing import Optional
 
 from artipy.artifacts import Artifact, ArtifactBuilder, utils
-from artipy.types import VALID_MAINSTATS, ArtifactSlot
+from artipy.types import VALID_MAINSTATS, ArtifactSet, ArtifactSlot
 
 
-def create_random_artifact(slot: ArtifactSlot, rarity: int = 5) -> Artifact:
+def create_random_artifact(
+    slot: ArtifactSlot, rarity: int = 5, artifact_set: Optional[ArtifactSet] = None
+) -> Artifact:
     """Create a random artifact.
 
     Args:
@@ -16,6 +19,8 @@ def create_random_artifact(slot: ArtifactSlot, rarity: int = 5) -> Artifact:
     Returns:
         artipy.artifacts.Artifact: The random artifact.
     """
+    if artifact_set is None:
+        artifact_set = random.choice(list(ArtifactSet))
 
     max_substats = rarity - 1
     substat_count = max(0, max_substats if random.random() < 0.2 else max_substats - 1)
@@ -26,6 +31,7 @@ def create_random_artifact(slot: ArtifactSlot, rarity: int = 5) -> Artifact:
         .with_rarity(rarity)
         .with_substats(amount=substat_count)
         .with_slot(slot)
+        .with_set(artifact_set)
         .build()
     )
 
