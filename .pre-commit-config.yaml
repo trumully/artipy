@@ -13,16 +13,3 @@ repos:
         exclude: ^tests/
         additional_dependencies: [ types-toml==0.10.8 ]
         types: [ python ]
-  - repo: local
-    hooks:
-      - id: pylint
-        name: pylint
-        entry: poetry run pylint
-        language: system
-        types: [ python ]
-        args: 
-          [
-            "-rn",
-            "--rcfile=pylintrc",
-            "--ignore-paths=^tests/.*$,^docs/.*$",
-          ]
