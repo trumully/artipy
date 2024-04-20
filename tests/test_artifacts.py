@@ -123,13 +123,13 @@ def test_artifact_str(artifact) -> None:
     set_data = VALID_ARTIFACT_SETS[artifact.artifact_set]
     assert str(artifact) == (
         f"{artifact.artifact_slot} [+{artifact.level}]\n"
-        f"{set_data.set_name} {'★' * artifact.rarity}\n"
-        f"{artifact.mainstat}\n{'\n'.join(str(s) for s in artifact.substats)}"
+        f"{set_data.set_name} {"★" * artifact.rarity}\n"
+        f"{artifact.mainstat}\n{"\n".join(str(s) for s in artifact.substats)}"
     )
 
 
 def test_builder_constraint_substats() -> None:
-    # Case 1: Rarity is 5, so the number of substats can't exceed 4
+    # Case 1: Rarity is 5, so the number of substats can"t exceed 4
     with pytest.raises(ValueError):
         (
             ArtifactBuilder()
@@ -141,7 +141,7 @@ def test_builder_constraint_substats() -> None:
             .with_rarity(5)
         )
 
-    # Case 2: Rarity is 4, so the number of substats can't exceed 3
+    # Case 2: Rarity is 4, so the number of substats can"t exceed 3
     with pytest.raises(ValueError):
         (ArtifactBuilder().with_substats(amount=4))
 

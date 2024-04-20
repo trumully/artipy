@@ -21,9 +21,7 @@ class ArtifactSlot(StrEnum):
 
 
 def key_to_constant(key: str) -> str:
-    """Get a constant name from a key.
-
-    PascalCase -> PASCAL_CASE
+    """Get a constant name from a key i.e: PascalCase -> PASCAL_CASE
 
     Args:
         key (str): The key to convert.
@@ -53,12 +51,16 @@ class ArtifactSetData:
 
 
 def make_artifact_sets() -> Iterator[ArtifactSetData]:
+    """Make artifact sets from the artifact data.
+
+    Yields:
+        Iterator[ArtifactSetData]: The artifact set data.
+    """
     for key in ArtifactSet:
         data = json_to_dict(
-            f"artifacts/artifact_{key.name.title().replace('_', '')}_gen.json"  # pylint: disable=inconsistent-quotes
+            f"artifacts/artifact_{key.name.title().replace("_", "")}_gen.json"
         )
-        data = {camel_to_snake_case(k): v for k, v in data.items()}
-        yield ArtifactSetData(**data)
+        yield ArtifactSetData(**{camel_to_snake_case(k): v for k, v in data.items()})
 
 
 VALID_ARTIFACT_SETS: dict[ArtifactSet, ArtifactSetData] = {

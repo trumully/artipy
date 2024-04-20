@@ -187,9 +187,8 @@ class Artifact:
             set_name = VALID_ARTIFACT_SETS[self.artifact_set].set_name
         else:
             set_name = "Example"
-        # Black can't format f-strings with double quotes in them
         return (
             f"{self.artifact_slot} [+{self.level}]\n"
-            f"{set_name} {'★' * self.rarity}\n"  # pylint: disable=inconsistent-quotes
-            f"{self.mainstat}\n{'\n'.join(str(s) for s in self.substats)}"  # pylint: disable=inconsistent-quotes
+            f"{set_name} {"★" * self.rarity}\n"
+            f"{self.mainstat}\n{"\n".join(str(s) for s in self.substats)}"
         )
