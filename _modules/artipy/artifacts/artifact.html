@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>artipy.artifacts.artifact &mdash; artipy 1.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.svg"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=6efca38a"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../artipy.html">artipy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../artipy.html#submodules">Submodules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">artipy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">artipy.artifacts.artifact</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for artipy.artifacts.artifact</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Module containing the Artifact class.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">artipy</span> <span class="kn">import</span> <span class="n">UPGRADE_STEP</span>
+<span class="kn">from</span> <span class="nn">artipy.stats</span> <span class="kn">import</span> <span class="n">MainStat</span><span class="p">,</span> <span class="n">SubStat</span>
+<span class="kn">from</span> <span class="nn">artipy.types</span> <span class="kn">import</span> <span class="n">VALID_ARTIFACT_SETS</span><span class="p">,</span> <span class="n">ArtifactSet</span><span class="p">,</span> <span class="n">ArtifactSlot</span>
+
+<span class="kn">from</span> <span class="nn">.upgrade_strategy</span> <span class="kn">import</span> <span class="n">AddStatStrategy</span><span class="p">,</span> <span class="n">UpgradeStatStrategy</span><span class="p">,</span> <span class="n">UpgradeStrategy</span>
+
+
+<div class="viewcode-block" id="Artifact">
+<a class="viewcode-back" href="../../../artipy.artifacts.html#artipy.artifacts.artifact.Artifact">[docs]</a>
+<span class="k">class</span> <span class="nc">Artifact</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class representing an artifact in Genshin Impact.&quot;&quot;&quot;</span>
+
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;_mainstat&quot;</span><span class="p">,</span> <span class="s2">&quot;_substats&quot;</span><span class="p">,</span> <span class="s2">&quot;_level&quot;</span><span class="p">,</span> <span class="s2">&quot;_rarity&quot;</span><span class="p">,</span> <span class="s2">&quot;_set&quot;</span><span class="p">,</span> <span class="s2">&quot;_slot&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mainstat</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MainStat</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_substats</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">SubStat</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rarity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ArtifactSet</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_slot</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ArtifactSlot</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">mainstat</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MainStat</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The mainstat of the artifact. Return a placeholder mainstat if the mainstat</span>
+<span class="sd">        is None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Optional[artipy.stats.MainStat]: The mainstat of the artifact.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mainstat</span>
+
+    <span class="nd">@mainstat</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">mainstat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mainstat</span><span class="p">:</span> <span class="n">MainStat</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the mainstat of the artifact. If the rarity of the artifact is greater</span>
+<span class="sd">        than 0, set the rarity of the mainstat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mainstat (artipy.stats.MainStat): The mainstat to set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rarity</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">mainstat</span><span class="o">.</span><span class="n">rarity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rarity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mainstat</span> <span class="o">=</span> <span class="n">mainstat</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">substats</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">SubStat</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The substats of the artifact.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[artipy.stats.SubStat]: The substats of the artifact.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_substats</span>
+
+    <span class="nd">@substats</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">substats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">substats</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">SubStat</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the substats of the artifact. If the rarity of the artifact is greater</span>
+<span class="sd">        than 0, set the rarity of the substats.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            substats (list[artipy.stats.SubStat]): _description_</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rarity</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">substat</span> <span class="ow">in</span> <span class="n">substats</span><span class="p">:</span>
+                <span class="n">substat</span><span class="o">.</span><span class="n">rarity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rarity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_substats</span> <span class="o">=</span> <span class="n">substats</span>
+
+<div class="viewcode-block" id="Artifact.add_substat">
+<a class="viewcode-back" href="../../../artipy.artifacts.html#artipy.artifacts.artifact.Artifact.add_substat">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_substat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">substat</span><span class="p">:</span> <span class="n">SubStat</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a substat to the artifact. If the rarity of the artifact is greater</span>
+<span class="sd">        than 0, set the rarity of the substat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            substat (artipy.stats.SubStat): The substat to add.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rarity</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">substat</span><span class="o">.</span><span class="n">rarity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rarity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_substats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">substat</span><span class="p">)</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">level</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The level of the artifact.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The level of the artifact.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_level</span>
+
+    <span class="nd">@level</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the level of the artifact.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            level (int): The level to set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_level</span> <span class="o">=</span> <span class="n">level</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">rarity</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The rarity of the artifact.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The rarity of the artifact.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rarity</span>
+
+    <span class="nd">@rarity</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">rarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rarity</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the rarity of the artifact. If the rarity of the artifact is greater</span>
+<span class="sd">        than 0, set the rarity of the mainstat and substats.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rarity (int): The rarity to set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rarity</span> <span class="o">=</span> <span class="n">rarity</span>
+        <span class="n">stats</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">MainStat</span><span class="p">]</span> <span class="o">|</span> <span class="n">SubStat</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mainstat</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">substats</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">stat</span> <span class="ow">in</span> <span class="n">stats</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">stat</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">stat</span><span class="o">.</span><span class="n">rarity</span> <span class="o">=</span> <span class="n">rarity</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">artifact_set</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ArtifactSet</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The artifact set of the artifact.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Optional[artipy.types.ArtifactSet]: The artifact set of the artifact.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set</span>
+
+    <span class="nd">@artifact_set</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">artifact_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artifact_set</span><span class="p">:</span> <span class="n">ArtifactSet</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the artifact set of the artifact.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            artifact_set (artipy.types.ArtifactSet): The artifact set to set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set</span> <span class="o">=</span> <span class="n">artifact_set</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">artifact_slot</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ArtifactSlot</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The artifact slot of the artifact.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Optional[artipy.types.ArtifactSlot]: The artifact slot of the artifact.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slot</span>
+
+    <span class="nd">@artifact_slot</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">artifact_slot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">:</span> <span class="n">ArtifactSlot</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the artifact slot of the artifact.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slot (artipy.types.ArtifactSlot): The artifact slot to set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_slot</span> <span class="o">=</span> <span class="n">slot</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">strategy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">UpgradeStrategy</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The upgrade strategy of the artifact. If the rarity is 1, the strategy</span>
+<span class="sd">        inheriters are skipped in favor of the default strategy. Otherwise, if the</span>
+<span class="sd">        number of substats is less than the rarity - 1, the add stat strategy is</span>
+<span class="sd">        returned. Otherwise, the upgrade stat strategy is returned.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            artipy.artifacts.UpgradeStrategy: The upgrade strategy of the artifact.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rarity</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">UpgradeStrategy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">substats</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">rarity</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">AddStatStrategy</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">UpgradeStatStrategy</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">max_level</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rarity</span> <span class="o">*</span> <span class="n">UPGRADE_STEP</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rarity</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">UPGRADE_STEP</span>
+
+<div class="viewcode-block" id="Artifact.upgrade">
+<a class="viewcode-back" href="../../../artipy.artifacts.html#artipy.artifacts.artifact.Artifact.upgrade">[docs]</a>
+    <span class="k">def</span> <span class="nf">upgrade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Upgrade the artifact.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_level</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">upgrade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">artifact_set</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">set_name</span> <span class="o">=</span> <span class="n">VALID_ARTIFACT_SETS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_set</span><span class="p">]</span><span class="o">.</span><span class="n">set_name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">set_name</span> <span class="o">=</span> <span class="s2">&quot;Example&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_slot</span><span class="si">}</span><span class="s2"> [+</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="si">}</span><span class="s2">]</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">set_name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s2">&quot;★&quot;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">rarity</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mainstat</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">substats</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Truman Mulholland.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

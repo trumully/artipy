@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>artipy.types &mdash; artipy 1.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.svg"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=6efca38a"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../artipy.html">artipy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../artipy.html#submodules">Submodules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">artipy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">artipy.types</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for artipy.types</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Module containing the types used in the artipy package.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">StrEnum</span><span class="p">,</span> <span class="n">auto</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span>
+
+<span class="kn">from</span> <span class="nn">artipy.data_gen</span> <span class="kn">import</span> <span class="n">camel_to_snake_case</span><span class="p">,</span> <span class="n">json_to_dict</span>
+
+
+<span class="c1"># -------- Artifact Types -------- #</span>
+<div class="viewcode-block" id="ArtifactSlot">
+<a class="viewcode-back" href="../../artipy.artifacts.html#artipy.types.ArtifactSlot">[docs]</a>
+<span class="k">class</span> <span class="nc">ArtifactSlot</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enum representing the artifact slots in Genshin Impact.&quot;&quot;&quot;</span>
+
+    <span class="n">FLOWER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PLUME</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SANDS</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">GOBLET</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CIRCLET</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="key_to_constant">
+<a class="viewcode-back" href="../../artipy.html#artipy.types.key_to_constant">[docs]</a>
+<span class="k">def</span> <span class="nf">key_to_constant</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a constant name from a key i.e: PascalCase -&gt; PASCAL_CASE</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        key (str): The key to convert.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: The converted key.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(?&lt;!^)(?=[A-Z])&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="generate_artifact_sets">
+<a class="viewcode-back" href="../../artipy.html#artipy.types.generate_artifact_sets">[docs]</a>
+<span class="k">def</span> <span class="nf">generate_artifact_sets</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Use this if artifactNames_gen.json ever changes.&quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">key_to_constant</span><span class="p">(</span><span class="n">k</span><span class="p">):</span> <span class="n">v</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">json_to_dict</span><span class="p">(</span><span class="s2">&quot;artifacts/artifactNames_gen.json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="p">}</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span></div>
+
+
+
+<div class="viewcode-block" id="ArtifactSet">
+<a class="viewcode-back" href="../../artipy.html#artipy.types.ArtifactSet">[docs]</a>
+<span class="k">class</span> <span class="nc">ArtifactSet</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The artifact sets in Genshin Impact.&quot;&quot;&quot;</span>
+
+    <span class="n">RESOLUTION_OF_SOJOURNER</span> <span class="o">=</span> <span class="s2">&quot;Resolution of Sojourner&quot;</span>
+    <span class="n">BRAVE_HEART</span> <span class="o">=</span> <span class="s2">&quot;Brave Heart&quot;</span>
+    <span class="n">DEFENDERS_WILL</span> <span class="o">=</span> <span class="s2">&quot;Defender&#39;s Will&quot;</span>
+    <span class="n">TINY_MIRACLE</span> <span class="o">=</span> <span class="s2">&quot;Tiny Miracle&quot;</span>
+    <span class="n">BERSERKER</span> <span class="o">=</span> <span class="s2">&quot;Berserker&quot;</span>
+    <span class="n">MARTIAL_ARTIST</span> <span class="o">=</span> <span class="s2">&quot;Martial Artist&quot;</span>
+    <span class="n">INSTRUCTOR</span> <span class="o">=</span> <span class="s2">&quot;Instructor&quot;</span>
+    <span class="n">GAMBLER</span> <span class="o">=</span> <span class="s2">&quot;Gambler&quot;</span>
+    <span class="n">THE_EXILE</span> <span class="o">=</span> <span class="s2">&quot;The Exile&quot;</span>
+    <span class="n">ADVENTURER</span> <span class="o">=</span> <span class="s2">&quot;Adventurer&quot;</span>
+    <span class="n">LUCKY_DOG</span> <span class="o">=</span> <span class="s2">&quot;Lucky Dog&quot;</span>
+    <span class="n">SCHOLAR</span> <span class="o">=</span> <span class="s2">&quot;Scholar&quot;</span>
+    <span class="n">TRAVELING_DOCTOR</span> <span class="o">=</span> <span class="s2">&quot;Traveling Doctor&quot;</span>
+    <span class="n">BLIZZARD_STRAYER</span> <span class="o">=</span> <span class="s2">&quot;Blizzard Strayer&quot;</span>
+    <span class="n">THUNDERSOOTHER</span> <span class="o">=</span> <span class="s2">&quot;Thundersoother&quot;</span>
+    <span class="n">LAVAWALKER</span> <span class="o">=</span> <span class="s2">&quot;Lavawalker&quot;</span>
+    <span class="n">MAIDEN_BELOVED</span> <span class="o">=</span> <span class="s2">&quot;Maiden Beloved&quot;</span>
+    <span class="n">GLADIATORS_FINALE</span> <span class="o">=</span> <span class="s2">&quot;Gladiator&#39;s Finale&quot;</span>
+    <span class="n">VIRIDESCENT_VENERER</span> <span class="o">=</span> <span class="s2">&quot;Viridescent Venerer&quot;</span>
+    <span class="n">WANDERERS_TROUPE</span> <span class="o">=</span> <span class="s2">&quot;Wanderer&#39;s Troupe&quot;</span>
+    <span class="n">THUNDERING_FURY</span> <span class="o">=</span> <span class="s2">&quot;Thundering Fury&quot;</span>
+    <span class="n">CRIMSON_WITCH_OF_FLAMES</span> <span class="o">=</span> <span class="s2">&quot;Crimson Witch of Flames&quot;</span>
+    <span class="n">NOBLESSE_OBLIGE</span> <span class="o">=</span> <span class="s2">&quot;Noblesse Oblige&quot;</span>
+    <span class="n">BLOODSTAINED_CHIVALRY</span> <span class="o">=</span> <span class="s2">&quot;Bloodstained Chivalry&quot;</span>
+    <span class="n">PRAYERS_FOR_ILLUMINATION</span> <span class="o">=</span> <span class="s2">&quot;Prayers for Illumination&quot;</span>
+    <span class="n">PRAYERS_FOR_DESTINY</span> <span class="o">=</span> <span class="s2">&quot;Prayers for Destiny&quot;</span>
+    <span class="n">PRAYERS_FOR_WISDOM</span> <span class="o">=</span> <span class="s2">&quot;Prayers for Wisdom&quot;</span>
+    <span class="n">PRAYERS_TO_SPRINGTIME</span> <span class="o">=</span> <span class="s2">&quot;Prayers to Springtime&quot;</span>
+    <span class="n">ARCHAIC_PETRA</span> <span class="o">=</span> <span class="s2">&quot;Archaic Petra&quot;</span>
+    <span class="n">RETRACING_BOLIDE</span> <span class="o">=</span> <span class="s2">&quot;Retracing Bolide&quot;</span>
+    <span class="n">HEART_OF_DEPTH</span> <span class="o">=</span> <span class="s2">&quot;Heart of Depth&quot;</span>
+    <span class="n">TENACITY_OF_THE_MILLELITH</span> <span class="o">=</span> <span class="s2">&quot;Tenacity of the Millelith&quot;</span>
+    <span class="n">PALE_FLAME</span> <span class="o">=</span> <span class="s2">&quot;Pale Flame&quot;</span>
+    <span class="n">SHIMENAWAS_REMINISCENCE</span> <span class="o">=</span> <span class="s2">&quot;Shimenawa&#39;s Reminiscence&quot;</span>
+    <span class="n">EMBLEM_OF_SEVERED_FATE</span> <span class="o">=</span> <span class="s2">&quot;Emblem of Severed Fate&quot;</span>
+    <span class="n">HUSK_OF_OPULENT_DREAMS</span> <span class="o">=</span> <span class="s2">&quot;Husk of Opulent Dreams&quot;</span>
+    <span class="n">OCEAN_HUED_CLAM</span> <span class="o">=</span> <span class="s2">&quot;Ocean-Hued Clam&quot;</span>
+    <span class="n">VERMILLION_HEREAFTER</span> <span class="o">=</span> <span class="s2">&quot;Vermillion Hereafter&quot;</span>
+    <span class="n">ECHOES_OF_AN_OFFERING</span> <span class="o">=</span> <span class="s2">&quot;Echoes of an Offering&quot;</span>
+    <span class="n">DEEPWOOD_MEMORIES</span> <span class="o">=</span> <span class="s2">&quot;Deepwood Memories&quot;</span>
+    <span class="n">GILDED_DREAMS</span> <span class="o">=</span> <span class="s2">&quot;Gilded Dreams&quot;</span>
+    <span class="n">DESERT_PAVILION_CHRONICLE</span> <span class="o">=</span> <span class="s2">&quot;Desert Pavilion Chronicle&quot;</span>
+    <span class="n">FLOWER_OF_PARADISE_LOST</span> <span class="o">=</span> <span class="s2">&quot;Flower of Paradise Lost&quot;</span>
+    <span class="n">NYMPHS_DREAM</span> <span class="o">=</span> <span class="s2">&quot;Nymph&#39;s Dream&quot;</span>
+    <span class="n">VOURUKASHAS_GLOW</span> <span class="o">=</span> <span class="s2">&quot;Vourukasha&#39;s Glow&quot;</span>
+    <span class="n">MARECHAUSSEE_HUNTER</span> <span class="o">=</span> <span class="s2">&quot;Marechaussee Hunter&quot;</span>
+    <span class="n">GOLDEN_TROUPE</span> <span class="o">=</span> <span class="s2">&quot;Golden Troupe&quot;</span>
+    <span class="n">SONG_OF_DAYS_PAST</span> <span class="o">=</span> <span class="s2">&quot;Song of Days Past&quot;</span>
+    <span class="n">NIGHTTIME_WHISPERS_IN_THE_ECHOING_WOODS</span> <span class="o">=</span> <span class="s2">&quot;Nighttime Whispers in the Echoing Woods&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="ArtifactSetData">
+<a class="viewcode-back" href="../../artipy.html#artipy.types.ArtifactSetData">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ArtifactSetData</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Data class representing an artifact set in Genshin Impact.&quot;&quot;&quot;</span>
+
+    <span class="n">set_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">set_effects</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+    <span class="n">pieces</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">ArtifactSlot</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span></div>
+
+
+
+<div class="viewcode-block" id="make_artifact_sets">
+<a class="viewcode-back" href="../../artipy.html#artipy.types.make_artifact_sets">[docs]</a>
+<span class="k">def</span> <span class="nf">make_artifact_sets</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">ArtifactSetData</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Make artifact sets from the artifact data.</span>
+
+<span class="sd">    Yields:</span>
+<span class="sd">        Iterator[ArtifactSetData]: The artifact set data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">ArtifactSet</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json_to_dict</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;artifacts/artifact_</span><span class="si">{</span><span class="n">key</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="si">}</span><span class="s2">_gen.json&quot;</span>
+        <span class="p">)</span>
+        <span class="k">yield</span> <span class="n">ArtifactSetData</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">camel_to_snake_case</span><span class="p">(</span><span class="n">k</span><span class="p">):</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span></div>
+
+
+
+<span class="n">VALID_ARTIFACT_SETS</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">ArtifactSet</span><span class="p">,</span> <span class="n">ArtifactSetData</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">ArtifactSet</span><span class="p">(</span><span class="n">key</span><span class="p">):</span> <span class="n">value</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">make_artifact_sets</span><span class="p">()</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">ArtifactSet</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="RollMagnitude">
+<a class="viewcode-back" href="../../artipy.html#artipy.types.RollMagnitude">[docs]</a>
+<span class="k">class</span> <span class="nc">RollMagnitude</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The roll magnitude of a substat. This is a measure of how much the substat has</span>
+<span class="sd">    been increased in relation to its maximum potential value.&quot;&quot;&quot;</span>
+
+    <span class="n">LOW</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MEDIUM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HIGH</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MAX</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">magnitude</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Decimal</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the magnitude of the roll magnitude.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Decimal: The magnitude of the roll magnitude.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">RollMagnitude</span><span class="o">.</span><span class="n">LOW</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.7&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">RollMagnitude</span><span class="o">.</span><span class="n">MEDIUM</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.8&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">RollMagnitude</span><span class="o">.</span><span class="n">HIGH</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.9&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;1.0&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RollMagnitude.closest">
+<a class="viewcode-back" href="../../artipy.html#artipy.types.RollMagnitude.closest">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">closest</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Decimal</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RollMagnitude&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The closest roll magnitude to a value.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value (Decimal | float | int): The value to find the closest roll magnitude</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            RollMagnitude: The closest roll magnitude to the value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">RollMagnitude</span><span class="p">(</span>
+            <span class="nb">min</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">RollMagnitude</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">-</span> <span class="n">Decimal</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<span class="c1"># ---------- Stat Types ---------- #</span>
+<div class="viewcode-block" id="StatType">
+<a class="viewcode-back" href="../../artipy.html#artipy.types.StatType">[docs]</a>
+<span class="k">class</span> <span class="nc">StatType</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enumeration of stat types in Genshin Impact.&quot;&quot;&quot;</span>
+
+    <span class="n">HP</span> <span class="o">=</span> <span class="s2">&quot;FIGHT_PROP_HP&quot;</span>
+    <span class="n">ATK</span> <span class="o">=</span> <span class="s2">&quot;FIGHT_PROP_ATTACK&quot;</span>
+    <span class="n">DEF</span> <span class="o">=</span> <span class="s2">&quot;FIGHT_PROP_DEFENSE&quot;</span>
+    <span class="n">HP_PERCENT</span> <span class="o">=</span> <span class="s2">&quot;FIGHT_PROP_HP_PERCENT&quot;</span>
+    <span class="n">ATK_PERCENT</span> <span class="o">=</span> <span class="s2">&quot;FIGHT_PROP_ATTACK_PERCENT&quot;</span>
+    <span class="n">DEF_PERCENT</span> <span class="o">=</span> <span class="s2">&quot;FIGHT_PROP_DEFENSE_PERCENT&quot;</span>
+    <span class="n">ELEMENTAL_MASTERY</span> <span class="o">=</span> <span class="s2">&quot;FIGHT_PROP_ELEMENT_MASTERY&quot;</span>
+    <span class="n">ENERGY_RECHARGE</span> <span class="o">=</span> <span class="s2">&quot;FIGHT_PROP_CHARGE_EFFICIENCY&quot;</span>
+    <span class="n">CRIT_RATE</span> <span class="o">=</span> <span class="s2">&quot;FIGHT_PROP_CRITICAL&quot;</span>
+    <span class="n">CRIT_DMG</span> <span class="o">=</span> <span class="s2">&quot;FIGHT_PROP_CRITICAL_HURT&quot;</span>
+    <span class="n">HEALING_BONUS</span> <span class="o">=</span> <span class="s2">&quot;FIGHT_PROP_HEAL_ADD&quot;</span>
+    <span class="n">ANEMO_DMG</span> <span class="o">=</span> <span class="s2">&quot;FIGHT_PROP_WIND_ADD_HURT&quot;</span>
+    <span class="n">CRYO_DMG</span> <span class="o">=</span> <span class="s2">&quot;FIGHT_PROP_ICE_ADD_HURT&quot;</span>
+    <span class="n">DENDRO_DMG</span> <span class="o">=</span> <span class="s2">&quot;FIGHT_PROP_GRASS_ADD_HURT&quot;</span>
+    <span class="n">ELECTRO_DMG</span> <span class="o">=</span> <span class="s2">&quot;FIGHT_PROP_ELEC_ADD_HURT&quot;</span>
+    <span class="n">GEO_DMG</span> <span class="o">=</span> <span class="s2">&quot;FIGHT_PROP_ROCK_ADD_HURT&quot;</span>
+    <span class="n">HYDRO_DMG</span> <span class="o">=</span> <span class="s2">&quot;FIGHT_PROP_WATER_ADD_HURT&quot;</span>
+    <span class="n">PYRO_DMG</span> <span class="o">=</span> <span class="s2">&quot;FIGHT_PROP_FIRE_ADD_HURT&quot;</span>
+    <span class="n">PHYSICAL_DMG</span> <span class="o">=</span> <span class="s2">&quot;FIGHT_PROP_PHYSICAL_ADD_HURT&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_pct</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;%&quot;</span> <span class="ow">in</span> <span class="n">STAT_NAMES</span><span class="p">[</span><span class="bp">self</span><span class="p">]</span></div>
+
+
+
+<span class="n">STAT_NAMES</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">StatType</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">HP</span><span class="p">:</span> <span class="s2">&quot;HP&quot;</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">ATK</span><span class="p">:</span> <span class="s2">&quot;ATK&quot;</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">DEF</span><span class="p">:</span> <span class="s2">&quot;DEF&quot;</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">HP_PERCENT</span><span class="p">:</span> <span class="s2">&quot;HP%&quot;</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">ATK_PERCENT</span><span class="p">:</span> <span class="s2">&quot;ATK%&quot;</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">DEF_PERCENT</span><span class="p">:</span> <span class="s2">&quot;DEF%&quot;</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">ELEMENTAL_MASTERY</span><span class="p">:</span> <span class="s2">&quot;Elemental Mastery&quot;</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">ENERGY_RECHARGE</span><span class="p">:</span> <span class="s2">&quot;Energy Recharge%&quot;</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">CRIT_RATE</span><span class="p">:</span> <span class="s2">&quot;CRIT Rate%&quot;</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">CRIT_DMG</span><span class="p">:</span> <span class="s2">&quot;CRIT DMG%&quot;</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">HEALING_BONUS</span><span class="p">:</span> <span class="s2">&quot;Healing Bonus%&quot;</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">ANEMO_DMG</span><span class="p">:</span> <span class="s2">&quot;Anemo DMG Bonus%&quot;</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">CRYO_DMG</span><span class="p">:</span> <span class="s2">&quot;Cryo DMG Bonus%&quot;</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">DENDRO_DMG</span><span class="p">:</span> <span class="s2">&quot;Dendro DMG Bonus%&quot;</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">ELECTRO_DMG</span><span class="p">:</span> <span class="s2">&quot;Electro DMG Bonus%&quot;</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">GEO_DMG</span><span class="p">:</span> <span class="s2">&quot;Geo DMG Bonus%&quot;</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">HYDRO_DMG</span><span class="p">:</span> <span class="s2">&quot;Hydro DMG Bonus%&quot;</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">PYRO_DMG</span><span class="p">:</span> <span class="s2">&quot;Pyro DMG Bonus%&quot;</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">PHYSICAL_DMG</span><span class="p">:</span> <span class="s2">&quot;Physical DMG Bonus%&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">VALID_SUBSTATS</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">StatType</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">HP</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">ATK</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">DEF</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">HP_PERCENT</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">ATK_PERCENT</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">DEF_PERCENT</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">ELEMENTAL_MASTERY</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">ENERGY_RECHARGE</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">CRIT_RATE</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">CRIT_DMG</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">VALID_MAINSTATS</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="n">StatType</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">ArtifactSlot</span><span class="o">.</span><span class="n">FLOWER</span><span class="p">:</span> <span class="p">{</span><span class="n">StatType</span><span class="o">.</span><span class="n">HP</span><span class="p">:</span> <span class="mi">100</span><span class="p">},</span>
+    <span class="n">ArtifactSlot</span><span class="o">.</span><span class="n">PLUME</span><span class="p">:</span> <span class="p">{</span><span class="n">StatType</span><span class="o">.</span><span class="n">ATK</span><span class="p">:</span> <span class="mi">100</span><span class="p">},</span>
+    <span class="n">ArtifactSlot</span><span class="o">.</span><span class="n">SANDS</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">HP_PERCENT</span><span class="p">:</span> <span class="mf">26.68</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">ATK_PERCENT</span><span class="p">:</span> <span class="mf">26.66</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">DEF_PERCENT</span><span class="p">:</span> <span class="mf">26.66</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">ENERGY_RECHARGE</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">ELEMENTAL_MASTERY</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">ArtifactSlot</span><span class="o">.</span><span class="n">CIRCLET</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">HP_PERCENT</span><span class="p">:</span> <span class="mf">22.0</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">ATK_PERCENT</span><span class="p">:</span> <span class="mf">22.0</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">DEF_PERCENT</span><span class="p">:</span> <span class="mf">22.0</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">CRIT_RATE</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">CRIT_DMG</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">HEALING_BONUS</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">ELEMENTAL_MASTERY</span><span class="p">:</span> <span class="mf">4.0</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">ArtifactSlot</span><span class="o">.</span><span class="n">GOBLET</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">HP_PERCENT</span><span class="p">:</span> <span class="mf">19.25</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">ATK_PERCENT</span><span class="p">:</span> <span class="mf">19.25</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">DEF_PERCENT</span><span class="p">:</span> <span class="mf">19.0</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">PHYSICAL_DMG</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">ANEMO_DMG</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">CRYO_DMG</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">DENDRO_DMG</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">ELECTRO_DMG</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">GEO_DMG</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">HYDRO_DMG</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">PYRO_DMG</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">,</span>
+        <span class="n">StatType</span><span class="o">.</span><span class="n">ELEMENTAL_MASTERY</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Truman Mulholland.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

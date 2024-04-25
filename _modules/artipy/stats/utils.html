@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>artipy.stats.utils &mdash; artipy 1.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.svg"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=6efca38a"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../artipy.html">artipy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../artipy.html#submodules">Submodules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">artipy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">artipy.stats.utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for artipy.stats.utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Utilities for stats module.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">attrgetter</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span>
+
+<span class="kn">from</span> <span class="nn">artipy.data_gen</span> <span class="kn">import</span> <span class="n">DataGen</span>
+<span class="kn">from</span> <span class="nn">artipy.types</span> <span class="kn">import</span> <span class="n">StatType</span>
+
+<span class="n">MAINSTAT_DATA</span> <span class="o">=</span> <span class="n">DataGen</span><span class="p">(</span><span class="s2">&quot;ReliquaryLevelExcelConfigData.json&quot;</span><span class="p">)</span>
+<span class="n">SUBSTAT_DATA</span> <span class="o">=</span> <span class="n">DataGen</span><span class="p">(</span><span class="s2">&quot;ReliquaryAffixExcelConfigData.json&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="map_to_decimal">
+<a class="viewcode-back" href="../../../artipy.stats.html#artipy.stats.utils.map_to_decimal">[docs]</a>
+<span class="k">def</span> <span class="nf">map_to_decimal</span><span class="p">(</span><span class="n">values</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Decimal</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Map the values to Decimal.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        values (Iterable[float  |  int]): The values to map.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple[Decimal, ...]: The mapped values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">Decimal</span><span class="p">,</span> <span class="n">values</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="possible_mainstat_values">
+<a class="viewcode-back" href="../../../artipy.stats.html#artipy.stats.utils.possible_mainstat_values">[docs]</a>
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">possible_mainstat_values</span><span class="p">(</span><span class="n">stat</span><span class="p">:</span> <span class="n">StatType</span><span class="p">,</span> <span class="n">rarity</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Decimal</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the possible values for a mainstat based on the stat type and rarity.</span>
+<span class="sd">    Map the values to Decimal.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        stat (StatType): The stat type to get the values for.</span>
+<span class="sd">        rarity (int): The rarity of the artifact.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple[Decimal, ...]: The possible values for the mainstat.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">MAINSTAT_DATA</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">j</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">values</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">rank</span> <span class="o">==</span> <span class="n">rarity</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">i</span><span class="o">.</span><span class="n">add_props</span>
+        <span class="k">if</span> <span class="n">j</span><span class="o">.</span><span class="n">prop_type</span> <span class="o">==</span> <span class="n">stat</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">map_to_decimal</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="possible_substat_values">
+<a class="viewcode-back" href="../../../artipy.stats.html#artipy.stats.utils.possible_substat_values">[docs]</a>
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">possible_substat_values</span><span class="p">(</span><span class="n">stat</span><span class="p">:</span> <span class="n">StatType</span><span class="p">,</span> <span class="n">rarity</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Decimal</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the possible values for a substat based on the stat type and rarity.</span>
+<span class="sd">    Map the values to Decimal.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        stat (StatType): The stat type to get the values for.</span>
+<span class="sd">        rarity (int): The rarity of the artifact.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple[Decimal, ...]: The possible values for the substat.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">d</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">SUBSTAT_DATA</span>
+        <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">depot_id</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">rarity</span><span class="si">}</span><span class="s2">01&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">d</span><span class="o">.</span><span class="n">prop_type</span> <span class="o">==</span> <span class="n">stat</span>
+    <span class="p">]</span>
+    <span class="n">sorted_data</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">&quot;prop_value&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">map_to_decimal</span><span class="p">((</span><span class="n">d</span><span class="o">.</span><span class="n">prop_value</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">sorted_data</span><span class="p">))</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Truman Mulholland.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

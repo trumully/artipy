@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>artipy.analysis.analyse &mdash; artipy 1.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.svg"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=6efca38a"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../artipy.html">artipy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../artipy.html#submodules">Submodules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">artipy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">artipy.analysis.analyse</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for artipy.analysis.analyse</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;This module contains functions for analysing artifacts and their rolls.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+
+<span class="kn">from</span> <span class="nn">artipy.artifacts</span> <span class="kn">import</span> <span class="n">Artifact</span>
+<span class="kn">from</span> <span class="nn">artipy.artifacts.upgrade_strategy</span> <span class="kn">import</span> <span class="n">UPGRADE_STEP</span>
+<span class="kn">from</span> <span class="nn">artipy.stats</span> <span class="kn">import</span> <span class="n">SubStat</span>
+<span class="kn">from</span> <span class="nn">artipy.stats.utils</span> <span class="kn">import</span> <span class="n">possible_substat_values</span>
+<span class="kn">from</span> <span class="nn">artipy.types</span> <span class="kn">import</span> <span class="n">RollMagnitude</span><span class="p">,</span> <span class="n">StatType</span>
+
+<span class="n">ROLL_MULTIPLIERS</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+    <span class="mi">4</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+    <span class="mi">5</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="calculate_substat_roll_value">
+<a class="viewcode-back" href="../../../artipy.analysis.html#artipy.analysis.analyse.calculate_substat_roll_value">[docs]</a>
+<span class="k">def</span> <span class="nf">calculate_substat_roll_value</span><span class="p">(</span><span class="n">substat</span><span class="p">:</span> <span class="n">SubStat</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Decimal</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the substat roll value. This is the value of the substat divided by the</span>
+<span class="sd">    highest possible value of the substat.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        substat (artipy.stats.SubStat): The substat to calculate the roll value for.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Decimal: The roll value of the substat.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">stat_value</span> <span class="o">=</span> <span class="n">substat</span><span class="o">.</span><span class="n">value</span>
+    <span class="n">highest_value</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">possible_substat_values</span><span class="p">(</span><span class="n">substat</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">substat</span><span class="o">.</span><span class="n">rarity</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">substat</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">is_pct</span><span class="p">:</span>
+        <span class="n">stat_value</span> <span class="o">*=</span> <span class="mi">100</span>
+        <span class="n">highest_value</span> <span class="o">*=</span> <span class="mi">100</span>
+
+    <span class="k">return</span> <span class="n">stat_value</span> <span class="o">/</span> <span class="n">highest_value</span></div>
+
+
+
+<div class="viewcode-block" id="calculate_substat_rolls">
+<a class="viewcode-back" href="../../../artipy.analysis.html#artipy.analysis.analyse.calculate_substat_rolls">[docs]</a>
+<span class="k">def</span> <span class="nf">calculate_substat_rolls</span><span class="p">(</span><span class="n">substat</span><span class="p">:</span> <span class="n">SubStat</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the number of rolls of a substat. This is the difference between the</span>
+<span class="sd">    actual roll value and the average roll value divided by the average roll value.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        substat (artipy.stats.SubStat): The substat to calculate the rolls for.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: The number of rolls of the substat.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">possible_rolls</span> <span class="o">=</span> <span class="n">possible_substat_values</span><span class="p">(</span><span class="n">substat</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">substat</span><span class="o">.</span><span class="n">rarity</span><span class="p">)</span>
+    <span class="n">average_roll</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">possible_rolls</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">possible_rolls</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">substat</span><span class="o">.</span><span class="n">value</span> <span class="o">-</span> <span class="n">average_roll</span><span class="p">)</span> <span class="o">/</span> <span class="n">average_roll</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="calculate_substat_roll_magnitudes">
+<a class="viewcode-back" href="../../../artipy.analysis.html#artipy.analysis.analyse.calculate_substat_roll_magnitudes">[docs]</a>
+<span class="k">def</span> <span class="nf">calculate_substat_roll_magnitudes</span><span class="p">(</span><span class="n">substat</span><span class="p">:</span> <span class="n">SubStat</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">RollMagnitude</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the roll magnitudes of a substat. This is the closest roll magnitude</span>
+<span class="sd">    to the actual roll value for each roll.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        substat (artipy.stats.SubStat): The substat to calculate the roll magnitudes</span>
+<span class="sd">                                        for.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple[RollMagnitude, ...]: The roll magnitudes of the substat.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">get_magnitude</span><span class="p">(</span>
+        <span class="n">values</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Decimal</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">value_to_index</span><span class="p">:</span> <span class="n">Decimal</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RollMagnitude</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">value_to_index</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">RollMagnitude</span><span class="o">.</span><span class="n">closest</span><span class="p">(</span><span class="n">ROLL_MULTIPLIERS</span><span class="p">[</span><span class="n">substat</span><span class="o">.</span><span class="n">rarity</span><span class="p">][</span><span class="n">index</span><span class="p">])</span>
+
+    <span class="n">possible_rolls</span> <span class="o">=</span> <span class="n">possible_substat_values</span><span class="p">(</span><span class="n">substat</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">substat</span><span class="o">.</span><span class="n">rarity</span><span class="p">)</span>
+    <span class="n">rolls_actual</span> <span class="o">=</span> <span class="n">calculate_substat_rolls</span><span class="p">(</span><span class="n">substat</span><span class="p">)</span>
+
+    <span class="n">combinations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="n">itertools</span><span class="o">.</span><span class="n">combinations_with_replacement</span><span class="p">(</span><span class="n">possible_rolls</span><span class="p">,</span> <span class="n">rolls_actual</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">combination</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">combinations</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">substat</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">get_magnitude</span><span class="p">(</span><span class="n">possible_rolls</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">combination</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="calculate_artifact_roll_value">
+<a class="viewcode-back" href="../../../artipy.analysis.html#artipy.analysis.analyse.calculate_artifact_roll_value">[docs]</a>
+<span class="k">def</span> <span class="nf">calculate_artifact_roll_value</span><span class="p">(</span><span class="n">artifact</span><span class="p">:</span> <span class="n">Artifact</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Decimal</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the roll value of an artifact. This is the sum of the roll values of</span>
+<span class="sd">    all substats.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        artifact (artipy.artifacts.Artifact): The artifact to calculate the roll value</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Decimal: The roll value of the artifact.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Decimal</span><span class="p">(</span>
+        <span class="nb">sum</span><span class="p">(</span><span class="n">calculate_substat_roll_value</span><span class="p">(</span><span class="n">substat</span><span class="p">)</span> <span class="k">for</span> <span class="n">substat</span> <span class="ow">in</span> <span class="n">artifact</span><span class="o">.</span><span class="n">substats</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="calculate_artifact_maximum_roll_value">
+<a class="viewcode-back" href="../../../artipy.analysis.html#artipy.analysis.analyse.calculate_artifact_maximum_roll_value">[docs]</a>
+<span class="k">def</span> <span class="nf">calculate_artifact_maximum_roll_value</span><span class="p">(</span><span class="n">artifact</span><span class="p">:</span> <span class="n">Artifact</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Decimal</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the maximum roll value of an artifact. This is the roll value of the</span>
+<span class="sd">    artifact with all remaining rolls being maximum rolls.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        artifact (artipy.artifacts.Artifact): The artifact to calculate the maximum</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Decimal: The maximum roll value of the artifact.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">artifact_max_level</span> <span class="o">=</span> <span class="n">artifact</span><span class="o">.</span><span class="n">rarity</span> <span class="o">*</span> <span class="mi">4</span>
+    <span class="n">remaining_rolls</span> <span class="o">=</span> <span class="p">(</span><span class="n">artifact_max_level</span> <span class="o">-</span> <span class="n">artifact</span><span class="o">.</span><span class="n">level</span><span class="p">)</span> <span class="o">//</span> <span class="n">UPGRADE_STEP</span>
+    <span class="k">return</span> <span class="n">Decimal</span><span class="p">(</span><span class="n">calculate_artifact_roll_value</span><span class="p">(</span><span class="n">artifact</span><span class="p">)</span> <span class="o">+</span> <span class="n">remaining_rolls</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="calculate_artifact_crit_value">
+<a class="viewcode-back" href="../../../artipy.analysis.html#artipy.analysis.analyse.calculate_artifact_crit_value">[docs]</a>
+<span class="k">def</span> <span class="nf">calculate_artifact_crit_value</span><span class="p">(</span><span class="n">artifact</span><span class="p">:</span> <span class="n">Artifact</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Decimal</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the crit value of an artifact. This is the sum of the crit damage and</span>
+<span class="sd">    the crit rate times two.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        artifact (artipy.artifacts.Artifact): The artifact to calculate the crit value</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Decimal: The crit value of the artifact.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">crit_dmg</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="nb">sum</span><span class="p">([</span>
+            <span class="n">substat</span><span class="o">.</span><span class="n">value</span>
+            <span class="k">for</span> <span class="n">substat</span> <span class="ow">in</span> <span class="n">artifact</span><span class="o">.</span><span class="n">substats</span>
+            <span class="k">if</span> <span class="n">substat</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">StatType</span><span class="o">.</span><span class="n">CRIT_DMG</span>
+        <span class="p">])</span>
+        <span class="o">*</span> <span class="mi">100</span>
+    <span class="p">)</span>
+    <span class="n">crit_rate</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="nb">sum</span><span class="p">([</span>
+            <span class="n">substat</span><span class="o">.</span><span class="n">value</span>
+            <span class="k">for</span> <span class="n">substat</span> <span class="ow">in</span> <span class="n">artifact</span><span class="o">.</span><span class="n">substats</span>
+            <span class="k">if</span> <span class="n">substat</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">StatType</span><span class="o">.</span><span class="n">CRIT_RATE</span>
+        <span class="p">])</span>
+        <span class="o">*</span> <span class="mi">100</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">Decimal</span><span class="p">(</span><span class="n">crit_dmg</span> <span class="o">+</span> <span class="n">crit_rate</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Truman Mulholland.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>artipy.analysis &mdash; artipy 1.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="_static/favicon.svg"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=6efca38a"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="artipy.artifacts" href="artipy.artifacts.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="artipy.html">artipy</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">artipy.analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-artipy.analysis.analyse">artipy.analysis.analyse module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.analysis.analyse.calculate_artifact_crit_value"><code class="docutils literal notranslate"><span class="pre">calculate_artifact_crit_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.analysis.analyse.calculate_artifact_maximum_roll_value"><code class="docutils literal notranslate"><span class="pre">calculate_artifact_maximum_roll_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.analysis.analyse.calculate_artifact_roll_value"><code class="docutils literal notranslate"><span class="pre">calculate_artifact_roll_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.analysis.analyse.calculate_substat_roll_magnitudes"><code class="docutils literal notranslate"><span class="pre">calculate_substat_roll_magnitudes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.analysis.analyse.calculate_substat_roll_value"><code class="docutils literal notranslate"><span class="pre">calculate_substat_roll_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.analysis.analyse.calculate_substat_rolls"><code class="docutils literal notranslate"><span class="pre">calculate_substat_rolls()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-artipy.analysis.plots">artipy.analysis.plots module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.analysis.plots.plot_artifact_substat_rolls"><code class="docutils literal notranslate"><span class="pre">plot_artifact_substat_rolls()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.analysis.plots.plot_crit_value_distribution"><code class="docutils literal notranslate"><span class="pre">plot_crit_value_distribution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.analysis.plots.plot_expected_against_actual_mainstats"><code class="docutils literal notranslate"><span class="pre">plot_expected_against_actual_mainstats()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.analysis.plots.plot_multi_value_distribution"><code class="docutils literal notranslate"><span class="pre">plot_multi_value_distribution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.analysis.plots.plot_roll_value_distribution"><code class="docutils literal notranslate"><span class="pre">plot_roll_value_distribution()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-artipy.analysis.simulate">artipy.analysis.simulate module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.analysis.simulate.create_multiple_random_artifacts"><code class="docutils literal notranslate"><span class="pre">create_multiple_random_artifacts()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.analysis.simulate.create_random_artifact"><code class="docutils literal notranslate"><span class="pre">create_random_artifact()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.analysis.simulate.upgrade_artifact_to_max"><code class="docutils literal notranslate"><span class="pre">upgrade_artifact_to_max()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-artipy.analysis">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.analysis.calculate_artifact_crit_value"><code class="docutils literal notranslate"><span class="pre">calculate_artifact_crit_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.analysis.calculate_artifact_maximum_roll_value"><code class="docutils literal notranslate"><span class="pre">calculate_artifact_maximum_roll_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.analysis.calculate_artifact_roll_value"><code class="docutils literal notranslate"><span class="pre">calculate_artifact_roll_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.analysis.calculate_substat_roll_value"><code class="docutils literal notranslate"><span class="pre">calculate_substat_roll_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.analysis.calculate_substat_rolls"><code class="docutils literal notranslate"><span class="pre">calculate_substat_rolls()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="artipy.artifacts.html">artipy.artifacts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="artipy.stats.html">artipy.stats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="artipy.html#submodules">Submodules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">artipy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="artipy.html">artipy</a></li>
+          <li class="breadcrumb-item"><a href="modules.html">&lt;no title&gt;</a></li>
+      <li class="breadcrumb-item active">artipy.analysis</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/artipy.analysis.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="artipy-analysis">
+<h1>artipy.analysis<a class="headerlink" href="#artipy-analysis" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-artipy.analysis.analyse">
+<span id="artipy-analysis-analyse-module"></span><h2>artipy.analysis.analyse module<a class="headerlink" href="#module-artipy.analysis.analyse" title="Link to this heading"></a></h2>
+<p>This module contains functions for analysing artifacts and their rolls.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.analysis.analyse.calculate_artifact_crit_value">
+<span class="sig-prename descclassname"><span class="pre">artipy.analysis.analyse.</span></span><span class="sig-name descname"><span class="pre">calculate_artifact_crit_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact" title="artipy.artifacts.artifact.Artifact"><span class="pre">Artifact</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Decimal</span></span></span><a class="reference internal" href="_modules/artipy/analysis/analyse.html#calculate_artifact_crit_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.analysis.analyse.calculate_artifact_crit_value" title="Link to this definition"></a></dt>
+<dd><p>Calculate the crit value of an artifact. This is the sum of the crit damage and
+the crit rate times two.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>artifact</strong> (<a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact" title="artipy.artifacts.Artifact"><em>artipy.artifacts.Artifact</em></a>) – The artifact to calculate the crit value</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The crit value of the artifact.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Decimal</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.analysis.analyse.calculate_artifact_maximum_roll_value">
+<span class="sig-prename descclassname"><span class="pre">artipy.analysis.analyse.</span></span><span class="sig-name descname"><span class="pre">calculate_artifact_maximum_roll_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact" title="artipy.artifacts.artifact.Artifact"><span class="pre">Artifact</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Decimal</span></span></span><a class="reference internal" href="_modules/artipy/analysis/analyse.html#calculate_artifact_maximum_roll_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.analysis.analyse.calculate_artifact_maximum_roll_value" title="Link to this definition"></a></dt>
+<dd><p>Calculate the maximum roll value of an artifact. This is the roll value of the
+artifact with all remaining rolls being maximum rolls.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>artifact</strong> (<a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact" title="artipy.artifacts.Artifact"><em>artipy.artifacts.Artifact</em></a>) – The artifact to calculate the maximum</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The maximum roll value of the artifact.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Decimal</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.analysis.analyse.calculate_artifact_roll_value">
+<span class="sig-prename descclassname"><span class="pre">artipy.analysis.analyse.</span></span><span class="sig-name descname"><span class="pre">calculate_artifact_roll_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact" title="artipy.artifacts.artifact.Artifact"><span class="pre">Artifact</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Decimal</span></span></span><a class="reference internal" href="_modules/artipy/analysis/analyse.html#calculate_artifact_roll_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.analysis.analyse.calculate_artifact_roll_value" title="Link to this definition"></a></dt>
+<dd><p>Calculate the roll value of an artifact. This is the sum of the roll values of
+all substats.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>artifact</strong> (<a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact" title="artipy.artifacts.Artifact"><em>artipy.artifacts.Artifact</em></a>) – The artifact to calculate the roll value</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The roll value of the artifact.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Decimal</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.analysis.analyse.calculate_substat_roll_magnitudes">
+<span class="sig-prename descclassname"><span class="pre">artipy.analysis.analyse.</span></span><span class="sig-name descname"><span class="pre">calculate_substat_roll_magnitudes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">substat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="artipy.stats.html#artipy.stats.substat.SubStat" title="artipy.stats.substat.SubStat"><span class="pre">SubStat</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="artipy.html#artipy.types.RollMagnitude" title="artipy.types.RollMagnitude"><span class="pre">RollMagnitude</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/artipy/analysis/analyse.html#calculate_substat_roll_magnitudes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.analysis.analyse.calculate_substat_roll_magnitudes" title="Link to this definition"></a></dt>
+<dd><p>Calculate the roll magnitudes of a substat. This is the closest roll magnitude
+to the actual roll value for each roll.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>substat</strong> (<a class="reference internal" href="artipy.stats.html#artipy.stats.SubStat" title="artipy.stats.SubStat"><em>artipy.stats.SubStat</em></a>) – The substat to calculate the roll magnitudes
+for.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The roll magnitudes of the substat.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[<a class="reference internal" href="artipy.html#artipy.types.RollMagnitude" title="artipy.types.RollMagnitude">RollMagnitude</a>, …]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.analysis.analyse.calculate_substat_roll_value">
+<span class="sig-prename descclassname"><span class="pre">artipy.analysis.analyse.</span></span><span class="sig-name descname"><span class="pre">calculate_substat_roll_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">substat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="artipy.stats.html#artipy.stats.substat.SubStat" title="artipy.stats.substat.SubStat"><span class="pre">SubStat</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Decimal</span></span></span><a class="reference internal" href="_modules/artipy/analysis/analyse.html#calculate_substat_roll_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.analysis.analyse.calculate_substat_roll_value" title="Link to this definition"></a></dt>
+<dd><p>Calculate the substat roll value. This is the value of the substat divided by the
+highest possible value of the substat.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>substat</strong> (<a class="reference internal" href="artipy.stats.html#artipy.stats.SubStat" title="artipy.stats.SubStat"><em>artipy.stats.SubStat</em></a>) – The substat to calculate the roll value for.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The roll value of the substat.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Decimal</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.analysis.analyse.calculate_substat_rolls">
+<span class="sig-prename descclassname"><span class="pre">artipy.analysis.analyse.</span></span><span class="sig-name descname"><span class="pre">calculate_substat_rolls</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">substat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="artipy.stats.html#artipy.stats.substat.SubStat" title="artipy.stats.substat.SubStat"><span class="pre">SubStat</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/artipy/analysis/analyse.html#calculate_substat_rolls"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.analysis.analyse.calculate_substat_rolls" title="Link to this definition"></a></dt>
+<dd><p>Calculate the number of rolls of a substat. This is the difference between the
+actual roll value and the average roll value divided by the average roll value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>substat</strong> (<a class="reference internal" href="artipy.stats.html#artipy.stats.SubStat" title="artipy.stats.SubStat"><em>artipy.stats.SubStat</em></a>) – The substat to calculate the rolls for.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The number of rolls of the substat.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-artipy.analysis.plots">
+<span id="artipy-analysis-plots-module"></span><h2>artipy.analysis.plots module<a class="headerlink" href="#module-artipy.analysis.plots" title="Link to this heading"></a></h2>
+<p>This module contains functions to plot various statistics of artifacts.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.analysis.plots.plot_artifact_substat_rolls">
+<span class="sig-prename descclassname"><span class="pre">artipy.analysis.plots.</span></span><span class="sig-name descname"><span class="pre">plot_artifact_substat_rolls</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact" title="artipy.artifacts.artifact.Artifact"><span class="pre">Artifact</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/artipy/analysis/plots.html#plot_artifact_substat_rolls"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.analysis.plots.plot_artifact_substat_rolls" title="Link to this definition"></a></dt>
+<dd><p>Plot the substat rolls of an artifact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>artifact</strong> (<a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact" title="artipy.artifacts.Artifact"><em>artipy.artifacts.Artifact</em></a>) – The artifact to plot the substat rolls
+for.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.analysis.plots.plot_crit_value_distribution">
+<span class="sig-prename descclassname"><span class="pre">artipy.analysis.plots.</span></span><span class="sig-name descname"><span class="pre">plot_crit_value_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/artipy/analysis/plots.html#plot_crit_value_distribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.analysis.plots.plot_crit_value_distribution" title="Link to this definition"></a></dt>
+<dd><p>Plot the crit value distribution of artifacts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>iterations</strong> (<em>int</em><em>, </em><em>optional</em>) – The artifacts to generate. Defaults to 1000.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.analysis.plots.plot_expected_against_actual_mainstats">
+<span class="sig-prename descclassname"><span class="pre">artipy.analysis.plots.</span></span><span class="sig-name descname"><span class="pre">plot_expected_against_actual_mainstats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/artipy/analysis/plots.html#plot_expected_against_actual_mainstats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.analysis.plots.plot_expected_against_actual_mainstats" title="Link to this definition"></a></dt>
+<dd><p>Plot the expected mainstats against the actual mainstats of artifacts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>iterations</strong> (<em>int</em><em>, </em><em>optional</em>) – The artifacts to generate. Defaults to 1000.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.analysis.plots.plot_multi_value_distribution">
+<span class="sig-prename descclassname"><span class="pre">artipy.analysis.plots.</span></span><span class="sig-name descname"><span class="pre">plot_multi_value_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/artipy/analysis/plots.html#plot_multi_value_distribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.analysis.plots.plot_multi_value_distribution" title="Link to this definition"></a></dt>
+<dd><p>Plot a combined histogram of multiple attributes of artifacts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attributes</strong> (<em>tuple</em><em>[</em><em>str</em><em>]</em>) – The attributes to plot.</p></li>
+<li><p><strong>iterations</strong> (<em>int</em><em>, </em><em>optional</em>) – The artifacts to generate. Defaults to 1000.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If an invalid attribute is passed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.analysis.plots.plot_roll_value_distribution">
+<span class="sig-prename descclassname"><span class="pre">artipy.analysis.plots.</span></span><span class="sig-name descname"><span class="pre">plot_roll_value_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/artipy/analysis/plots.html#plot_roll_value_distribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.analysis.plots.plot_roll_value_distribution" title="Link to this definition"></a></dt>
+<dd><p>Plot the roll value distribution of artifacts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>iterations</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of artifacts. Defaults to 1000.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-artipy.analysis.simulate">
+<span id="artipy-analysis-simulate-module"></span><h2>artipy.analysis.simulate module<a class="headerlink" href="#module-artipy.analysis.simulate" title="Link to this heading"></a></h2>
+<p>This module contains functions to simulate artifacts.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.analysis.simulate.create_multiple_random_artifacts">
+<span class="sig-prename descclassname"><span class="pre">artipy.analysis.simulate.</span></span><span class="sig-name descname"><span class="pre">create_multiple_random_artifacts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact" title="artipy.artifacts.artifact.Artifact"><span class="pre">Artifact</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/artipy/analysis/simulate.html#create_multiple_random_artifacts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.analysis.simulate.create_multiple_random_artifacts" title="Link to this definition"></a></dt>
+<dd><p>Create multiple random artifacts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>amount</strong> (<em>int</em><em>, </em><em>optional</em>) – The amount of artifacts to generate. Defaults to 1.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list of random artifacts.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact" title="artipy.artifacts.Artifact">artipy.artifacts.Artifact</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.analysis.simulate.create_random_artifact">
+<span class="sig-prename descclassname"><span class="pre">artipy.analysis.simulate.</span></span><span class="sig-name descname"><span class="pre">create_random_artifact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="artipy.html#artipy.types.ArtifactSlot" title="artipy.types.ArtifactSlot"><span class="pre">ArtifactSlot</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rarity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact" title="artipy.artifacts.artifact.Artifact"><span class="pre">Artifact</span></a></span></span><a class="reference internal" href="_modules/artipy/analysis/simulate.html#create_random_artifact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.analysis.simulate.create_random_artifact" title="Link to this definition"></a></dt>
+<dd><p>Create a random artifact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>slot</strong> (<a class="reference internal" href="artipy.html#artipy.types.ArtifactSlot" title="artipy.types.ArtifactSlot"><em>artipy.types.ArtifactSlot</em></a>) – The slot of the artifact.</p></li>
+<li><p><strong>rarity</strong> (<em>int</em><em>, </em><em>optional</em>) – The rarity of the artifact. Defaults to 5.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The random artifact.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact" title="artipy.artifacts.Artifact">artipy.artifacts.Artifact</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.analysis.simulate.upgrade_artifact_to_max">
+<span class="sig-prename descclassname"><span class="pre">artipy.analysis.simulate.</span></span><span class="sig-name descname"><span class="pre">upgrade_artifact_to_max</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact" title="artipy.artifacts.artifact.Artifact"><span class="pre">Artifact</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact" title="artipy.artifacts.artifact.Artifact"><span class="pre">Artifact</span></a></span></span><a class="reference internal" href="_modules/artipy/analysis/simulate.html#upgrade_artifact_to_max"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.analysis.simulate.upgrade_artifact_to_max" title="Link to this definition"></a></dt>
+<dd><p>Upgrade an artifact to its maximum level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>artifact</strong> (<a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact" title="artipy.artifacts.Artifact"><em>artipy.artifacts.Artifact</em></a>) – The artifact to upgrade.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The upgraded artifact.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact" title="artipy.artifacts.Artifact">artipy.artifacts.Artifact</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-artipy.analysis">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-artipy.analysis" title="Link to this heading"></a></h2>
+<p>Module for analysing artifacts.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.analysis.calculate_artifact_crit_value">
+<span class="sig-prename descclassname"><span class="pre">artipy.analysis.</span></span><span class="sig-name descname"><span class="pre">calculate_artifact_crit_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact" title="artipy.artifacts.artifact.Artifact"><span class="pre">Artifact</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Decimal</span></span></span><a class="reference internal" href="_modules/artipy/analysis/analyse.html#calculate_artifact_crit_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.analysis.calculate_artifact_crit_value" title="Link to this definition"></a></dt>
+<dd><p>Calculate the crit value of an artifact. This is the sum of the crit damage and
+the crit rate times two.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>artifact</strong> (<a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact" title="artipy.artifacts.Artifact"><em>artipy.artifacts.Artifact</em></a>) – The artifact to calculate the crit value</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The crit value of the artifact.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Decimal</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.analysis.calculate_artifact_maximum_roll_value">
+<span class="sig-prename descclassname"><span class="pre">artipy.analysis.</span></span><span class="sig-name descname"><span class="pre">calculate_artifact_maximum_roll_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact" title="artipy.artifacts.artifact.Artifact"><span class="pre">Artifact</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Decimal</span></span></span><a class="reference internal" href="_modules/artipy/analysis/analyse.html#calculate_artifact_maximum_roll_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.analysis.calculate_artifact_maximum_roll_value" title="Link to this definition"></a></dt>
+<dd><p>Calculate the maximum roll value of an artifact. This is the roll value of the
+artifact with all remaining rolls being maximum rolls.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>artifact</strong> (<a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact" title="artipy.artifacts.Artifact"><em>artipy.artifacts.Artifact</em></a>) – The artifact to calculate the maximum</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The maximum roll value of the artifact.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Decimal</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.analysis.calculate_artifact_roll_value">
+<span class="sig-prename descclassname"><span class="pre">artipy.analysis.</span></span><span class="sig-name descname"><span class="pre">calculate_artifact_roll_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact" title="artipy.artifacts.artifact.Artifact"><span class="pre">Artifact</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Decimal</span></span></span><a class="reference internal" href="_modules/artipy/analysis/analyse.html#calculate_artifact_roll_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.analysis.calculate_artifact_roll_value" title="Link to this definition"></a></dt>
+<dd><p>Calculate the roll value of an artifact. This is the sum of the roll values of
+all substats.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>artifact</strong> (<a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact" title="artipy.artifacts.Artifact"><em>artipy.artifacts.Artifact</em></a>) – The artifact to calculate the roll value</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The roll value of the artifact.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Decimal</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.analysis.calculate_substat_roll_value">
+<span class="sig-prename descclassname"><span class="pre">artipy.analysis.</span></span><span class="sig-name descname"><span class="pre">calculate_substat_roll_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">substat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="artipy.stats.html#artipy.stats.substat.SubStat" title="artipy.stats.substat.SubStat"><span class="pre">SubStat</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Decimal</span></span></span><a class="reference internal" href="_modules/artipy/analysis/analyse.html#calculate_substat_roll_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.analysis.calculate_substat_roll_value" title="Link to this definition"></a></dt>
+<dd><p>Calculate the substat roll value. This is the value of the substat divided by the
+highest possible value of the substat.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>substat</strong> (<a class="reference internal" href="artipy.stats.html#artipy.stats.SubStat" title="artipy.stats.SubStat"><em>artipy.stats.SubStat</em></a>) – The substat to calculate the roll value for.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The roll value of the substat.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Decimal</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.analysis.calculate_substat_rolls">
+<span class="sig-prename descclassname"><span class="pre">artipy.analysis.</span></span><span class="sig-name descname"><span class="pre">calculate_substat_rolls</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">substat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="artipy.stats.html#artipy.stats.substat.SubStat" title="artipy.stats.substat.SubStat"><span class="pre">SubStat</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/artipy/analysis/analyse.html#calculate_substat_rolls"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.analysis.calculate_substat_rolls" title="Link to this definition"></a></dt>
+<dd><p>Calculate the number of rolls of a substat. This is the difference between the
+actual roll value and the average roll value divided by the average roll value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>substat</strong> (<a class="reference internal" href="artipy.stats.html#artipy.stats.SubStat" title="artipy.stats.SubStat"><em>artipy.stats.SubStat</em></a>) – The substat to calculate the rolls for.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The number of rolls of the substat.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="artipy.artifacts.html" class="btn btn-neutral float-right" title="artipy.artifacts" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Truman Mulholland.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

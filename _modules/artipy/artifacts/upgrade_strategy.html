@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>artipy.artifacts.upgrade_strategy &mdash; artipy 1.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.svg"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=6efca38a"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../artipy.html">artipy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../artipy.html#submodules">Submodules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">artipy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">artipy.artifacts.upgrade_strategy</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for artipy.artifacts.upgrade_strategy</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;This module contains classes for upgrading artifacts.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+
+<span class="kn">from</span> <span class="nn">artipy</span> <span class="kn">import</span> <span class="n">UPGRADE_STEP</span>
+<span class="kn">from</span> <span class="nn">artipy.stats</span> <span class="kn">import</span> <span class="n">SubStat</span><span class="p">,</span> <span class="n">create_substat</span>
+<span class="kn">from</span> <span class="nn">artipy.types</span> <span class="kn">import</span> <span class="n">StatType</span>
+
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">choose</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.artifact</span> <span class="kn">import</span> <span class="n">Artifact</span>
+
+
+<span class="n">substat_weights</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">StatType</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">HP</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">ATK</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">DEF</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">HP_PERCENT</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">ATK_PERCENT</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">DEF_PERCENT</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">ENERGY_RECHARGE</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">ELEMENTAL_MASTERY</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">CRIT_RATE</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">StatType</span><span class="o">.</span><span class="n">CRIT_DMG</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="UpgradeStrategy">
+<a class="viewcode-back" href="../../../artipy.artifacts.html#artipy.artifacts.upgrade_strategy.UpgradeStrategy">[docs]</a>
+<span class="k">class</span> <span class="nc">UpgradeStrategy</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A base Strategy class for upgrading artifacts.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="UpgradeStrategy.upgrade">
+<a class="viewcode-back" href="../../../artipy.artifacts.html#artipy.artifacts.upgrade_strategy.UpgradeStrategy.upgrade">[docs]</a>
+    <span class="k">def</span> <span class="nf">upgrade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artifact</span><span class="p">:</span> <span class="s2">&quot;Artifact&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Upgrade the artifact&#39;s level by one.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            artifact (artipy.artifacts.Artifact): The artifact to upgrade.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_level</span> <span class="o">=</span> <span class="n">artifact</span><span class="o">.</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">artifact</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">new_level</span>
+        <span class="k">if</span> <span class="n">artifact</span><span class="o">.</span><span class="n">mainstat</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">artifact</span><span class="o">.</span><span class="n">mainstat</span><span class="o">.</span><span class="n">set_value_by_level</span><span class="p">(</span><span class="n">new_level</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AddStatStrategy">
+<a class="viewcode-back" href="../../../artipy.artifacts.html#artipy.artifacts.upgrade_strategy.AddStatStrategy">[docs]</a>
+<span class="k">class</span> <span class="nc">AddStatStrategy</span><span class="p">(</span><span class="n">UpgradeStrategy</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A Strategy class for adding a new substat to an artifact.</span>
+
+<span class="sd">    This strategy is used when initially creating an artifact and when an artifact</span>
+<span class="sd">    is capable of generating a new substat.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AddStatStrategy.pick_stat">
+<a class="viewcode-back" href="../../../artipy.artifacts.html#artipy.artifacts.upgrade_strategy.AddStatStrategy.pick_stat">[docs]</a>
+    <span class="k">def</span> <span class="nf">pick_stat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artifact</span><span class="p">:</span> <span class="s2">&quot;Artifact&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SubStat</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Pick a new substat for the artifact.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            artifact (artipy.artifacts.Artifact): The artifact to pick a substat for.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            artipy.stats.SubStat: The new substat to add to the artifact.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">(</span><span class="n">artifact</span><span class="o">.</span><span class="n">mainstat</span><span class="p">,</span> <span class="o">*</span><span class="n">artifact</span><span class="o">.</span><span class="n">substats</span><span class="p">)</span> <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">]</span>
+        <span class="n">pool</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="n">w</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">substat_weights</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">s</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stats</span><span class="p">}</span>
+        <span class="n">population</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">pool</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+        <span class="n">new_stat_name</span> <span class="o">=</span> <span class="n">choose</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
+        <span class="n">new_stat</span> <span class="o">=</span> <span class="n">create_substat</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">new_stat_name</span><span class="p">,</span> <span class="n">rarity</span><span class="o">=</span><span class="n">artifact</span><span class="o">.</span><span class="n">rarity</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_stat</span></div>
+
+
+<div class="viewcode-block" id="AddStatStrategy.upgrade">
+<a class="viewcode-back" href="../../../artipy.artifacts.html#artipy.artifacts.upgrade_strategy.AddStatStrategy.upgrade">[docs]</a>
+    <span class="k">def</span> <span class="nf">upgrade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artifact</span><span class="p">:</span> <span class="s2">&quot;Artifact&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Upgrade the artifact. If the artifact level is divisible by the upgrade step,</span>
+<span class="sd">        add a new substat to the artifact.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            artifact (artipy.artifacts.Artifact): The artifact to upgrade.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">artifact</span><span class="o">.</span><span class="n">level</span> <span class="o">%</span> <span class="n">UPGRADE_STEP</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">new_stat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pick_stat</span><span class="p">(</span><span class="n">artifact</span><span class="p">)</span>
+            <span class="n">artifact</span><span class="o">.</span><span class="n">add_substat</span><span class="p">(</span><span class="n">new_stat</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">upgrade</span><span class="p">(</span><span class="n">artifact</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="UpgradeStatStrategy">
+<a class="viewcode-back" href="../../../artipy.artifacts.html#artipy.artifacts.upgrade_strategy.UpgradeStatStrategy">[docs]</a>
+<span class="k">class</span> <span class="nc">UpgradeStatStrategy</span><span class="p">(</span><span class="n">UpgradeStrategy</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A Strategy class for upgrading a substat on an artifact.</span>
+
+<span class="sd">    This strategy is used when an artifact is capable of upgrading a substat. The</span>
+<span class="sd">    substat to upgrade is chosen randomly.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="UpgradeStatStrategy.upgrade">
+<a class="viewcode-back" href="../../../artipy.artifacts.html#artipy.artifacts.upgrade_strategy.UpgradeStatStrategy.upgrade">[docs]</a>
+    <span class="k">def</span> <span class="nf">upgrade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artifact</span><span class="p">:</span> <span class="s2">&quot;Artifact&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Upgrade the artifact. If the artifact level is divisible by the upgrade step,</span>
+<span class="sd">        upgrade a random substat on the artifact.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            artifact (aritpy.artifacts.Artifact): The artifact to upgrade.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">artifact</span><span class="o">.</span><span class="n">level</span> <span class="o">%</span> <span class="n">UPGRADE_STEP</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">substat</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">artifact</span><span class="o">.</span><span class="n">substats</span><span class="p">)</span>
+            <span class="n">substat</span><span class="o">.</span><span class="n">upgrade</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">upgrade</span><span class="p">(</span><span class="n">artifact</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Truman Mulholland.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

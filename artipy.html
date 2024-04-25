@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>artipy &mdash; artipy 1.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="shortcut icon" href="_static/favicon.svg"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=6efca38a"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="modules.html" />
+    <link rel="prev" title="" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">artipy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="artipy.analysis.html">artipy.analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="artipy.artifacts.html">artipy.artifacts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="artipy.stats.html">artipy.stats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-artipy.data_gen">artipy.data_gen</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#artipy.data_gen.DataGen"><code class="docutils literal notranslate"><span class="pre">DataGen</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.data_gen.DataGen._instances"><code class="docutils literal notranslate"><span class="pre">DataGen._instances</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.data_gen.DataGen._data"><code class="docutils literal notranslate"><span class="pre">DataGen._data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.data_gen.DataGen.__init__"><code class="docutils literal notranslate"><span class="pre">DataGen.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.data_gen.DataGen.__new__"><code class="docutils literal notranslate"><span class="pre">DataGen.__new__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#artipy.data_gen.camel_to_snake_case"><code class="docutils literal notranslate"><span class="pre">camel_to_snake_case()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#artipy.data_gen.json_to_dict"><code class="docutils literal notranslate"><span class="pre">json_to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#artipy.data_gen.recursive_namespace"><code class="docutils literal notranslate"><span class="pre">recursive_namespace()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-artipy.types">artipy.types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#artipy.types.ArtifactSet"><code class="docutils literal notranslate"><span class="pre">ArtifactSet</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.ADVENTURER"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.ADVENTURER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.ARCHAIC_PETRA"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.ARCHAIC_PETRA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.BERSERKER"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.BERSERKER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.BLIZZARD_STRAYER"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.BLIZZARD_STRAYER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.BLOODSTAINED_CHIVALRY"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.BLOODSTAINED_CHIVALRY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.BRAVE_HEART"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.BRAVE_HEART</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.CRIMSON_WITCH_OF_FLAMES"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.CRIMSON_WITCH_OF_FLAMES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.DEEPWOOD_MEMORIES"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.DEEPWOOD_MEMORIES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.DEFENDERS_WILL"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.DEFENDERS_WILL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.DESERT_PAVILION_CHRONICLE"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.DESERT_PAVILION_CHRONICLE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.ECHOES_OF_AN_OFFERING"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.ECHOES_OF_AN_OFFERING</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.EMBLEM_OF_SEVERED_FATE"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.EMBLEM_OF_SEVERED_FATE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.FLOWER_OF_PARADISE_LOST"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.FLOWER_OF_PARADISE_LOST</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.GAMBLER"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.GAMBLER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.GILDED_DREAMS"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.GILDED_DREAMS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.GLADIATORS_FINALE"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.GLADIATORS_FINALE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.GOLDEN_TROUPE"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.GOLDEN_TROUPE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.HEART_OF_DEPTH"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.HEART_OF_DEPTH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.HUSK_OF_OPULENT_DREAMS"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.HUSK_OF_OPULENT_DREAMS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.INSTRUCTOR"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.INSTRUCTOR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.LAVAWALKER"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.LAVAWALKER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.LUCKY_DOG"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.LUCKY_DOG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.MAIDEN_BELOVED"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.MAIDEN_BELOVED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.MARECHAUSSEE_HUNTER"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.MARECHAUSSEE_HUNTER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.MARTIAL_ARTIST"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.MARTIAL_ARTIST</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.NIGHTTIME_WHISPERS_IN_THE_ECHOING_WOODS"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.NIGHTTIME_WHISPERS_IN_THE_ECHOING_WOODS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.NOBLESSE_OBLIGE"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.NOBLESSE_OBLIGE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.NYMPHS_DREAM"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.NYMPHS_DREAM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.OCEAN_HUED_CLAM"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.OCEAN_HUED_CLAM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.PALE_FLAME"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.PALE_FLAME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.PRAYERS_FOR_DESTINY"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.PRAYERS_FOR_DESTINY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.PRAYERS_FOR_ILLUMINATION"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.PRAYERS_FOR_ILLUMINATION</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.PRAYERS_FOR_WISDOM"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.PRAYERS_FOR_WISDOM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.PRAYERS_TO_SPRINGTIME"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.PRAYERS_TO_SPRINGTIME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.RESOLUTION_OF_SOJOURNER"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.RESOLUTION_OF_SOJOURNER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.RETRACING_BOLIDE"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.RETRACING_BOLIDE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.SCHOLAR"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.SCHOLAR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.SHIMENAWAS_REMINISCENCE"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.SHIMENAWAS_REMINISCENCE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.SONG_OF_DAYS_PAST"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.SONG_OF_DAYS_PAST</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.TENACITY_OF_THE_MILLELITH"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.TENACITY_OF_THE_MILLELITH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.THE_EXILE"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.THE_EXILE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.THUNDERING_FURY"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.THUNDERING_FURY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.THUNDERSOOTHER"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.THUNDERSOOTHER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.TINY_MIRACLE"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.TINY_MIRACLE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.TRAVELING_DOCTOR"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.TRAVELING_DOCTOR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.VERMILLION_HEREAFTER"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.VERMILLION_HEREAFTER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.VIRIDESCENT_VENERER"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.VIRIDESCENT_VENERER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.VOURUKASHAS_GLOW"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.VOURUKASHAS_GLOW</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet.WANDERERS_TROUPE"><code class="docutils literal notranslate"><span class="pre">ArtifactSet.WANDERERS_TROUPE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSet._generate_next_value_"><code class="docutils literal notranslate"><span class="pre">ArtifactSet._generate_next_value_()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#artipy.types.ArtifactSetData"><code class="docutils literal notranslate"><span class="pre">ArtifactSetData</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSetData.pieces"><code class="docutils literal notranslate"><span class="pre">ArtifactSetData.pieces</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSetData.set_effects"><code class="docutils literal notranslate"><span class="pre">ArtifactSetData.set_effects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSetData.set_name"><code class="docutils literal notranslate"><span class="pre">ArtifactSetData.set_name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#artipy.types.ArtifactSlot"><code class="docutils literal notranslate"><span class="pre">ArtifactSlot</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSlot.CIRCLET"><code class="docutils literal notranslate"><span class="pre">ArtifactSlot.CIRCLET</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSlot.FLOWER"><code class="docutils literal notranslate"><span class="pre">ArtifactSlot.FLOWER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSlot.GOBLET"><code class="docutils literal notranslate"><span class="pre">ArtifactSlot.GOBLET</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSlot.PLUME"><code class="docutils literal notranslate"><span class="pre">ArtifactSlot.PLUME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSlot.SANDS"><code class="docutils literal notranslate"><span class="pre">ArtifactSlot.SANDS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.ArtifactSlot._generate_next_value_"><code class="docutils literal notranslate"><span class="pre">ArtifactSlot._generate_next_value_()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#artipy.types.RollMagnitude"><code class="docutils literal notranslate"><span class="pre">RollMagnitude</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.RollMagnitude.HIGH"><code class="docutils literal notranslate"><span class="pre">RollMagnitude.HIGH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.RollMagnitude.LOW"><code class="docutils literal notranslate"><span class="pre">RollMagnitude.LOW</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.RollMagnitude.MAX"><code class="docutils literal notranslate"><span class="pre">RollMagnitude.MAX</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.RollMagnitude.MEDIUM"><code class="docutils literal notranslate"><span class="pre">RollMagnitude.MEDIUM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.RollMagnitude._generate_next_value_"><code class="docutils literal notranslate"><span class="pre">RollMagnitude._generate_next_value_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.RollMagnitude.closest"><code class="docutils literal notranslate"><span class="pre">RollMagnitude.closest()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.RollMagnitude.magnitude"><code class="docutils literal notranslate"><span class="pre">RollMagnitude.magnitude</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#artipy.types.StatType"><code class="docutils literal notranslate"><span class="pre">StatType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.ANEMO_DMG"><code class="docutils literal notranslate"><span class="pre">StatType.ANEMO_DMG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.ATK"><code class="docutils literal notranslate"><span class="pre">StatType.ATK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.ATK_PERCENT"><code class="docutils literal notranslate"><span class="pre">StatType.ATK_PERCENT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.CRIT_DMG"><code class="docutils literal notranslate"><span class="pre">StatType.CRIT_DMG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.CRIT_RATE"><code class="docutils literal notranslate"><span class="pre">StatType.CRIT_RATE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.CRYO_DMG"><code class="docutils literal notranslate"><span class="pre">StatType.CRYO_DMG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.DEF"><code class="docutils literal notranslate"><span class="pre">StatType.DEF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.DEF_PERCENT"><code class="docutils literal notranslate"><span class="pre">StatType.DEF_PERCENT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.DENDRO_DMG"><code class="docutils literal notranslate"><span class="pre">StatType.DENDRO_DMG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.ELECTRO_DMG"><code class="docutils literal notranslate"><span class="pre">StatType.ELECTRO_DMG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.ELEMENTAL_MASTERY"><code class="docutils literal notranslate"><span class="pre">StatType.ELEMENTAL_MASTERY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.ENERGY_RECHARGE"><code class="docutils literal notranslate"><span class="pre">StatType.ENERGY_RECHARGE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.GEO_DMG"><code class="docutils literal notranslate"><span class="pre">StatType.GEO_DMG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.HEALING_BONUS"><code class="docutils literal notranslate"><span class="pre">StatType.HEALING_BONUS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.HP"><code class="docutils literal notranslate"><span class="pre">StatType.HP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.HP_PERCENT"><code class="docutils literal notranslate"><span class="pre">StatType.HP_PERCENT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.HYDRO_DMG"><code class="docutils literal notranslate"><span class="pre">StatType.HYDRO_DMG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.PHYSICAL_DMG"><code class="docutils literal notranslate"><span class="pre">StatType.PHYSICAL_DMG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.PYRO_DMG"><code class="docutils literal notranslate"><span class="pre">StatType.PYRO_DMG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType._generate_next_value_"><code class="docutils literal notranslate"><span class="pre">StatType._generate_next_value_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#artipy.types.StatType.is_pct"><code class="docutils literal notranslate"><span class="pre">StatType.is_pct</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#artipy.types.generate_artifact_sets"><code class="docutils literal notranslate"><span class="pre">generate_artifact_sets()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#artipy.types.key_to_constant"><code class="docutils literal notranslate"><span class="pre">key_to_constant()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#artipy.types.make_artifact_sets"><code class="docutils literal notranslate"><span class="pre">make_artifact_sets()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">artipy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">artipy</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/artipy.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="artipy">
+<h1>artipy<a class="headerlink" href="#artipy" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="artipy.analysis.html">artipy.analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="artipy.analysis.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="artipy.analysis.html#module-artipy.analysis.analyse">artipy.analysis.analyse module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="artipy.analysis.html#artipy.analysis.analyse.calculate_artifact_crit_value"><code class="docutils literal notranslate"><span class="pre">calculate_artifact_crit_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.analysis.html#artipy.analysis.analyse.calculate_artifact_maximum_roll_value"><code class="docutils literal notranslate"><span class="pre">calculate_artifact_maximum_roll_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.analysis.html#artipy.analysis.analyse.calculate_artifact_roll_value"><code class="docutils literal notranslate"><span class="pre">calculate_artifact_roll_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.analysis.html#artipy.analysis.analyse.calculate_substat_roll_magnitudes"><code class="docutils literal notranslate"><span class="pre">calculate_substat_roll_magnitudes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.analysis.html#artipy.analysis.analyse.calculate_substat_roll_value"><code class="docutils literal notranslate"><span class="pre">calculate_substat_roll_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.analysis.html#artipy.analysis.analyse.calculate_substat_rolls"><code class="docutils literal notranslate"><span class="pre">calculate_substat_rolls()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="artipy.analysis.html#module-artipy.analysis.plots">artipy.analysis.plots module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="artipy.analysis.html#artipy.analysis.plots.plot_artifact_substat_rolls"><code class="docutils literal notranslate"><span class="pre">plot_artifact_substat_rolls()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.analysis.html#artipy.analysis.plots.plot_crit_value_distribution"><code class="docutils literal notranslate"><span class="pre">plot_crit_value_distribution()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.analysis.html#artipy.analysis.plots.plot_expected_against_actual_mainstats"><code class="docutils literal notranslate"><span class="pre">plot_expected_against_actual_mainstats()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.analysis.html#artipy.analysis.plots.plot_multi_value_distribution"><code class="docutils literal notranslate"><span class="pre">plot_multi_value_distribution()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.analysis.html#artipy.analysis.plots.plot_roll_value_distribution"><code class="docutils literal notranslate"><span class="pre">plot_roll_value_distribution()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="artipy.analysis.html#module-artipy.analysis.simulate">artipy.analysis.simulate module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="artipy.analysis.html#artipy.analysis.simulate.create_multiple_random_artifacts"><code class="docutils literal notranslate"><span class="pre">create_multiple_random_artifacts()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.analysis.html#artipy.analysis.simulate.create_random_artifact"><code class="docutils literal notranslate"><span class="pre">create_random_artifact()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.analysis.html#artipy.analysis.simulate.upgrade_artifact_to_max"><code class="docutils literal notranslate"><span class="pre">upgrade_artifact_to_max()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="artipy.analysis.html#module-artipy.analysis">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="artipy.analysis.html#artipy.analysis.calculate_artifact_crit_value"><code class="docutils literal notranslate"><span class="pre">calculate_artifact_crit_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.analysis.html#artipy.analysis.calculate_artifact_maximum_roll_value"><code class="docutils literal notranslate"><span class="pre">calculate_artifact_maximum_roll_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.analysis.html#artipy.analysis.calculate_artifact_roll_value"><code class="docutils literal notranslate"><span class="pre">calculate_artifact_roll_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.analysis.html#artipy.analysis.calculate_substat_roll_value"><code class="docutils literal notranslate"><span class="pre">calculate_substat_roll_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.analysis.html#artipy.analysis.calculate_substat_rolls"><code class="docutils literal notranslate"><span class="pre">calculate_substat_rolls()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="artipy.artifacts.html">artipy.artifacts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="artipy.artifacts.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="artipy.artifacts.html#module-artipy.artifacts.artifact">artipy.artifacts.artifact module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact"><code class="docutils literal notranslate"><span class="pre">Artifact</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact.add_substat"><code class="docutils literal notranslate"><span class="pre">Artifact.add_substat()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact.artifact_set"><code class="docutils literal notranslate"><span class="pre">Artifact.artifact_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact.artifact_slot"><code class="docutils literal notranslate"><span class="pre">Artifact.artifact_slot</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact.level"><code class="docutils literal notranslate"><span class="pre">Artifact.level</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact.mainstat"><code class="docutils literal notranslate"><span class="pre">Artifact.mainstat</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact.max_level"><code class="docutils literal notranslate"><span class="pre">Artifact.max_level</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact.rarity"><code class="docutils literal notranslate"><span class="pre">Artifact.rarity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact.strategy"><code class="docutils literal notranslate"><span class="pre">Artifact.strategy</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact.substats"><code class="docutils literal notranslate"><span class="pre">Artifact.substats</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.artifact.Artifact.upgrade"><code class="docutils literal notranslate"><span class="pre">Artifact.upgrade()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="artipy.artifacts.html#module-artipy.artifacts.builder">artipy.artifacts.builder module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.builder.ArtifactBuilder"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.builder.ArtifactBuilder.build"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder.build()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.builder.ArtifactBuilder.with_level"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder.with_level()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.builder.ArtifactBuilder.with_mainstat"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder.with_mainstat()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.builder.ArtifactBuilder.with_rarity"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder.with_rarity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.builder.ArtifactBuilder.with_set"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder.with_set()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.builder.ArtifactBuilder.with_slot"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder.with_slot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.builder.ArtifactBuilder.with_substat"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder.with_substat()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.builder.ArtifactBuilder.with_substats"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder.with_substats()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="artipy.artifacts.html#module-artipy.artifacts.upgrade_strategy">artipy.artifacts.upgrade_strategy module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.upgrade_strategy.AddStatStrategy"><code class="docutils literal notranslate"><span class="pre">AddStatStrategy</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.upgrade_strategy.AddStatStrategy.pick_stat"><code class="docutils literal notranslate"><span class="pre">AddStatStrategy.pick_stat()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.upgrade_strategy.AddStatStrategy.upgrade"><code class="docutils literal notranslate"><span class="pre">AddStatStrategy.upgrade()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.upgrade_strategy.UpgradeStatStrategy"><code class="docutils literal notranslate"><span class="pre">UpgradeStatStrategy</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.upgrade_strategy.UpgradeStatStrategy.upgrade"><code class="docutils literal notranslate"><span class="pre">UpgradeStatStrategy.upgrade()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.upgrade_strategy.UpgradeStrategy"><code class="docutils literal notranslate"><span class="pre">UpgradeStrategy</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.upgrade_strategy.UpgradeStrategy.upgrade"><code class="docutils literal notranslate"><span class="pre">UpgradeStrategy.upgrade()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="artipy.artifacts.html#module-artipy.artifacts.utils">artipy.artifacts.utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.utils.choose"><code class="docutils literal notranslate"><span class="pre">choose()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="artipy.artifacts.html#module-artipy.artifacts">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.AddStatStrategy"><code class="docutils literal notranslate"><span class="pre">AddStatStrategy</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.AddStatStrategy.pick_stat"><code class="docutils literal notranslate"><span class="pre">AddStatStrategy.pick_stat()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.AddStatStrategy.upgrade"><code class="docutils literal notranslate"><span class="pre">AddStatStrategy.upgrade()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact"><code class="docutils literal notranslate"><span class="pre">Artifact</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact.add_substat"><code class="docutils literal notranslate"><span class="pre">Artifact.add_substat()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact.artifact_set"><code class="docutils literal notranslate"><span class="pre">Artifact.artifact_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact.artifact_slot"><code class="docutils literal notranslate"><span class="pre">Artifact.artifact_slot</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact.level"><code class="docutils literal notranslate"><span class="pre">Artifact.level</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact.mainstat"><code class="docutils literal notranslate"><span class="pre">Artifact.mainstat</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact.max_level"><code class="docutils literal notranslate"><span class="pre">Artifact.max_level</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact.rarity"><code class="docutils literal notranslate"><span class="pre">Artifact.rarity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact.strategy"><code class="docutils literal notranslate"><span class="pre">Artifact.strategy</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact.substats"><code class="docutils literal notranslate"><span class="pre">Artifact.substats</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.Artifact.upgrade"><code class="docutils literal notranslate"><span class="pre">Artifact.upgrade()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.ArtifactBuilder"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.ArtifactBuilder.build"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder.build()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.ArtifactBuilder.with_level"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder.with_level()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.ArtifactBuilder.with_mainstat"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder.with_mainstat()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.ArtifactBuilder.with_rarity"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder.with_rarity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.ArtifactBuilder.with_set"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder.with_set()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.ArtifactBuilder.with_slot"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder.with_slot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.ArtifactBuilder.with_substat"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder.with_substat()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.ArtifactBuilder.with_substats"><code class="docutils literal notranslate"><span class="pre">ArtifactBuilder.with_substats()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.ArtifactSlot"><code class="docutils literal notranslate"><span class="pre">ArtifactSlot</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.ArtifactSlot.CIRCLET"><code class="docutils literal notranslate"><span class="pre">ArtifactSlot.CIRCLET</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.ArtifactSlot.FLOWER"><code class="docutils literal notranslate"><span class="pre">ArtifactSlot.FLOWER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.ArtifactSlot.GOBLET"><code class="docutils literal notranslate"><span class="pre">ArtifactSlot.GOBLET</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.ArtifactSlot.PLUME"><code class="docutils literal notranslate"><span class="pre">ArtifactSlot.PLUME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.ArtifactSlot.SANDS"><code class="docutils literal notranslate"><span class="pre">ArtifactSlot.SANDS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.ArtifactSlot._generate_next_value_"><code class="docutils literal notranslate"><span class="pre">ArtifactSlot._generate_next_value_()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.UpgradeStatStrategy"><code class="docutils literal notranslate"><span class="pre">UpgradeStatStrategy</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.UpgradeStatStrategy.upgrade"><code class="docutils literal notranslate"><span class="pre">UpgradeStatStrategy.upgrade()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.UpgradeStrategy"><code class="docutils literal notranslate"><span class="pre">UpgradeStrategy</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="artipy.artifacts.html#artipy.artifacts.UpgradeStrategy.upgrade"><code class="docutils literal notranslate"><span class="pre">UpgradeStrategy.upgrade()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="artipy.stats.html">artipy.stats</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="artipy.stats.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="artipy.stats.html#module-artipy.stats.mainstat">artipy.stats.mainstat module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="artipy.stats.html#artipy.stats.mainstat.MainStat"><code class="docutils literal notranslate"><span class="pre">MainStat</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="artipy.stats.html#artipy.stats.mainstat.MainStat.rarity"><code class="docutils literal notranslate"><span class="pre">MainStat.rarity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.stats.html#artipy.stats.mainstat.MainStat.set_value_by_level"><code class="docutils literal notranslate"><span class="pre">MainStat.set_value_by_level()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="artipy.stats.html#module-artipy.stats.stats">artipy.stats.stats module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="artipy.stats.html#artipy.stats.stats.Stat"><code class="docutils literal notranslate"><span class="pre">Stat</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="artipy.stats.html#artipy.stats.stats.Stat.name"><code class="docutils literal notranslate"><span class="pre">Stat.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.stats.html#artipy.stats.stats.Stat.value"><code class="docutils literal notranslate"><span class="pre">Stat.value</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="artipy.stats.html#module-artipy.stats.substat">artipy.stats.substat module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="artipy.stats.html#artipy.stats.substat.SubStat"><code class="docutils literal notranslate"><span class="pre">SubStat</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="artipy.stats.html#artipy.stats.substat.SubStat.rarity"><code class="docutils literal notranslate"><span class="pre">SubStat.rarity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.stats.html#artipy.stats.substat.SubStat.roll"><code class="docutils literal notranslate"><span class="pre">SubStat.roll()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.stats.html#artipy.stats.substat.SubStat.upgrade"><code class="docutils literal notranslate"><span class="pre">SubStat.upgrade()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.stats.html#artipy.stats.substat.create_substat"><code class="docutils literal notranslate"><span class="pre">create_substat()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="artipy.stats.html#module-artipy.stats.utils">artipy.stats.utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="artipy.stats.html#artipy.stats.utils.map_to_decimal"><code class="docutils literal notranslate"><span class="pre">map_to_decimal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.stats.html#artipy.stats.utils.possible_mainstat_values"><code class="docutils literal notranslate"><span class="pre">possible_mainstat_values()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.stats.html#artipy.stats.utils.possible_substat_values"><code class="docutils literal notranslate"><span class="pre">possible_substat_values()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="artipy.stats.html#module-artipy.stats">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="artipy.stats.html#artipy.stats.MainStat"><code class="docutils literal notranslate"><span class="pre">MainStat</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="artipy.stats.html#artipy.stats.MainStat.rarity"><code class="docutils literal notranslate"><span class="pre">MainStat.rarity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.stats.html#artipy.stats.MainStat.set_value_by_level"><code class="docutils literal notranslate"><span class="pre">MainStat.set_value_by_level()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.stats.html#artipy.stats.SubStat"><code class="docutils literal notranslate"><span class="pre">SubStat</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="artipy.stats.html#artipy.stats.SubStat.rarity"><code class="docutils literal notranslate"><span class="pre">SubStat.rarity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.stats.html#artipy.stats.SubStat.roll"><code class="docutils literal notranslate"><span class="pre">SubStat.roll()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="artipy.stats.html#artipy.stats.SubStat.upgrade"><code class="docutils literal notranslate"><span class="pre">SubStat.upgrade()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="artipy.stats.html#artipy.stats.create_substat"><code class="docutils literal notranslate"><span class="pre">create_substat()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h1>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h1>
+<section id="module-artipy.data_gen">
+<span id="artipy-data-gen"></span><h2>artipy.data_gen<a class="headerlink" href="#module-artipy.data_gen" title="Link to this heading"></a></h2>
+<p>Module that handles JSON data for the stats module.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="artipy.data_gen.DataGen">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artipy.data_gen.</span></span><span class="sig-name descname"><span class="pre">DataGen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artipy/data_gen.html#DataGen"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.data_gen.DataGen" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Handle JSON data.</p>
+<p>This is a singleton class that manages JSON data. Each instance of this class is
+associated with a specific JSON file, and the data from that file is loaded when
+the instance is created. The data is stored as a list of SimpleNamespace objects,
+which allows for easy attribute-style access.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.data_gen.DataGen._instances">
+<span class="sig-name descname"><span class="pre">_instances</span></span><a class="headerlink" href="#artipy.data_gen.DataGen._instances" title="Link to this definition"></a></dt>
+<dd><p>A dictionary that maps file names to DataGen
+instances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, <a class="reference internal" href="#artipy.data_gen.DataGen" title="artipy.data_gen.DataGen">DataGen</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.data_gen.DataGen._data">
+<span class="sig-name descname"><span class="pre">_data</span></span><a class="headerlink" href="#artipy.data_gen.DataGen._data" title="Link to this definition"></a></dt>
+<dd><p>The data loaded from the JSON file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[SimpleNamespace]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="artipy.data_gen.DataGen.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/artipy/data_gen.html#DataGen.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.data_gen.DataGen.__init__" title="Link to this definition"></a></dt>
+<dd><p>Load the data from the JSON file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – The name of the file to load.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="artipy.data_gen.DataGen.__new__">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#artipy.data_gen.DataGen" title="artipy.data_gen.DataGen"><span class="pre">DataGen</span></a></span></span><a class="reference internal" href="_modules/artipy/data_gen.html#DataGen.__new__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.data_gen.DataGen.__new__" title="Link to this definition"></a></dt>
+<dd><p>Create a new instance of the class if an instance with the same file name
+does not exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – The name of the file to load.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The instance of the class.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#artipy.data_gen.DataGen" title="artipy.data_gen.DataGen">DataGen</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.data_gen.camel_to_snake_case">
+<span class="sig-prename descclassname"><span class="pre">artipy.data_gen.</span></span><span class="sig-name descname"><span class="pre">camel_to_snake_case</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/artipy/data_gen.html#camel_to_snake_case"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.data_gen.camel_to_snake_case" title="Link to this definition"></a></dt>
+<dd><p>Convert a camel case string to snake case.</p>
+<p>Used by in the recursive_namespace function to make attribute names snake_case.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>s</strong> (<em>str</em>) – The string to convert.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The converted string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.data_gen.json_to_dict">
+<span class="sig-prename descclassname"><span class="pre">artipy.data_gen.</span></span><span class="sig-name descname"><span class="pre">json_to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/artipy/data_gen.html#json_to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.data_gen.json_to_dict" title="Link to this definition"></a></dt>
+<dd><p>Load JSON data from a file and return it as a dictionary.</p>
+<p>Sometimes we just want to load the JSON data as a dictionary instead of a list of
+SimpleNamespace objects. This function provides a way to do that.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – The name of the file to load.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The data from the JSON file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.data_gen.recursive_namespace">
+<span class="sig-prename descclassname"><span class="pre">artipy.data_gen.</span></span><span class="sig-name descname"><span class="pre">recursive_namespace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SimpleNamespace</span></span></span><a class="reference internal" href="_modules/artipy/data_gen.html#recursive_namespace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.data_gen.recursive_namespace" title="Link to this definition"></a></dt>
+<dd><p>Recursively convert a dictionary to a SimpleNamespace.</p>
+<p>Convert any attribute names from camelCase to snake_case for consistency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>Any</em>) – The data to convert.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The converted data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any | SimpleNamespace</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-artipy.types">
+<span id="artipy-types"></span><h2>artipy.types<a class="headerlink" href="#module-artipy.types" title="Link to this heading"></a></h2>
+<p>Module containing the types used in the artipy package.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artipy.types.</span></span><span class="sig-name descname"><span class="pre">ArtifactSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artipy/types.html#ArtifactSet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.types.ArtifactSet" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">StrEnum</span></code></p>
+<p>The artifact sets in Genshin Impact.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.ADVENTURER">
+<span class="sig-name descname"><span class="pre">ADVENTURER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Adventurer'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.ADVENTURER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.ARCHAIC_PETRA">
+<span class="sig-name descname"><span class="pre">ARCHAIC_PETRA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Archaic</span> <span class="pre">Petra'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.ARCHAIC_PETRA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.BERSERKER">
+<span class="sig-name descname"><span class="pre">BERSERKER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Berserker'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.BERSERKER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.BLIZZARD_STRAYER">
+<span class="sig-name descname"><span class="pre">BLIZZARD_STRAYER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Blizzard</span> <span class="pre">Strayer'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.BLIZZARD_STRAYER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.BLOODSTAINED_CHIVALRY">
+<span class="sig-name descname"><span class="pre">BLOODSTAINED_CHIVALRY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Bloodstained</span> <span class="pre">Chivalry'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.BLOODSTAINED_CHIVALRY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.BRAVE_HEART">
+<span class="sig-name descname"><span class="pre">BRAVE_HEART</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Brave</span> <span class="pre">Heart'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.BRAVE_HEART" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.CRIMSON_WITCH_OF_FLAMES">
+<span class="sig-name descname"><span class="pre">CRIMSON_WITCH_OF_FLAMES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Crimson</span> <span class="pre">Witch</span> <span class="pre">of</span> <span class="pre">Flames'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.CRIMSON_WITCH_OF_FLAMES" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.DEEPWOOD_MEMORIES">
+<span class="sig-name descname"><span class="pre">DEEPWOOD_MEMORIES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Deepwood</span> <span class="pre">Memories'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.DEEPWOOD_MEMORIES" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.DEFENDERS_WILL">
+<span class="sig-name descname"><span class="pre">DEFENDERS_WILL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;Defender's</span> <span class="pre">Will&quot;</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.DEFENDERS_WILL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.DESERT_PAVILION_CHRONICLE">
+<span class="sig-name descname"><span class="pre">DESERT_PAVILION_CHRONICLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Desert</span> <span class="pre">Pavilion</span> <span class="pre">Chronicle'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.DESERT_PAVILION_CHRONICLE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.ECHOES_OF_AN_OFFERING">
+<span class="sig-name descname"><span class="pre">ECHOES_OF_AN_OFFERING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Echoes</span> <span class="pre">of</span> <span class="pre">an</span> <span class="pre">Offering'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.ECHOES_OF_AN_OFFERING" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.EMBLEM_OF_SEVERED_FATE">
+<span class="sig-name descname"><span class="pre">EMBLEM_OF_SEVERED_FATE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Emblem</span> <span class="pre">of</span> <span class="pre">Severed</span> <span class="pre">Fate'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.EMBLEM_OF_SEVERED_FATE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.FLOWER_OF_PARADISE_LOST">
+<span class="sig-name descname"><span class="pre">FLOWER_OF_PARADISE_LOST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Flower</span> <span class="pre">of</span> <span class="pre">Paradise</span> <span class="pre">Lost'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.FLOWER_OF_PARADISE_LOST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.GAMBLER">
+<span class="sig-name descname"><span class="pre">GAMBLER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Gambler'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.GAMBLER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.GILDED_DREAMS">
+<span class="sig-name descname"><span class="pre">GILDED_DREAMS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Gilded</span> <span class="pre">Dreams'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.GILDED_DREAMS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.GLADIATORS_FINALE">
+<span class="sig-name descname"><span class="pre">GLADIATORS_FINALE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;Gladiator's</span> <span class="pre">Finale&quot;</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.GLADIATORS_FINALE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.GOLDEN_TROUPE">
+<span class="sig-name descname"><span class="pre">GOLDEN_TROUPE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Golden</span> <span class="pre">Troupe'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.GOLDEN_TROUPE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.HEART_OF_DEPTH">
+<span class="sig-name descname"><span class="pre">HEART_OF_DEPTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Heart</span> <span class="pre">of</span> <span class="pre">Depth'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.HEART_OF_DEPTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.HUSK_OF_OPULENT_DREAMS">
+<span class="sig-name descname"><span class="pre">HUSK_OF_OPULENT_DREAMS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Husk</span> <span class="pre">of</span> <span class="pre">Opulent</span> <span class="pre">Dreams'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.HUSK_OF_OPULENT_DREAMS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.INSTRUCTOR">
+<span class="sig-name descname"><span class="pre">INSTRUCTOR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Instructor'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.INSTRUCTOR" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.LAVAWALKER">
+<span class="sig-name descname"><span class="pre">LAVAWALKER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Lavawalker'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.LAVAWALKER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.LUCKY_DOG">
+<span class="sig-name descname"><span class="pre">LUCKY_DOG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Lucky</span> <span class="pre">Dog'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.LUCKY_DOG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.MAIDEN_BELOVED">
+<span class="sig-name descname"><span class="pre">MAIDEN_BELOVED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Maiden</span> <span class="pre">Beloved'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.MAIDEN_BELOVED" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.MARECHAUSSEE_HUNTER">
+<span class="sig-name descname"><span class="pre">MARECHAUSSEE_HUNTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Marechaussee</span> <span class="pre">Hunter'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.MARECHAUSSEE_HUNTER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.MARTIAL_ARTIST">
+<span class="sig-name descname"><span class="pre">MARTIAL_ARTIST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Martial</span> <span class="pre">Artist'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.MARTIAL_ARTIST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.NIGHTTIME_WHISPERS_IN_THE_ECHOING_WOODS">
+<span class="sig-name descname"><span class="pre">NIGHTTIME_WHISPERS_IN_THE_ECHOING_WOODS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Nighttime</span> <span class="pre">Whispers</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">Echoing</span> <span class="pre">Woods'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.NIGHTTIME_WHISPERS_IN_THE_ECHOING_WOODS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.NOBLESSE_OBLIGE">
+<span class="sig-name descname"><span class="pre">NOBLESSE_OBLIGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Noblesse</span> <span class="pre">Oblige'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.NOBLESSE_OBLIGE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.NYMPHS_DREAM">
+<span class="sig-name descname"><span class="pre">NYMPHS_DREAM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;Nymph's</span> <span class="pre">Dream&quot;</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.NYMPHS_DREAM" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.OCEAN_HUED_CLAM">
+<span class="sig-name descname"><span class="pre">OCEAN_HUED_CLAM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Ocean-Hued</span> <span class="pre">Clam'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.OCEAN_HUED_CLAM" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.PALE_FLAME">
+<span class="sig-name descname"><span class="pre">PALE_FLAME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Pale</span> <span class="pre">Flame'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.PALE_FLAME" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.PRAYERS_FOR_DESTINY">
+<span class="sig-name descname"><span class="pre">PRAYERS_FOR_DESTINY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Prayers</span> <span class="pre">for</span> <span class="pre">Destiny'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.PRAYERS_FOR_DESTINY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.PRAYERS_FOR_ILLUMINATION">
+<span class="sig-name descname"><span class="pre">PRAYERS_FOR_ILLUMINATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Prayers</span> <span class="pre">for</span> <span class="pre">Illumination'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.PRAYERS_FOR_ILLUMINATION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.PRAYERS_FOR_WISDOM">
+<span class="sig-name descname"><span class="pre">PRAYERS_FOR_WISDOM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Prayers</span> <span class="pre">for</span> <span class="pre">Wisdom'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.PRAYERS_FOR_WISDOM" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.PRAYERS_TO_SPRINGTIME">
+<span class="sig-name descname"><span class="pre">PRAYERS_TO_SPRINGTIME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Prayers</span> <span class="pre">to</span> <span class="pre">Springtime'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.PRAYERS_TO_SPRINGTIME" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.RESOLUTION_OF_SOJOURNER">
+<span class="sig-name descname"><span class="pre">RESOLUTION_OF_SOJOURNER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Resolution</span> <span class="pre">of</span> <span class="pre">Sojourner'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.RESOLUTION_OF_SOJOURNER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.RETRACING_BOLIDE">
+<span class="sig-name descname"><span class="pre">RETRACING_BOLIDE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Retracing</span> <span class="pre">Bolide'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.RETRACING_BOLIDE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.SCHOLAR">
+<span class="sig-name descname"><span class="pre">SCHOLAR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Scholar'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.SCHOLAR" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.SHIMENAWAS_REMINISCENCE">
+<span class="sig-name descname"><span class="pre">SHIMENAWAS_REMINISCENCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;Shimenawa's</span> <span class="pre">Reminiscence&quot;</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.SHIMENAWAS_REMINISCENCE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.SONG_OF_DAYS_PAST">
+<span class="sig-name descname"><span class="pre">SONG_OF_DAYS_PAST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Song</span> <span class="pre">of</span> <span class="pre">Days</span> <span class="pre">Past'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.SONG_OF_DAYS_PAST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.TENACITY_OF_THE_MILLELITH">
+<span class="sig-name descname"><span class="pre">TENACITY_OF_THE_MILLELITH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Tenacity</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">Millelith'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.TENACITY_OF_THE_MILLELITH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.THE_EXILE">
+<span class="sig-name descname"><span class="pre">THE_EXILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'The</span> <span class="pre">Exile'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.THE_EXILE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.THUNDERING_FURY">
+<span class="sig-name descname"><span class="pre">THUNDERING_FURY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Thundering</span> <span class="pre">Fury'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.THUNDERING_FURY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.THUNDERSOOTHER">
+<span class="sig-name descname"><span class="pre">THUNDERSOOTHER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Thundersoother'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.THUNDERSOOTHER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.TINY_MIRACLE">
+<span class="sig-name descname"><span class="pre">TINY_MIRACLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Tiny</span> <span class="pre">Miracle'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.TINY_MIRACLE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.TRAVELING_DOCTOR">
+<span class="sig-name descname"><span class="pre">TRAVELING_DOCTOR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Traveling</span> <span class="pre">Doctor'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.TRAVELING_DOCTOR" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.VERMILLION_HEREAFTER">
+<span class="sig-name descname"><span class="pre">VERMILLION_HEREAFTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Vermillion</span> <span class="pre">Hereafter'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.VERMILLION_HEREAFTER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.VIRIDESCENT_VENERER">
+<span class="sig-name descname"><span class="pre">VIRIDESCENT_VENERER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Viridescent</span> <span class="pre">Venerer'</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.VIRIDESCENT_VENERER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.VOURUKASHAS_GLOW">
+<span class="sig-name descname"><span class="pre">VOURUKASHAS_GLOW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;Vourukasha's</span> <span class="pre">Glow&quot;</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.VOURUKASHAS_GLOW" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet.WANDERERS_TROUPE">
+<span class="sig-name descname"><span class="pre">WANDERERS_TROUPE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;Wanderer's</span> <span class="pre">Troupe&quot;</span></em><a class="headerlink" href="#artipy.types.ArtifactSet.WANDERERS_TROUPE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSet._generate_next_value_">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_generate_next_value_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artipy.types.ArtifactSet._generate_next_value_" title="Link to this definition"></a></dt>
+<dd><p>Return the lower-cased version of the member name.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSetData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artipy.types.</span></span><span class="sig-name descname"><span class="pre">ArtifactSetData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_effects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pieces</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#artipy.types.ArtifactSlot" title="artipy.types.ArtifactSlot"><span class="pre">ArtifactSlot</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artipy/types.html#ArtifactSetData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.types.ArtifactSetData" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Data class representing an artifact set in Genshin Impact.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSetData.pieces">
+<span class="sig-name descname"><span class="pre">pieces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#artipy.types.ArtifactSlot" title="artipy.types.ArtifactSlot"><span class="pre">ArtifactSlot</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#artipy.types.ArtifactSetData.pieces" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSetData.set_effects">
+<span class="sig-name descname"><span class="pre">set_effects</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#artipy.types.ArtifactSetData.set_effects" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSetData.set_name">
+<span class="sig-name descname"><span class="pre">set_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#artipy.types.ArtifactSetData.set_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSlot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artipy.types.</span></span><span class="sig-name descname"><span class="pre">ArtifactSlot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artipy/types.html#ArtifactSlot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.types.ArtifactSlot" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">StrEnum</span></code></p>
+<p>Enum representing the artifact slots in Genshin Impact.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSlot.CIRCLET">
+<span class="sig-name descname"><span class="pre">CIRCLET</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'circlet'</span></em><a class="headerlink" href="#artipy.types.ArtifactSlot.CIRCLET" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSlot.FLOWER">
+<span class="sig-name descname"><span class="pre">FLOWER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'flower'</span></em><a class="headerlink" href="#artipy.types.ArtifactSlot.FLOWER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSlot.GOBLET">
+<span class="sig-name descname"><span class="pre">GOBLET</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'goblet'</span></em><a class="headerlink" href="#artipy.types.ArtifactSlot.GOBLET" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSlot.PLUME">
+<span class="sig-name descname"><span class="pre">PLUME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'plume'</span></em><a class="headerlink" href="#artipy.types.ArtifactSlot.PLUME" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSlot.SANDS">
+<span class="sig-name descname"><span class="pre">SANDS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'sands'</span></em><a class="headerlink" href="#artipy.types.ArtifactSlot.SANDS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="artipy.types.ArtifactSlot._generate_next_value_">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_generate_next_value_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artipy.types.ArtifactSlot._generate_next_value_" title="Link to this definition"></a></dt>
+<dd><p>Return the lower-cased version of the member name.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="artipy.types.RollMagnitude">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artipy.types.</span></span><span class="sig-name descname"><span class="pre">RollMagnitude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artipy/types.html#RollMagnitude"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.types.RollMagnitude" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">StrEnum</span></code></p>
+<p>The roll magnitude of a substat. This is a measure of how much the substat has
+been increased in relation to its maximum potential value.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.RollMagnitude.HIGH">
+<span class="sig-name descname"><span class="pre">HIGH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'high'</span></em><a class="headerlink" href="#artipy.types.RollMagnitude.HIGH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.RollMagnitude.LOW">
+<span class="sig-name descname"><span class="pre">LOW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'low'</span></em><a class="headerlink" href="#artipy.types.RollMagnitude.LOW" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.RollMagnitude.MAX">
+<span class="sig-name descname"><span class="pre">MAX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'max'</span></em><a class="headerlink" href="#artipy.types.RollMagnitude.MAX" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.RollMagnitude.MEDIUM">
+<span class="sig-name descname"><span class="pre">MEDIUM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'medium'</span></em><a class="headerlink" href="#artipy.types.RollMagnitude.MEDIUM" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="artipy.types.RollMagnitude._generate_next_value_">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_generate_next_value_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artipy.types.RollMagnitude._generate_next_value_" title="Link to this definition"></a></dt>
+<dd><p>Return the lower-cased version of the member name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="artipy.types.RollMagnitude.closest">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">closest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Decimal</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#artipy.types.RollMagnitude" title="artipy.types.RollMagnitude"><span class="pre">RollMagnitude</span></a></span></span><a class="reference internal" href="_modules/artipy/types.html#RollMagnitude.closest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.types.RollMagnitude.closest" title="Link to this definition"></a></dt>
+<dd><p>The closest roll magnitude to a value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>Decimal</em><em> | </em><em>float</em><em> | </em><em>int</em>) – The value to find the closest roll magnitude</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The closest roll magnitude to the value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#artipy.types.RollMagnitude" title="artipy.types.RollMagnitude">RollMagnitude</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="artipy.types.RollMagnitude.magnitude">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">magnitude</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Decimal</span></em><a class="headerlink" href="#artipy.types.RollMagnitude.magnitude" title="Link to this definition"></a></dt>
+<dd><p>Get the magnitude of the roll magnitude.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The magnitude of the roll magnitude.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Decimal</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="artipy.types.StatType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artipy.types.</span></span><span class="sig-name descname"><span class="pre">StatType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artipy/types.html#StatType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.types.StatType" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">StrEnum</span></code></p>
+<p>Enumeration of stat types in Genshin Impact.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.StatType.ANEMO_DMG">
+<span class="sig-name descname"><span class="pre">ANEMO_DMG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGHT_PROP_WIND_ADD_HURT'</span></em><a class="headerlink" href="#artipy.types.StatType.ANEMO_DMG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.StatType.ATK">
+<span class="sig-name descname"><span class="pre">ATK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGHT_PROP_ATTACK'</span></em><a class="headerlink" href="#artipy.types.StatType.ATK" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.StatType.ATK_PERCENT">
+<span class="sig-name descname"><span class="pre">ATK_PERCENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGHT_PROP_ATTACK_PERCENT'</span></em><a class="headerlink" href="#artipy.types.StatType.ATK_PERCENT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.StatType.CRIT_DMG">
+<span class="sig-name descname"><span class="pre">CRIT_DMG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGHT_PROP_CRITICAL_HURT'</span></em><a class="headerlink" href="#artipy.types.StatType.CRIT_DMG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.StatType.CRIT_RATE">
+<span class="sig-name descname"><span class="pre">CRIT_RATE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGHT_PROP_CRITICAL'</span></em><a class="headerlink" href="#artipy.types.StatType.CRIT_RATE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.StatType.CRYO_DMG">
+<span class="sig-name descname"><span class="pre">CRYO_DMG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGHT_PROP_ICE_ADD_HURT'</span></em><a class="headerlink" href="#artipy.types.StatType.CRYO_DMG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.StatType.DEF">
+<span class="sig-name descname"><span class="pre">DEF</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGHT_PROP_DEFENSE'</span></em><a class="headerlink" href="#artipy.types.StatType.DEF" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.StatType.DEF_PERCENT">
+<span class="sig-name descname"><span class="pre">DEF_PERCENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGHT_PROP_DEFENSE_PERCENT'</span></em><a class="headerlink" href="#artipy.types.StatType.DEF_PERCENT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.StatType.DENDRO_DMG">
+<span class="sig-name descname"><span class="pre">DENDRO_DMG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGHT_PROP_GRASS_ADD_HURT'</span></em><a class="headerlink" href="#artipy.types.StatType.DENDRO_DMG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.StatType.ELECTRO_DMG">
+<span class="sig-name descname"><span class="pre">ELECTRO_DMG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGHT_PROP_ELEC_ADD_HURT'</span></em><a class="headerlink" href="#artipy.types.StatType.ELECTRO_DMG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.StatType.ELEMENTAL_MASTERY">
+<span class="sig-name descname"><span class="pre">ELEMENTAL_MASTERY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGHT_PROP_ELEMENT_MASTERY'</span></em><a class="headerlink" href="#artipy.types.StatType.ELEMENTAL_MASTERY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.StatType.ENERGY_RECHARGE">
+<span class="sig-name descname"><span class="pre">ENERGY_RECHARGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGHT_PROP_CHARGE_EFFICIENCY'</span></em><a class="headerlink" href="#artipy.types.StatType.ENERGY_RECHARGE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.StatType.GEO_DMG">
+<span class="sig-name descname"><span class="pre">GEO_DMG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGHT_PROP_ROCK_ADD_HURT'</span></em><a class="headerlink" href="#artipy.types.StatType.GEO_DMG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.StatType.HEALING_BONUS">
+<span class="sig-name descname"><span class="pre">HEALING_BONUS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGHT_PROP_HEAL_ADD'</span></em><a class="headerlink" href="#artipy.types.StatType.HEALING_BONUS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.StatType.HP">
+<span class="sig-name descname"><span class="pre">HP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGHT_PROP_HP'</span></em><a class="headerlink" href="#artipy.types.StatType.HP" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.StatType.HP_PERCENT">
+<span class="sig-name descname"><span class="pre">HP_PERCENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGHT_PROP_HP_PERCENT'</span></em><a class="headerlink" href="#artipy.types.StatType.HP_PERCENT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.StatType.HYDRO_DMG">
+<span class="sig-name descname"><span class="pre">HYDRO_DMG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGHT_PROP_WATER_ADD_HURT'</span></em><a class="headerlink" href="#artipy.types.StatType.HYDRO_DMG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.StatType.PHYSICAL_DMG">
+<span class="sig-name descname"><span class="pre">PHYSICAL_DMG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGHT_PROP_PHYSICAL_ADD_HURT'</span></em><a class="headerlink" href="#artipy.types.StatType.PHYSICAL_DMG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artipy.types.StatType.PYRO_DMG">
+<span class="sig-name descname"><span class="pre">PYRO_DMG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FIGHT_PROP_FIRE_ADD_HURT'</span></em><a class="headerlink" href="#artipy.types.StatType.PYRO_DMG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="artipy.types.StatType._generate_next_value_">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_generate_next_value_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artipy.types.StatType._generate_next_value_" title="Link to this definition"></a></dt>
+<dd><p>Return the lower-cased version of the member name.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="artipy.types.StatType.is_pct">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_pct</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#artipy.types.StatType.is_pct" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.types.generate_artifact_sets">
+<span class="sig-prename descclassname"><span class="pre">artipy.types.</span></span><span class="sig-name descname"><span class="pre">generate_artifact_sets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/artipy/types.html#generate_artifact_sets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.types.generate_artifact_sets" title="Link to this definition"></a></dt>
+<dd><p>Use this if artifactNames_gen.json ever changes.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.types.key_to_constant">
+<span class="sig-prename descclassname"><span class="pre">artipy.types.</span></span><span class="sig-name descname"><span class="pre">key_to_constant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/artipy/types.html#key_to_constant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.types.key_to_constant" title="Link to this definition"></a></dt>
+<dd><p>Get a constant name from a key i.e: PascalCase -&gt; PASCAL_CASE</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>str</em>) – The key to convert.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The converted key.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artipy.types.make_artifact_sets">
+<span class="sig-prename descclassname"><span class="pre">artipy.types.</span></span><span class="sig-name descname"><span class="pre">make_artifact_sets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#artipy.types.ArtifactSetData" title="artipy.types.ArtifactSetData"><span class="pre">ArtifactSetData</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/artipy/types.html#make_artifact_sets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artipy.types.make_artifact_sets" title="Link to this definition"></a></dt>
+<dd><p>Make artifact sets from the artifact data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Yields<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Iterator[ArtifactSetData]</em> – The artifact set data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Truman Mulholland.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
