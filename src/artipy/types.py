@@ -3,7 +3,7 @@
 import re
 from dataclasses import dataclass
 from decimal import Decimal
-from enum import Enum, StrEnum, auto
+from enum import StrEnum, auto
 from typing import Iterator
 
 from artipy.data_gen import camel_to_snake_case, json_to_dict
@@ -32,13 +32,67 @@ def key_to_constant(key: str) -> str:
     return re.sub(r"(?<!^)(?=[A-Z])", "_", key).upper()
 
 
-ArtifactSet = Enum(  # type: ignore
-    "ArtifactSet",
-    {
+def generate_artifact_sets() -> None:
+    """Use this if artifactNames_gen.json ever changes."""
+    data = {
         key_to_constant(k): v
         for k, v in json_to_dict("artifacts/artifactNames_gen.json").items()
-    },
-)
+    }
+    print("\n".join(f"{k} = {v}" for k, v in data.items()))
+
+
+class ArtifactSet(StrEnum):
+    """The artifact sets in Genshin Impact."""
+
+    RESOLUTION_OF_SOJOURNER = "Resolution of Sojourner"
+    BRAVE_HEART = "Brave Heart"
+    DEFENDERS_WILL = "Defender's Will"
+    TINY_MIRACLE = "Tiny Miracle"
+    BERSERKER = "Berserker"
+    MARTIAL_ARTIST = "Martial Artist"
+    INSTRUCTOR = "Instructor"
+    GAMBLER = "Gambler"
+    THE_EXILE = "The Exile"
+    ADVENTURER = "Adventurer"
+    LUCKY_DOG = "Lucky Dog"
+    SCHOLAR = "Scholar"
+    TRAVELING_DOCTOR = "Traveling Doctor"
+    BLIZZARD_STRAYER = "Blizzard Strayer"
+    THUNDERSOOTHER = "Thundersoother"
+    LAVAWALKER = "Lavawalker"
+    MAIDEN_BELOVED = "Maiden Beloved"
+    GLADIATORS_FINALE = "Gladiator's Finale"
+    VIRIDESCENT_VENERER = "Viridescent Venerer"
+    WANDERERS_TROUPE = "Wanderer's Troupe"
+    THUNDERING_FURY = "Thundering Fury"
+    CRIMSON_WITCH_OF_FLAMES = "Crimson Witch of Flames"
+    NOBLESSE_OBLIGE = "Noblesse Oblige"
+    BLOODSTAINED_CHIVALRY = "Bloodstained Chivalry"
+    PRAYERS_FOR_ILLUMINATION = "Prayers for Illumination"
+    PRAYERS_FOR_DESTINY = "Prayers for Destiny"
+    PRAYERS_FOR_WISDOM = "Prayers for Wisdom"
+    PRAYERS_TO_SPRINGTIME = "Prayers to Springtime"
+    ARCHAIC_PETRA = "Archaic Petra"
+    RETRACING_BOLIDE = "Retracing Bolide"
+    HEART_OF_DEPTH = "Heart of Depth"
+    TENACITY_OF_THE_MILLELITH = "Tenacity of the Millelith"
+    PALE_FLAME = "Pale Flame"
+    SHIMENAWAS_REMINISCENCE = "Shimenawa's Reminiscence"
+    EMBLEM_OF_SEVERED_FATE = "Emblem of Severed Fate"
+    HUSK_OF_OPULENT_DREAMS = "Husk of Opulent Dreams"
+    OCEAN_HUED_CLAM = "Ocean-Hued Clam"
+    VERMILLION_HEREAFTER = "Vermillion Hereafter"
+    ECHOES_OF_AN_OFFERING = "Echoes of an Offering"
+    DEEPWOOD_MEMORIES = "Deepwood Memories"
+    GILDED_DREAMS = "Gilded Dreams"
+    DESERT_PAVILION_CHRONICLE = "Desert Pavilion Chronicle"
+    FLOWER_OF_PARADISE_LOST = "Flower of Paradise Lost"
+    NYMPHS_DREAM = "Nymph's Dream"
+    VOURUKASHAS_GLOW = "Vourukasha's Glow"
+    MARECHAUSSEE_HUNTER = "Marechaussee Hunter"
+    GOLDEN_TROUPE = "Golden Troupe"
+    SONG_OF_DAYS_PAST = "Song of Days Past"
+    NIGHTTIME_WHISPERS_IN_THE_ECHOING_WOODS = "Nighttime Whispers in the Echoing Woods"
 
 
 @dataclass(frozen=True, kw_only=True, slots=True)
