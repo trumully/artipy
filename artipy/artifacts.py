@@ -70,7 +70,7 @@ class Artifact:
     __slots__ = ("_level", "_mainstat", "_rarity", "_set", "_slot", "_substats")
 
     def __init__(self) -> None:
-        self._mainstat: MainStat
+        self._mainstat: MainStat = MainStat(StatType.HP_PERCENT)
         self._substats: list[SubStat] = []
         self._level: int = 0
         self._rarity: int = 0
@@ -103,8 +103,7 @@ class Artifact:
 
     @substats.setter
     def substats(self, substats: list[SubStat]) -> None:
-        """Set the substats of the artifact. If the rarity of the artifact is greater
-        than 0, set the rarity of the substats.
+        """Set the substats of the artifact. If they have no rarity, set their rarity to the rarity of the artifact.
 
         Args:
             substats (list[artipy.stats.SubStat]): _description_
@@ -115,8 +114,7 @@ class Artifact:
         self._substats = substats
 
     def add_substat(self, substat: SubStat) -> None:
-        """Add a substat to the artifact. If the rarity of the artifact is greater
-        than 0, set the rarity of the substat.
+        """Add a substat to the artifact. If it has no rarity, set its rarity to the rarity of the artifact.
 
         Args:
             substat (artipy.stats.SubStat): The substat to add.
@@ -127,39 +125,22 @@ class Artifact:
 
     @property
     def level(self) -> int:
-        """The level of the artifact.
-
-        Returns:
-            int: The level of the artifact.
-        """
+        """The level of the artifact."""
         return self._level
 
     @level.setter
     def level(self, level: int) -> None:
-        """Set the level of the artifact.
-
-        Args:
-            level (int): The level to set.
-        """
+        """Set the level of the artifact."""
         self._level = level
 
     @property
     def rarity(self) -> int:
-        """The rarity of the artifact.
-
-        Returns:
-            int: The rarity of the artifact.
-        """
+        """The rarity of the artifact."""
         return self._rarity
 
     @rarity.setter
     def rarity(self, rarity: int) -> None:
-        """Set the rarity of the artifact. If the rarity of the artifact is greater
-        than 0, set the rarity of the mainstat and substats.
-
-        Args:
-            rarity (int): The rarity to set.
-        """
+        """Set the rarity of the artifact and stats that have no rarity."""
         self._rarity = rarity
         stats: list[MainStat | SubStat | None] = [self.mainstat, *self.substats]
         for stat in stats:
@@ -170,11 +151,11 @@ class Artifact:
                 continue
 
     @property
-    def artifact_set(self) -> ArtifactSet | None:
+    def artifact_set(self) -> ArtifactSet:
         """The artifact set of the artifact.
 
         Returns:
-            Optional[artipy.types.ArtifactSet]: The artifact set of the artifact.
+            artipy.types.ArtifactSet: The artifact set of the artifact.
         """
         return self._set
 
@@ -232,7 +213,7 @@ class Artifact:
             self.upgrade_method(self)
 
     def __str__(self) -> str:
-        set_name = VALID_ARTIFACT_SETS[self.artifact_set].set_name if self.artifact_set is not None else "Example"
+        set_name = VALID_ARTIFACT_SETS[self.artifact_set].set_name
         return (
             f"{self.artifact_slot} [+{self.level}]\n"
             f"{set_name} {'★' * self.rarity}\n"
@@ -268,7 +249,7 @@ class ArtifactBuilder:
 
         Args:
             stat (artipy.types.StatType): The mainstat to set.
-            value (float | int, optional): The value of the mainstat. Defaults to 0.
+            value (float, optional): The value of the mainstat. Defaults to 0.
 
         Returns:
             ArtifactBuilder: The artifact builder object
@@ -282,7 +263,7 @@ class ArtifactBuilder:
 
         Args:
             stat (artipy.types.StatType): The substat to set.
-            value (float | int): The value of the substat.
+            value (float): The value of the substat.
 
         Raises:
             ValueError: If the substats are already full
