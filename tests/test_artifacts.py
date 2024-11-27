@@ -7,10 +7,8 @@ from hypothesis import strategies as st
 
 from artipy import UPGRADE_STEP
 from artipy.artifacts import (
-    AddStatStrategy,
     Artifact,
     ArtifactBuilder,
-    UpgradeStatStrategy,
 )
 from artipy.types import (
     VALID_ARTIFACT_SETS,
@@ -113,15 +111,6 @@ def test_artifact_upgrade_until_max(level: int, rarity: int) -> None:
     artifact.upgrade()
 
     assert artifact.level == max_level
-
-
-def test_artifact_get_strategy(artifact: Artifact) -> None:
-    while len(artifact.substats) < artifact.rarity - 1:
-        artifact.upgrade()
-        if len(artifact.substats) < artifact.rarity - 1:
-            assert isinstance(artifact.strategy, AddStatStrategy)
-
-    assert isinstance(artifact.strategy, UpgradeStatStrategy)
 
 
 def test_artifact_str(artifact: Artifact) -> None:

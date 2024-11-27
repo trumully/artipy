@@ -2,9 +2,10 @@
 
 import json
 import re
+from collections.abc import Iterator, Mapping, MutableMapping, Sequence
 from pathlib import Path
 from types import SimpleNamespace
-from typing import Any, ClassVar, Iterator
+from typing import Any, ClassVar
 
 from artipy import __data__
 
@@ -20,11 +21,11 @@ def camel_to_snake_case(s: str) -> str:
     Returns:
         str: The converted string.
     """
-    s = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", s)
-    return re.sub("([a-z0-9])([A-Z])", r"\1_\2", s).lower()
+    s = re.sub(r"(.)([A-Z][a-z]+)", r"\1_\2", s)
+    return re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", s).lower()
 
 
-def recursive_namespace(data: Any) -> Any | SimpleNamespace:
+def recursive_namespace(data: Mapping[str, Any]) -> Any | SimpleNamespace:
     """Recursively convert a dictionary to a SimpleNamespace.
 
     Convert any attribute names from camelCase to snake_case for consistency.
@@ -36,9 +37,7 @@ def recursive_namespace(data: Any) -> Any | SimpleNamespace:
         Any | SimpleNamespace: The converted data.
     """
     if isinstance(data, dict):
-        return SimpleNamespace(**{
-            camel_to_snake_case(k): recursive_namespace(v) for k, v in data.items()
-        })
+        return SimpleNamespace(**{camel_to_snake_case(k): recursive_namespace(v) for k, v in data.items()})
     return data
 
 
@@ -51,13 +50,12 @@ class DataGen:
     which allows for easy attribute-style access.
 
     Attributes:
-        _instances (dict[str, DataGen]): A dictionary that maps file names to DataGen
-                                        instances.
-        _data (list[SimpleNamespace]): The data loaded from the JSON file.
+        _instances (MutableMapping[str, DataGen]): A dictionary that maps file names to DataGen instances.
+        _data (Sequence[SimpleNamespace]): The data loaded from the JSON file.
     """
 
-    _instances: ClassVar[dict[str, "DataGen"]] = {}
-    _data: list[SimpleNamespace] = []
+    _instances: ClassVar[MutableMapping[str, "DataGen"]] = {}
+    _data: Sequence[SimpleNamespace]
 
     def __new__(cls, file_name: str) -> "DataGen":
         """Create a new instance of the class if an instance with the same file name
@@ -79,7 +77,7 @@ class DataGen:
         Args:
             file_name (str): The name of the file to load.
         """
-        with open(Path(__data__ / file_name), mode="r", encoding="utf-8") as f:
+        with Path(__data__ / file_name).open(encoding="utf-8") as f:
             self._data = json.load(f, object_hook=recursive_namespace)
 
     def __iter__(self) -> Iterator[SimpleNamespace]:
@@ -89,7 +87,7 @@ class DataGen:
         return self._data[index]
 
 
-def json_to_dict(file_name: str) -> dict[str, Any]:
+def json_to_dict(file_name: str) -> Mapping[str, Any]:
     """Load JSON data from a file and return it as a dictionary.
 
     Sometimes we just want to load the JSON data as a dictionary instead of a list of
@@ -101,6 +99,6 @@ def json_to_dict(file_name: str) -> dict[str, Any]:
     Returns:
         dict[str, Any]: The data from the JSON file.
     """
-    with open(Path(__data__ / file_name), mode="r", encoding="utf-8") as f:
+    with Path(__data__ / file_name).open(encoding="utf-8") as f:
         data: dict[str, Any] = json.load(f)
         return data

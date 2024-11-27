@@ -18,8 +18,8 @@ def create_random_artifact(slot: ArtifactSlot, rarity: int = 5) -> Artifact:
     """
 
     max_substats = rarity - 1
-    substat_count = max(0, max_substats if random.random() < 0.2 else max_substats - 1)
-    mainstats, mainstat_weights = zip(*VALID_MAINSTATS[slot].items())
+    substat_count = max(0, max_substats if random.random() < 0.2 else max_substats - 1)  # noqa: PLR2004
+    mainstats, mainstat_weights = zip(*VALID_MAINSTATS[slot].items(), strict=False)
     return (
         ArtifactBuilder()
         .with_mainstat(utils.choose(mainstats, mainstat_weights))
@@ -53,7 +53,7 @@ def create_multiple_random_artifacts(amount: int = 1) -> list[Artifact]:
     Returns:
         list[artipy.artifacts.Artifact]: The list of random artifacts.
     """
-    result = []
+    result: list[Artifact] = []
     for _ in range(amount):
         slot: ArtifactSlot = ArtifactSlot(random.choice(list(ArtifactSlot)))
         result.append(create_random_artifact(slot))

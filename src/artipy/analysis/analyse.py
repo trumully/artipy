@@ -4,8 +4,8 @@ import itertools
 import math
 from decimal import Decimal
 
+from artipy import UPGRADE_STEP
 from artipy.artifacts import Artifact
-from artipy.artifacts.upgrade_strategy import UPGRADE_STEP
 from artipy.stats import SubStat
 from artipy.stats.utils import possible_substat_values
 from artipy.types import RollMagnitude, StatType
@@ -67,7 +67,8 @@ def calculate_substat_roll_magnitudes(substat: SubStat) -> tuple[RollMagnitude, 
     """
 
     def get_magnitude(
-        values: tuple[Decimal, ...], value_to_index: Decimal
+        values: tuple[Decimal, ...],
+        value_to_index: Decimal,
     ) -> RollMagnitude:
         index = values.index(value_to_index)
         return RollMagnitude.closest(ROLL_MULTIPLIERS[substat.rarity][index])
@@ -76,7 +77,7 @@ def calculate_substat_roll_magnitudes(substat: SubStat) -> tuple[RollMagnitude, 
     rolls_actual = calculate_substat_rolls(substat)
 
     combinations = list(
-        itertools.combinations_with_replacement(possible_rolls, rolls_actual)
+        itertools.combinations_with_replacement(possible_rolls, rolls_actual),
     )
     combination = min(combinations, key=lambda x: abs(sum(x) - substat.value))
     return tuple(get_magnitude(possible_rolls, value) for value in combination)
@@ -93,7 +94,7 @@ def calculate_artifact_roll_value(artifact: Artifact) -> Decimal:
         Decimal: The roll value of the artifact.
     """
     return Decimal(
-        sum(calculate_substat_roll_value(substat) for substat in artifact.substats)
+        sum(calculate_substat_roll_value(substat) for substat in artifact.substats),
     )
 
 
@@ -122,20 +123,6 @@ def calculate_artifact_crit_value(artifact: Artifact) -> Decimal:
     Returns:
         Decimal: The crit value of the artifact.
     """
-    crit_dmg = (
-        sum([
-            substat.value
-            for substat in artifact.substats
-            if substat.name == StatType.CRIT_DMG
-        ])
-        * 100
-    )
-    crit_rate = (
-        sum([
-            substat.value
-            for substat in artifact.substats
-            if substat.name == StatType.CRIT_RATE
-        ])
-        * 100
-    )
+    crit_dmg = sum(substat.value for substat in artifact.substats if substat.name == StatType.CRIT_DMG) * 100
+    crit_rate = sum(substat.value for substat in artifact.substats if substat.name == StatType.CRIT_RATE) * 100
     return Decimal(crit_dmg + crit_rate * 2)

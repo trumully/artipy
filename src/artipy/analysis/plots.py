@@ -1,7 +1,10 @@
 """This module contains functions to plot various statistics of artifacts."""
+# No typestubs for plotly.
+# pyright: reportMissingTypeStubs=false, reportUnknownMemberType=false, reportUnknownVariableType=false, reportUnknownArgumentType=false
 
+from collections.abc import Callable, Mapping
 from decimal import Decimal
-from typing import Callable
+from typing import Any
 
 import pandas as pd
 import plotly.express as px
@@ -9,6 +12,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 from artipy.artifacts import Artifact
+from artipy.stats.substat import SubStat
 from artipy.types import STAT_NAMES, VALID_MAINSTATS, ArtifactSlot, StatType
 
 from .analyse import (
@@ -22,10 +26,16 @@ from .simulate import create_multiple_random_artifacts, upgrade_artifact_to_max
 
 ROUND_TO = Decimal("1E-2")
 
-ATTRIBUTES: dict[str, Callable] = {
-    "rolls": calculate_substat_rolls,
+type SubstatMethod[R] = Callable[[SubStat], R]
+type ArtifactMethod[R] = Callable[[Artifact], R]
+
+ARTIFACT_ATTRIBUTES: Mapping[str, ArtifactMethod[Decimal]] = {
     "roll_value": calculate_artifact_roll_value,
     "crit_value": calculate_artifact_crit_value,
+}
+
+SUBSTAT_ATTRIBUTES: Mapping[str, SubstatMethod[int]] = {
+    "rolls": calculate_substat_rolls,
 }
 
 
@@ -36,29 +46,23 @@ def plot_artifact_substat_rolls(artifact: Artifact) -> None:
         artifact (artipy.artifacts.Artifact): The artifact to plot the substat rolls
                                               for.
     """
-    substat_rolls = {
-        STAT_NAMES[substat.name]: calculate_substat_rolls(substat)
-        for substat in artifact.substats
-    }
-    df = pd.DataFrame(substat_rolls.items(), columns=["stat", "rolls"])
+    substat_rolls = {STAT_NAMES[substat.name]: calculate_substat_rolls(substat) for substat in artifact.substats}
+    stat_rolls_df = pd.DataFrame(substat_rolls.items(), columns=["stat", "rolls"])
 
     colors = px.colors.qualitative.Plotly
 
     pie_figure = px.pie(
-        df,
+        stat_rolls_df,
         values="rolls",
         names="stat",
         color_discrete_sequence=colors,
     )
 
     magnitudes_flat = [
-        tuple(i.value for i in calculate_substat_roll_magnitudes(substat))
-        for substat in artifact.substats
+        tuple(i.value for i in calculate_substat_roll_magnitudes(substat)) for substat in artifact.substats
     ]
     magnitudes_to_dict = {
-        STAT_NAMES[substat.name]: {
-            i.value: magnitudes_flat[idx].count(i.value) for i in RollMagnitude
-        }
+        STAT_NAMES[substat.name]: {i.value: magnitudes_flat[idx].count(i.value) for i in RollMagnitude}
         for idx, substat in enumerate(artifact.substats)
     }
     magnitudes_to_long_form = [
@@ -78,7 +82,7 @@ def plot_artifact_substat_rolls(artifact: Artifact) -> None:
                 text=df_filtered["count"],
                 textposition="auto",
                 marker_color=colors[idx % len(colors)],
-            )
+            ),
         )
 
     fig = make_subplots(
@@ -88,10 +92,7 @@ def plot_artifact_substat_rolls(artifact: Artifact) -> None:
         column_widths=[0.4] + [0.6 / len(bar_traces)] * len(bar_traces),
         subplot_titles=[
             f"Substat rolls on Artifact with {sum(substat_rolls.values())} total rolls",
-            *(
-                f"{stat} ({substat_rolls[STAT_NAMES[stat.name]]} rolls)"
-                for stat in artifact.substats
-            ),
+            *(f"{stat} ({substat_rolls[STAT_NAMES[stat.name]]} rolls)" for stat in artifact.substats),
         ],
     )
 
@@ -113,17 +114,15 @@ def plot_crit_value_distribution(iterations: int = 1000) -> None:
     for a in (artifacts := create_multiple_random_artifacts(iterations)):
         upgrade_artifact_to_max(a)
 
-    crit_values = [
-        calculate_artifact_crit_value(a).quantize(ROUND_TO) for a in artifacts
-    ]
-    df = pd.DataFrame(crit_values, columns=["crit_value"])
+    crit_values = [calculate_artifact_crit_value(a).quantize(ROUND_TO) for a in artifacts]
+    crit_value_df = pd.DataFrame(crit_values, columns=["crit_value"])
 
     bins = [0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0]
     labels = [f"{bins[i]}-{bins[i + 1]}" for i in range(len(bins) - 1)]
-    df["crit_value_range"] = pd.cut(df["crit_value"], bins=bins, labels=labels)
+    crit_value_df["crit_value_range"] = pd.cut(crit_value_df["crit_value"], bins=bins, labels=labels)
 
     fig = px.histogram(
-        df,
+        crit_value_df,
         x="crit_value",
         color="crit_value_range",
         title=f"Crit Rate Distribution of {iterations:,} Artifacts",
@@ -141,9 +140,11 @@ def plot_roll_value_distribution(iterations: int = 1000) -> None:
     for a in (artifacts := create_multiple_random_artifacts(iterations)):
         upgrade_artifact_to_max(a)
     roll_values = [calculate_artifact_roll_value(a) for a in artifacts]
-    df = pd.DataFrame(roll_values, columns=["roll_value"])
+    roll_value_df = pd.DataFrame(roll_values, columns=["roll_value"])
     fig = px.histogram(
-        df, x="roll_value", title=f"Roll Value Distribution of {iterations:,} Artifacts"
+        roll_value_df,
+        x="roll_value",
+        title=f"Roll Value Distribution of {iterations:,} Artifacts",
     )
     fig.show()
 
@@ -159,13 +160,9 @@ def plot_expected_against_actual_mainstats(iterations: int = 1000) -> None:
         upgrade_artifact_to_max(a)
 
     expected_mainstats: dict[ArtifactSlot, dict[StatType, float]] = {
-        ArtifactSlot(k): v
-        for k, v in VALID_MAINSTATS.items()
-        if k not in (ArtifactSlot.FLOWER, ArtifactSlot.PLUME)
+        ArtifactSlot(k): v for k, v in VALID_MAINSTATS.items() if k not in (ArtifactSlot.FLOWER, ArtifactSlot.PLUME)
     }
-    actual_mainstats: dict[ArtifactSlot, list[StatType]] = {
-        k: [] for k in expected_mainstats
-    }
+    actual_mainstats: dict[ArtifactSlot, list[StatType]] = {k: [] for k in expected_mainstats}
 
     for a in artifacts:
         slot: ArtifactSlot = ArtifactSlot(str(a.artifact_slot))
@@ -173,15 +170,13 @@ def plot_expected_against_actual_mainstats(iterations: int = 1000) -> None:
             actual_mainstats[slot].append(a.mainstat.name)
 
     actual_mainstats_pct: dict[ArtifactSlot, dict[StatType, float]] = {
-        k: {
-            stat: (actual_mainstats[k].count(stat) / len(actual_mainstats[k])) * 100
-            for stat in v
-        }
-        for k, v in actual_mainstats.items()
+        k: {stat: (v.count(stat) / len(v)) * 100 for stat in v} for k, v in actual_mainstats.items()
     }
 
     fig = make_subplots(
-        rows=1, cols=len(expected_mainstats), subplot_titles=list(expected_mainstats)
+        rows=1,
+        cols=len(expected_mainstats),
+        subplot_titles=list(expected_mainstats),
     )
 
     for i, slot in enumerate(expected_mainstats, start=1):
@@ -191,7 +186,7 @@ def plot_expected_against_actual_mainstats(iterations: int = 1000) -> None:
                 x=list(expected_mainstats[slot]),
                 y=list(expected_mainstats[slot].values()),
                 name="Expected",
-                marker=dict(color="#FF6961"),
+                marker={"color": "#FF6961"},
             ),
             row=1,
             col=col,
@@ -201,7 +196,7 @@ def plot_expected_against_actual_mainstats(iterations: int = 1000) -> None:
                 x=list(actual_mainstats_pct[slot]),
                 y=list(actual_mainstats_pct[slot].values()),
                 name="Actual",
-                marker=dict(color="#B4D8E7"),
+                marker={"color": "#B4D8E7"},
             ),
             row=1,
             col=col,
@@ -212,7 +207,9 @@ def plot_expected_against_actual_mainstats(iterations: int = 1000) -> None:
 
 
 def plot_multi_value_distribution(
-    iterations: int = 1000, *, attributes: tuple[str]
+    iterations: int = 1000,
+    *,
+    attributes: tuple[str],
 ) -> None:
     """Plot a combined histogram of multiple attributes of artifacts.
 
@@ -223,20 +220,20 @@ def plot_multi_value_distribution(
     Raises:
         ValueError: If an invalid attribute is passed.
     """
+    all_attributes: Mapping[str, Callable[..., Any]] = {**ARTIFACT_ATTRIBUTES, **SUBSTAT_ATTRIBUTES}
     for attr in attributes:
-        if attr not in ATTRIBUTES:
-            raise ValueError(
-                f"Invalid attribute: {attr}\nValid attributes: {ATTRIBUTES}"
-            )
+        if attr not in all_attributes:
+            msg = f"Invalid attribute: {attr}\nValid attributes: {all_attributes}"
+            raise ValueError(msg)
 
     for a in (artifacts := create_multiple_random_artifacts(iterations)):
         upgrade_artifact_to_max(a)
 
     concatted_df = pd.DataFrame()
     for attr in attributes:
-        values = [ATTRIBUTES[attr](a) for a in artifacts if ATTRIBUTES[attr](a) > 0]
-        df = pd.DataFrame(values, columns=[attr])
-        concatted_df = pd.concat([concatted_df, df])
+        values = [all_attributes[attr](a) for a in artifacts if all_attributes[attr](a) > 0]
+        attr_df = pd.DataFrame(values, columns=[attr])
+        concatted_df = pd.concat([concatted_df, attr_df])
 
     fig = px.histogram(
         concatted_df,

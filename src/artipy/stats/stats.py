@@ -11,7 +11,7 @@ class Stat:
     """Dataclass for a stat in Genshin Impact."""
 
     name: StatType
-    _value: float | int | Decimal = field(default=Decimal(0), repr=False)
+    _value: float | Decimal = field(default=Decimal(0), repr=False)
 
     @property
     def value(self) -> Decimal:
@@ -23,18 +23,16 @@ class Stat:
         return Decimal(self._value)
 
     @value.setter
-    def value(self, value: float | int | Decimal) -> None:
+    def value(self, value: Decimal) -> None:
         """Set the value of the stat.
 
         :param value: The value to set the stat to.
         :type value: float | int | Decimal
         """
-        if not isinstance(value, Decimal):
-            value = Decimal(value)
-        self._value = value
+        self._value = Decimal(value)
 
     def __format__(self, format_spec: str) -> str:
-        if format_spec in ("v", "verbose"):
+        if format_spec in ("v", "verbose"):  # noqa: PLR6201 tuple is slightly faster
             return f"{self.name} = {self.value}"
         return str(self)
 

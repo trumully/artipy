@@ -34,7 +34,9 @@ class SubStat(Stat):
 
 
 def create_substat(
-    *, name: StatType = StatType(random.choice(VALID_SUBSTATS)), rarity: int
+    *,
+    name: StatType | None = None,
+    rarity: int,
 ) -> SubStat:
     """Create a new SubStat object.
 
@@ -48,6 +50,8 @@ def create_substat(
     :return: A new SubStat object
     :rtype: SubStat
     """
+    if name is None:
+        name = StatType(random.choice(VALID_SUBSTATS))
     stat = SubStat(name, Decimal(0), rarity)
     stat.value = stat.roll()
     return stat
