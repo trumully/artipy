@@ -31,8 +31,7 @@ type UpgradeMethod = Callable[[Artifact], None]
 def _level_up_artifact(artifact: Artifact) -> None:
     new_level = artifact.level + 1
     artifact.level = new_level
-    if artifact.mainstat is not None:
-        artifact.mainstat.set_value_by_level(new_level)
+    artifact.mainstat.set_value_by_level(new_level)
 
 
 def upgrade_artifact(artifact: Artifact) -> None:
@@ -41,7 +40,7 @@ def upgrade_artifact(artifact: Artifact) -> None:
 
 
 def pick_stat(artifact: Artifact) -> SubStat:
-    stats = [s.name for s in (artifact.mainstat, *artifact.substats) if s is not None]
+    stats = [s.name for s in (artifact.mainstat, *artifact.substats)]
     pool = {s: w for s, w in substat_weights.items() if s not in stats}
     population, weights = map(tuple, zip(*pool.items(), strict=False))
     new_stat_name = choose(population, weights)
@@ -71,30 +70,23 @@ class Artifact:
     __slots__ = ("_level", "_mainstat", "_rarity", "_set", "_slot", "_substats")
 
     def __init__(self) -> None:
-        self._mainstat: MainStat | None = None
+        self._mainstat: MainStat
         self._substats: list[SubStat] = []
         self._level: int = 0
         self._rarity: int = 0
-        self._set: ArtifactSet | None = None
-        self._slot: ArtifactSlot | None = None
+        self._set: ArtifactSet = ArtifactSet.RESOLUTION_OF_SOJOURNER
+        self._slot: ArtifactSlot = ArtifactSlot.FLOWER
 
     @property
-    def mainstat(self) -> MainStat | None:
-        """The mainstat of the artifact. Return a placeholder mainstat if the mainstat
-        is None.
-
-        Returns:
-            Optional[artipy.stats.MainStat]: The mainstat of the artifact.
-        """
+    def mainstat(self) -> MainStat:
+        """The mainstat of the artifact."""
         return self._mainstat
 
     @mainstat.setter
     def mainstat(self, mainstat: MainStat) -> None:
-        """Set the mainstat of the artifact. If the rarity of the artifact is greater
-        than 0, set the rarity of the mainstat.
+        """Set the mainstat of the artifact.
 
-        Args:
-            mainstat (artipy.stats.MainStat): The mainstat to set.
+        If the rarity of the artifact is greater than 0, set the rarity of the mainstat.
         """
         if self.rarity > 0:
             mainstat.rarity = self.rarity
@@ -196,11 +188,11 @@ class Artifact:
         self._set = artifact_set
 
     @property
-    def artifact_slot(self) -> ArtifactSlot | None:
+    def artifact_slot(self) -> ArtifactSlot:
         """The artifact slot of the artifact.
 
         Returns:
-            Optional[artipy.types.ArtifactSlot]: The artifact slot of the artifact.
+            artipy.types.ArtifactSlot | None: The artifact slot of the artifact.
         """
         return self._slot
 
@@ -215,10 +207,11 @@ class Artifact:
 
     @property
     def upgrade_method(self) -> UpgradeMethod:
-        """The upgrade strategy of the artifact. If the rarity is 1, the strategy
-        inheriters are skipped in favor of the default strategy. Otherwise, if the
-        number of substats is less than the rarity - 1, the add stat strategy is
-        returned. Otherwise, the upgrade stat strategy is returned.
+        """The upgrade strategy of the artifact.
+
+        If the rarity is 1, the strategy is to only upgrade the artifact's level. Otherwise, if the number of substats
+        is less than the rarity - 1, the strategy is to add a new substat. Otherwise, the strategy is to upgrade a
+        random substat.
 
         Returns:
             UpgradeMethod: The upgrade strategy of the artifact.
@@ -260,8 +253,7 @@ class ArtifactBuilder:
         - with_slot: Set the artifact slot
 
     Methods:
-        - build: Build the artifact object based on the parameters passed into the
-                 builder.
+        - build: Build the artifact object based on the parameters passed into the builder.
     """
 
     def __init__(self) -> None:
@@ -282,7 +274,7 @@ class ArtifactBuilder:
             ArtifactBuilder: The artifact builder object
         """
         self._artifact.mainstat = MainStat(stat, value)
-        self._artifact.mainstat.set_value_by_level(self._artifact.level)  # type: ignore[reportOptionalMemberAccess]
+        self._artifact.mainstat.set_value_by_level(self._artifact.level)
         return self
 
     def with_substat(self, stat: StatType, value: float) -> ArtifactBuilder:
@@ -373,8 +365,7 @@ class ArtifactBuilder:
                     f"Substat length mismatch with rarity '{rarity}' (Expected {rarity} substats, got {substat_length})"
                 )
                 raise ValueError(msg)
-            if self._artifact.mainstat is not None:
-                self._artifact.mainstat.set_value_by_level(level)
+            self._artifact.mainstat.set_value_by_level(level)
 
         self._artifact.level = level
         return self
@@ -424,7 +415,7 @@ class ArtifactBuilder:
             ArtifactBuilder: The artifact builder object
         """
         set_data = VALID_ARTIFACT_SETS[artifact_set]
-        if (slot := self._artifact.artifact_slot) is not None and slot not in set_data.pieces:
+        if (slot := self._artifact.artifact_slot) not in set_data.pieces:
             msg = f"Invalid slot '{slot}' for set '{artifact_set}' (expected: {set_data.pieces})"
             raise ValueError(msg)
         self._artifact.artifact_set = artifact_set
