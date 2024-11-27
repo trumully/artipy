@@ -1,9 +1,9 @@
 """Utilities for stats module."""
 
-from collections.abc import Iterable
 from decimal import Decimal
-from functools import cache
+from functools import lru_cache
 from operator import attrgetter
+from typing import NamedTuple, cast
 
 from artipy.data_gen import DataGen
 from artipy.types import StatType
@@ -12,19 +12,19 @@ MAINSTAT_DATA = DataGen("ReliquaryLevelExcelConfigData.json")
 SUBSTAT_DATA = DataGen("ReliquaryAffixExcelConfigData.json")
 
 
-def map_to_decimal(values: Iterable[float | int]) -> tuple[Decimal, ...]:
-    """Map the values to Decimal.
-
-    Args:
-        values (Iterable[float  |  int]): The values to map.
-
-    Returns:
-        tuple[Decimal, ...]: The mapped values.
-    """
-    return tuple(map(Decimal, values))
+class StatData(NamedTuple):
+    depot_id: int
+    prop_type: StatType
+    prop_value: float
+    value: float
 
 
-@cache
+class StatContainer(NamedTuple):
+    rank: int
+    add_props: list[StatData]
+
+
+@lru_cache
 def possible_mainstat_values(stat: StatType, rarity: int) -> tuple[Decimal, ...]:
     """Get the possible values for a mainstat based on the stat type and rarity.
     Map the values to Decimal.
@@ -36,12 +36,13 @@ def possible_mainstat_values(stat: StatType, rarity: int) -> tuple[Decimal, ...]
     Returns:
         tuple[Decimal, ...]: The possible values for the mainstat.
     """
-    values = list(MAINSTAT_DATA)[1:]
+    mainstat_data = MAINSTAT_DATA.as_list()
+    values = cast(list[StatContainer], mainstat_data[1:])
     data = [j.value for i in values if i.rank == rarity for j in i.add_props if j.prop_type == stat]
-    return map_to_decimal(data)
+    return tuple(x for x in map(Decimal, data))
 
 
-@cache
+@lru_cache
 def possible_substat_values(stat: StatType, rarity: int) -> tuple[Decimal, ...]:
     """Get the possible values for a substat based on the stat type and rarity.
     Map the values to Decimal.
@@ -53,6 +54,7 @@ def possible_substat_values(stat: StatType, rarity: int) -> tuple[Decimal, ...]:
     Returns:
         tuple[Decimal, ...]: The possible values for the substat.
     """
-    data = [d for d in SUBSTAT_DATA if d.depot_id == int(f"{rarity}01") and d.prop_type == stat]
+    substat_data = cast(list[StatData], SUBSTAT_DATA.as_list())
+    data = [d for d in substat_data if d.depot_id == int(f"{rarity}01") and d.prop_type == stat]
     sorted_data = sorted(data, key=attrgetter("prop_value"))
-    return map_to_decimal(d.prop_value for d in sorted_data)
+    return tuple(x for x in map(Decimal, (d.prop_value for d in sorted_data)))

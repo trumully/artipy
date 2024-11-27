@@ -80,6 +80,14 @@ class DataGen:
         with Path(__data__ / file_name).open(encoding="utf-8") as f:
             self._data = json.load(f, object_hook=recursive_namespace)
 
+    def as_list(self) -> list[SimpleNamespace]:
+        """Return the data as a list.
+
+        Returns:
+            list[SimpleNamespace]: The data as a list.
+        """
+        return list(self._data)
+
     def __iter__(self) -> Iterator[SimpleNamespace]:
         return iter(self._data)
 

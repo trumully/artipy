@@ -70,7 +70,7 @@ class ArtifactBuilder:
 
     def with_substats(
         self,
-        substats: list[tuple[StatType, float | int]] | None = None,
+        substats: list[tuple[StatType, float]] | None = None,
         *,
         amount: int = 0,
     ) -> ArtifactBuilder:
@@ -78,7 +78,7 @@ class ArtifactBuilder:
         random substats based on the rarity of the artifact.
 
         Args:
-            substats (list[tuple[artipy.types.StatType, float  |  int]], optional): The
+            substats (list[tuple[artipy.types.StatType, float]], optional): The
                 substats to set. Defaults to None.
             amount (int, optional): The amount of stats to generate. Defaults to 0.
 
@@ -90,7 +90,13 @@ class ArtifactBuilder:
             ArtifactBuilder: The artifact builder object
         """
         rarity = self._artifact.rarity
-        if substats is None:
+        if substats is not None:
+            if len(substats) > rarity - 1 and rarity > 0:
+                msg = "Too many substats provided."
+                raise ValueError(msg)
+            self._artifact.substats = list(starmap(SubStat, substats))
+
+        else:
             substats = []
             valid_range = range(1, rarity)
             if amount not in valid_range:
@@ -100,11 +106,6 @@ class ArtifactBuilder:
             for _ in range(amount):
                 new_stat = pick_stat(self._artifact)
                 self._artifact.add_substat(new_stat)
-        elif len(substats) > rarity - 1 and rarity > 0:
-            msg = "Too many substats provided."
-            raise ValueError(msg)
-        else:
-            self._artifact.substats = list(starmap(SubStat, substats))
 
         return self
 
@@ -165,12 +166,15 @@ class ArtifactBuilder:
                     f"(Expected {min(expected_range)}-{max(expected_range)})"
                 )
                 raise ValueError(msg)
+
         if rarity not in range(1, MAX_RARITY + 1):
             msg = f"Invalid rarity '{rarity}' for artifact."
             raise ValueError(msg)
+
         if len(self._artifact.substats) >= rarity:
             msg = "Substats are already full."
             raise ValueError(msg)
+
         self._artifact.rarity = rarity
         return self
 
@@ -184,10 +188,8 @@ class ArtifactBuilder:
             ArtifactBuilder: The artifact builder object
         """
         set_data = VALID_ARTIFACT_SETS[artifact_set]
-        if self._artifact.artifact_slot is not None and self._artifact.artifact_slot not in set_data.pieces:
-            msg = (
-                f"Invalid slot '{self._artifact.artifact_slot}' for set '{artifact_set}' (expected: {set_data.pieces})"
-            )
+        if (slot := self._artifact.artifact_slot) is not None and slot not in set_data.pieces:
+            msg = f"Invalid slot '{slot}' for set '{artifact_set}' (expected: {set_data.pieces})"
             raise ValueError(msg)
         self._artifact.artifact_set = artifact_set
         return self
