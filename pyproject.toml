@@ -81,6 +81,11 @@ unfixable = [
 convention = "google"
 "ignore-decorators" = ["typing.overload"]
 
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = [
+    "PLC1901", "PLR2004", "PLR6301", "S", "TID252"
+]
+
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
 # https://discuss.python.org/t/problems-with-typeis/55410/6
 # https://discuss.python.org/t/problems-with-typeis/55410/46

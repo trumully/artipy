@@ -2,6 +2,9 @@ import random
 from copy import deepcopy
 
 import pytest
+from hypothesis import assume, given
+from hypothesis import strategies as st
+
 from artipy import UPGRADE_STEP
 from artipy.artifacts import (
     AddStatStrategy,
@@ -16,8 +19,6 @@ from artipy.types import (
     ArtifactSlot,
     StatType,
 )
-from hypothesis import assume, given
-from hypothesis import strategies as st
 
 
 @pytest.fixture
@@ -70,6 +71,8 @@ def test_artifact_upgrade(level: int, rarity: int) -> None:
         artifact.upgrade()
 
         assert artifact.level == previous.level + 1
+        assert artifact.mainstat is not None
+        assert previous.mainstat is not None
         assert artifact.mainstat.value > previous.mainstat.value
 
 
@@ -102,6 +105,8 @@ def test_artifact_upgrade_until_max(level: int, rarity: int) -> None:
         artifact.upgrade()
 
     assert artifact.level == max_level
+    assert artifact.mainstat is not None
+    assert old.mainstat is not None
     assert artifact.mainstat.value > old.mainstat.value
 
     # Upgrade again
@@ -110,7 +115,7 @@ def test_artifact_upgrade_until_max(level: int, rarity: int) -> None:
     assert artifact.level == max_level
 
 
-def test_artifact_get_strategy(artifact) -> None:
+def test_artifact_get_strategy(artifact: Artifact) -> None:
     while len(artifact.substats) < artifact.rarity - 1:
         artifact.upgrade()
         if len(artifact.substats) < artifact.rarity - 1:
@@ -119,12 +124,13 @@ def test_artifact_get_strategy(artifact) -> None:
     assert isinstance(artifact.strategy, UpgradeStatStrategy)
 
 
-def test_artifact_str(artifact) -> None:
+def test_artifact_str(artifact: Artifact) -> None:
+    assert artifact.artifact_set is not None
     set_data = VALID_ARTIFACT_SETS[artifact.artifact_set]
     assert str(artifact) == (
         f"{artifact.artifact_slot} [+{artifact.level}]\n"
-        f"{set_data.set_name} {"★" * artifact.rarity}\n"
-        f"{artifact.mainstat}\n{"\n".join(str(s) for s in artifact.substats)}"
+        f"{set_data.set_name} {'★' * artifact.rarity}\n"
+        f"{artifact.mainstat}\n{'\n'.join(str(s) for s in artifact.substats)}"
     )
 
 
