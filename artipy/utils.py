@@ -1,5 +1,6 @@
-"""Utilities for stats module."""
+"""Utility functions for the package."""
 
+import random
 from decimal import Decimal
 from functools import lru_cache
 from operator import attrgetter
@@ -8,8 +9,24 @@ from typing import NamedTuple, cast
 from artipy.data_gen import DataGen
 from artipy.types import StatType
 
+type Seq[T] = tuple[T, ...] | list[T]
+
 MAINSTAT_DATA = DataGen("ReliquaryLevelExcelConfigData.json")
 SUBSTAT_DATA = DataGen("ReliquaryAffixExcelConfigData.json")
+
+
+def choose[T](population: Seq[T], weights: tuple[float]) -> T:
+    """Helper function to choose a random element from a population with weights.
+    This skips having to do slicing of the result of random.choices.
+
+    Args:
+        population (Seq[T]): The population to choose from.
+        weights (tuple[float]): The weights of the population.
+
+    Returns:
+        T: The chosen element.
+    """
+    return random.choices(population, weights)[0]
 
 
 class StatData(NamedTuple):

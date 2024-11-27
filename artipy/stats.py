@@ -1,5 +1,7 @@
 """Stat types and data for Genshin Impact artifacts."""
 
+from __future__ import annotations
+
 import random
 from dataclasses import dataclass, field
 from decimal import Decimal
@@ -13,6 +15,10 @@ __all__ = (
     "SubStat",
     "create_substat",
 )
+
+
+def get_stat_str(name: str, value: float | Decimal, *, is_pct: bool) -> str:
+    return f"{name}+{value:.1%}" if is_pct else f"{name}+{value:,.0f}"
 
 
 @dataclass(slots=True)
@@ -44,8 +50,8 @@ class Stat:
         return f"{self.name} = {self.value}" if format_spec in ("v", "verbose") else str(self)  # noqa: PLR6201 tuple is slightly faster
 
     def __str__(self) -> str:
-        name = STAT_NAMES[self.name].split("%")
-        return f"{name[0]}+{self.value:.1%}" if self.name.is_pct else f"{name[0]}+{self.value:,.0f}"
+        name, *_ = STAT_NAMES[self.name].split("%")
+        return get_stat_str(name, self.value, is_pct=self.name.is_pct)
 
 
 @dataclass(slots=True)
@@ -83,7 +89,8 @@ class SubStat(Stat):
         self.value += self.roll()
 
     def __str__(self) -> str:
-        return f"• {self!s}"
+        name, *_ = STAT_NAMES[self.name].split("%")
+        return f"• {get_stat_str(name, self.value, is_pct=self.name.is_pct)}"
 
 
 def create_substat(

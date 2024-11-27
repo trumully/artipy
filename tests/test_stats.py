@@ -5,8 +5,7 @@ import decimal
 from hypothesis import assume, given
 from hypothesis import strategies as st
 
-import artipy.stats
-from artipy.stats import utils as stats_utils
+from artipy import stats, utils
 from artipy.types import STAT_NAMES, VALID_SUBSTATS, StatType
 
 
@@ -28,7 +27,7 @@ def test_fuzz_MainStat(
         _value (Union[float, int, decimal.Decimal]): The value of the stat.
         rarity (int): The rarity of the stat.
     """
-    artipy.stats.MainStat(name=name, _value=_value, rarity=rarity)
+    stats.MainStat(name=name, _value=_value, rarity=rarity)
 
 
 @given(
@@ -54,9 +53,9 @@ def test_fuzz_MainStat_set_value_by_level(
         level (int): The level of the artifact.
     """
     assume(level <= (4 * rarity if rarity >= 3 else 4))
-    mainstat = artipy.stats.MainStat(name=name, _value=_value, rarity=rarity)
+    mainstat = stats.MainStat(name=name, _value=_value, rarity=rarity)
     mainstat.set_value_by_level(level)
-    values = stats_utils.possible_mainstat_values(stat=name, rarity=rarity)
+    values = utils.possible_mainstat_values(stat=name, rarity=rarity)
     assert mainstat.value in values
 
 
@@ -81,7 +80,7 @@ def test_fuzz_MainStat_str(
         rarity (int): The rarity of the stat.
         level (int): The level of the artifact.
     """
-    mainstat = artipy.stats.MainStat(name=name, _value=_value, rarity=rarity)
+    mainstat = stats.MainStat(name=name, _value=_value, rarity=rarity)
     stat_name = STAT_NAMES[mainstat.name].split("%")
     if mainstat.name.is_pct:
         assert str(mainstat) == f"{stat_name[0]}+{mainstat.value:.1%}"
@@ -107,7 +106,7 @@ def test_fuzz_SubStat(
         _value (Union[float, int, decimal.Decimal]): The value of the stat.
         rarity (int): The rarity of the stat.
     """
-    artipy.stats.SubStat(name=name, _value=_value, rarity=rarity)
+    stats.SubStat(name=name, _value=_value, rarity=rarity)
 
 
 @given(name=st.sampled_from(VALID_SUBSTATS), rarity=st.integers(1, 5))
@@ -121,8 +120,8 @@ def test_fuzz_create_substat(name: StatType, rarity: int) -> None:
         name (StatType): The name of the substat.
         rarity (int): The rarity of the substat.
     """
-    artipy.stats.create_substat(name=name, rarity=rarity)
-    artipy.stats.create_substat(rarity=rarity)
+    stats.create_substat(name=name, rarity=rarity)
+    stats.create_substat(rarity=rarity)
 
 
 @given(name=st.sampled_from(VALID_SUBSTATS), rarity=st.integers(1, 5))
@@ -134,7 +133,7 @@ def test_fuzz_possible_substat_values(name: StatType, rarity: int) -> None:
         name (StatType): The name of the substat.
         rarity (int): The rarity of the substat.
     """
-    stats_utils.possible_substat_values(stat=name, rarity=rarity)
+    utils.possible_substat_values(stat=name, rarity=rarity)
 
 
 @given(name=st.sampled_from(VALID_SUBSTATS), rarity=st.integers(1, 5))
@@ -146,9 +145,9 @@ def test_fuzz_SubStat_roll(name: StatType, rarity: int) -> None:
         name (StatType): The name of the substat.
         rarity (int): The rarity of the substat.
     """
-    substat = artipy.stats.create_substat(name=name, rarity=rarity)
+    substat = stats.create_substat(name=name, rarity=rarity)
     roll = substat.roll()
-    assert roll in stats_utils.possible_substat_values(stat=name, rarity=rarity)
+    assert roll in utils.possible_substat_values(stat=name, rarity=rarity)
 
 
 @given(name=st.sampled_from(VALID_SUBSTATS), rarity=st.integers(1, 5))
@@ -160,7 +159,7 @@ def test_fuzz_SubStat_str(name: StatType, rarity: int) -> None:
         name (StatType): The name of the substat.
         rarity (int): The rarity of the substat.
     """
-    substat = artipy.stats.create_substat(name=name, rarity=rarity)
+    substat = stats.create_substat(name=name, rarity=rarity)
     stat_name = STAT_NAMES[substat.name].split("%")
     if substat.name.is_pct:
         assert str(substat) == f"• {stat_name[0]}+{substat.value:.1%}"

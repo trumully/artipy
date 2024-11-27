@@ -35,10 +35,10 @@ requires = [ "hatchling" ]
 build-backend = "hatchling.build"
 
 [tool.hatch.version]
-path = "src/artipy/__init__.py"
+path = "artipy/__init__.py"
 
 [tool.hatch.build.targets.wheel]
-packages = [ "src/artipy" ]
+packages = [ "artipy" ]
 
 [tool.ruff]
 line-length = 120
@@ -99,7 +99,7 @@ convention = "google"
 
 
 [tool.pyright]
-include = ["src"]
+include = ["artipy"]
 exclude = [
     "**/__pycache__",
     "build",
@@ -118,13 +118,13 @@ reportUnnecessaryTypeIgnoreComment = "warning"
 [tool.pytest.ini_options]
 minversion = "8.0.0"
 testpaths = [ "tests/" ]
-addopts = "--cov=src/artipy --cov-report term-missing"
+addopts = "--cov=artipy --cov-report term-missing"
 
 [tool.coverage.run]
 omit = ["plots.py"]
 
 [tool.semantic_release]
-version_variable = [ "src/artipy/__init__.py:__version__" ]
+version_variable = [ "artipy/__init__.py:__version__" ]
 build_command = "uv build"
 version_source = "tag"
 commit_version_number = true

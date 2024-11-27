@@ -1,7 +1,6 @@
 """The example script for the artipy package."""
 
-import artipy.analysis as analysis
-from artipy.analysis import plots
+from artipy import analysis
 from artipy.artifacts import ArtifactBuilder
 from artipy.types import ArtifactSet, ArtifactSlot, StatType
 
@@ -34,7 +33,7 @@ def main() -> None:
     print(f"Max Roll Value: {max_roll_value}")
     print(f"Crit Value: {crit_value}")
 
-    plots.plot_artifact_substat_rolls(artifact)
+    analysis.plot_artifact_substat_rolls(artifact)
 
 
 if __name__ == "__main__":
