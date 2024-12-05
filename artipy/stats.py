@@ -58,6 +58,7 @@ class MainStat(Stat):
         """Set the value of the mainstat based on the level of the artifact."""
         self.value = possible_mainstat_values(self.name, self.rarity)[level]
 
+
 @dataclass(slots=True)
 class SubStat(Stat):
     """Substat dataclass for a Genshin Impact artifact."""

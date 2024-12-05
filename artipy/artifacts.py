@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from copy import deepcopy
 import random
 from collections.abc import Callable
+from copy import deepcopy
 from itertools import starmap
 
 from artipy import MAX_RARITY, UPGRADE_STEP
@@ -34,16 +34,19 @@ def _level_up_artifact(artifact: Artifact) -> None:
     artifact.level = new_level
     artifact.mainstat.set_value_by_level(new_level)
 
+
 def pick_stat(artifact: Artifact) -> SubStat:
     if not artifact.rarity:
-        raise ValueError("Artifact must have a rarity set")
-    
+        msg = "Artifact must have a rarity set"
+        raise ValueError(msg)
+
     stats = frozenset(s.name for s in (artifact.mainstat, *artifact.substats))
     pool = {s: w for s, w in substat_weights.items() if s not in stats}
-    
+
     if not pool:
-        raise ValueError("No valid stats available to pick from")
-        
+        msg = "No valid stats available to pick from"
+        raise ValueError(msg)
+
     population, weights = map(tuple, zip(*pool.items(), strict=False))
     new_stat_name = choose(population, weights)
     return create_substat(name=new_stat_name, rarity=artifact.rarity)
@@ -385,11 +388,11 @@ class ArtifactBuilder:
 
         self._artifact.rarity = rarity
         return self
-    
+
     @classmethod
     def five_star(cls) -> ArtifactBuilder:
         return cls().with_rarity(5)
-    
+
     @classmethod
     def four_star(cls) -> ArtifactBuilder:
         return cls().with_rarity(4)

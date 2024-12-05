@@ -54,7 +54,7 @@ def possible_mainstat_values(stat: StatType, rarity: int) -> list[Decimal]:
         list[Decimal]: The possible values for the mainstat.
     """
     mainstat_data = MAINSTAT_DATA.as_list()
-    values = cast(list[StatContainer], mainstat_data[1:])
+    values = cast("list[StatContainer]", mainstat_data[1:])
     data = [
         j.value
         for i in values
@@ -77,7 +77,7 @@ def possible_substat_values(stat: StatType, rarity: int) -> list[Decimal]:
     Returns:
         list[Decimal]: The possible values for the substat.
     """
-    substat_data = cast(list[StatData], SUBSTAT_DATA.as_list())
+    substat_data = cast("list[StatData]", SUBSTAT_DATA.as_list())
     data = [
         d
         for d in substat_data

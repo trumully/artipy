@@ -1,10 +1,11 @@
 """Module that handles JSON data for the stats module."""
 
-import orjson
 import re
 from collections.abc import Iterator, Mapping, MutableMapping, Sequence
 from types import SimpleNamespace
 from typing import Any, ClassVar, cast
+
+import orjson
 
 from artipy import __data__
 
@@ -36,7 +37,7 @@ def recursive_namespace(data: Any) -> Any | SimpleNamespace:
         Any | SimpleNamespace: The converted data.
     """
     if isinstance(data, Mapping):
-        data = cast(Mapping[str, Any], data)
+        data = cast("Mapping[str, Any]", data)
         return SimpleNamespace(**{
             camel_to_snake_case(k): recursive_namespace(v) for k, v in data.items()
         })
@@ -86,7 +87,7 @@ class DataGen:
         with (__data__ / file_name).open("rb") as f:
             data = orjson.loads(f.read())
             if not hasattr(self, "_data"):
-                self._data = [recursive_namespace(item) for item in data]  # type: ignore
+                self._data = [recursive_namespace(item) for item in data]  # type: ignore[reportUninitializedInstanceVariable]
 
     def as_list(self) -> list[SimpleNamespace]:
         """Return the data as a list.
