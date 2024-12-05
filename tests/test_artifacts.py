@@ -2,12 +2,13 @@ import random
 from copy import deepcopy
 
 import pytest
+from hypothesis import assume, given
+from hypothesis import strategies as st
+
 from artipy import UPGRADE_STEP
 from artipy.artifacts import (
-    AddStatStrategy,
     Artifact,
     ArtifactBuilder,
-    UpgradeStatStrategy,
 )
 from artipy.types import (
     VALID_ARTIFACT_SETS,
@@ -16,8 +17,6 @@ from artipy.types import (
     ArtifactSlot,
     StatType,
 )
-from hypothesis import assume, given
-from hypothesis import strategies as st
 
 
 @pytest.fixture
@@ -26,7 +25,7 @@ def artifact() -> Artifact:
         ArtifactBuilder()
         .with_mainstat(StatType.HP, 0)
         .with_substat(StatType.HP_PERCENT, 5)
-        .with_rarity(5)
+        .five_star()
         .with_level(0)
         .with_slot(ArtifactSlot.FLOWER)
         .with_set(ArtifactSet.GLADIATORS_FINALE)
@@ -70,6 +69,8 @@ def test_artifact_upgrade(level: int, rarity: int) -> None:
         artifact.upgrade()
 
         assert artifact.level == previous.level + 1
+        assert artifact.mainstat is not None
+        assert previous.mainstat is not None
         assert artifact.mainstat.value > previous.mainstat.value
 
 
@@ -102,6 +103,8 @@ def test_artifact_upgrade_until_max(level: int, rarity: int) -> None:
         artifact.upgrade()
 
     assert artifact.level == max_level
+    assert artifact.mainstat is not None
+    assert old.mainstat is not None
     assert artifact.mainstat.value > old.mainstat.value
 
     # Upgrade again
@@ -110,21 +113,13 @@ def test_artifact_upgrade_until_max(level: int, rarity: int) -> None:
     assert artifact.level == max_level
 
 
-def test_artifact_get_strategy(artifact) -> None:
-    while len(artifact.substats) < artifact.rarity - 1:
-        artifact.upgrade()
-        if len(artifact.substats) < artifact.rarity - 1:
-            assert isinstance(artifact.strategy, AddStatStrategy)
-
-    assert isinstance(artifact.strategy, UpgradeStatStrategy)
-
-
-def test_artifact_str(artifact) -> None:
+def test_artifact_str(artifact: Artifact) -> None:
+    assert artifact.artifact_set is not None
     set_data = VALID_ARTIFACT_SETS[artifact.artifact_set]
     assert str(artifact) == (
         f"{artifact.artifact_slot} [+{artifact.level}]\n"
-        f"{set_data.set_name} {"★" * artifact.rarity}\n"
-        f"{artifact.mainstat}\n{"\n".join(str(s) for s in artifact.substats)}"
+        f"{set_data.set_name} {'★' * artifact.rarity}\n"
+        f"{artifact.mainstat}\n{'\n'.join(str(s) for s in artifact.substats)}"
     )
 
 

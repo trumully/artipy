@@ -1,10 +1,10 @@
 """Module that handles JSON data for the stats module."""
 
-import json
+import orjson
 import re
-from pathlib import Path
+from collections.abc import Iterator, Mapping, MutableMapping, Sequence
 from types import SimpleNamespace
-from typing import Any, ClassVar, Iterator
+from typing import Any, ClassVar, cast
 
 from artipy import __data__
 
@@ -20,8 +20,8 @@ def camel_to_snake_case(s: str) -> str:
     Returns:
         str: The converted string.
     """
-    s = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", s)
-    return re.sub("([a-z0-9])([A-Z])", r"\1_\2", s).lower()
+    s = re.sub(r"(.)([A-Z][a-z]+)", r"\1_\2", s)
+    return re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", s).lower()
 
 
 def recursive_namespace(data: Any) -> Any | SimpleNamespace:
@@ -35,10 +35,14 @@ def recursive_namespace(data: Any) -> Any | SimpleNamespace:
     Returns:
         Any | SimpleNamespace: The converted data.
     """
-    if isinstance(data, dict):
+    if isinstance(data, Mapping):
+        data = cast(Mapping[str, Any], data)
         return SimpleNamespace(**{
             camel_to_snake_case(k): recursive_namespace(v) for k, v in data.items()
         })
+    if isinstance(data, list):
+        data = cast("Sequence[Any]", data)
+        return [recursive_namespace(item) for item in data]
     return data
 
 
@@ -51,36 +55,46 @@ class DataGen:
     which allows for easy attribute-style access.
 
     Attributes:
-        _instances (dict[str, DataGen]): A dictionary that maps file names to DataGen
-                                        instances.
-        _data (list[SimpleNamespace]): The data loaded from the JSON file.
+        _instances (MutableMapping[str, DataGen]): A dictionary that maps file names to DataGen instances.
+        _data (Sequence[SimpleNamespace]): The data loaded from the JSON file.
     """
 
-    _instances: ClassVar[dict[str, "DataGen"]] = {}
-    _data: list[SimpleNamespace] = []
+    _instances: ClassVar[MutableMapping[str, "DataGen"]] = {}
 
     def __new__(cls, file_name: str) -> "DataGen":
         """Create a new instance of the class if an instance with the same file name
         does not exist.
 
         Args:
-            file_name (str): The name of the file to load.
+            file_name (str): The name of the JSON file to load.
 
         Returns:
-            DataGen: The instance of the class.
+            DataGen: The instance of the DataGen class.
         """
         if file_name not in cls._instances:
-            cls._instances[file_name] = super().__new__(cls)
+            instance = super().__new__(cls)
+            cls._instances[file_name] = instance
+            instance._load_data(file_name)
         return cls._instances[file_name]
 
-    def __init__(self, file_name: str) -> None:
-        """Load the data from the JSON file.
+    def _load_data(self, file_name: str) -> None:
+        """Load data from a JSON file.
 
         Args:
-            file_name (str): The name of the file to load.
+            file_name (str): The name of the JSON file to load.
         """
-        with open(Path(__data__ / file_name), mode="r", encoding="utf-8") as f:
-            self._data = json.load(f, object_hook=recursive_namespace)
+        with (__data__ / file_name).open("rb") as f:
+            data = orjson.loads(f.read())
+            if not hasattr(self, "_data"):
+                self._data = [recursive_namespace(item) for item in data]  # type: ignore
+
+    def as_list(self) -> list[SimpleNamespace]:
+        """Return the data as a list.
+
+        Returns:
+            list[SimpleNamespace]: The data as a list.
+        """
+        return list(self._data)
 
     def __iter__(self) -> Iterator[SimpleNamespace]:
         return iter(self._data)
@@ -89,7 +103,7 @@ class DataGen:
         return self._data[index]
 
 
-def json_to_dict(file_name: str) -> dict[str, Any]:
+def json_to_dict(file_name: str) -> Mapping[str, Any]:
     """Load JSON data from a file and return it as a dictionary.
 
     Sometimes we just want to load the JSON data as a dictionary instead of a list of
@@ -101,6 +115,6 @@ def json_to_dict(file_name: str) -> dict[str, Any]:
     Returns:
         dict[str, Any]: The data from the JSON file.
     """
-    with open(Path(__data__ / file_name), mode="r", encoding="utf-8") as f:
-        data: dict[str, Any] = json.load(f)
+    with (__data__ / file_name).open("rb") as f:
+        data: dict[str, Any] = orjson.loads(f.read())
         return data

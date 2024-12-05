@@ -1,10 +1,10 @@
-"""Module containing the types used in the artipy package."""
+"""Module containing the types used in the artipy package."""  # noqa: A005
 
 import re
+from collections.abc import Iterator
 from dataclasses import dataclass
 from decimal import Decimal
 from enum import StrEnum, auto
-from typing import Iterator
 
 from artipy.data_gen import camel_to_snake_case, json_to_dict
 
@@ -38,7 +38,7 @@ def generate_artifact_sets() -> None:
         key_to_constant(k): v
         for k, v in json_to_dict("artifacts/artifactNames_gen.json").items()
     }
-    print("\n".join(f"{k} = {v}" for k, v in data.items()))
+    print("\n".join(f"{k} = {v}" for k, v in data.items()))  # noqa: T201
 
 
 class ArtifactSet(StrEnum):
@@ -112,7 +112,7 @@ def make_artifact_sets() -> Iterator[ArtifactSetData]:
     """
     for key in ArtifactSet:
         data = json_to_dict(
-            f"artifacts/artifact_{key.name.title().replace("_", "")}_gen.json"
+            f"artifacts/artifact_{key.name.title().replace('_', '')}_gen.json",
         )
         yield ArtifactSetData(**{camel_to_snake_case(k): v for k, v in data.items()})
 
@@ -147,7 +147,7 @@ class RollMagnitude(StrEnum):
         return Decimal("1.0")
 
     @classmethod
-    def closest(cls, value: Decimal | float | int) -> "RollMagnitude":
+    def closest(cls, value: Decimal | float) -> "RollMagnitude":
         """The closest roll magnitude to a value.
 
         Args:
@@ -157,7 +157,7 @@ class RollMagnitude(StrEnum):
             RollMagnitude: The closest roll magnitude to the value.
         """
         return RollMagnitude(
-            min(cls, key=lambda x: abs(RollMagnitude(x).magnitude - Decimal(value)))
+            min(cls, key=lambda x: abs(RollMagnitude(x).magnitude - Decimal(value))),
         )
 
 
