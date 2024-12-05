@@ -16,7 +16,8 @@ classifiers = [
 dependencies = [
     "toml>=0.10.2",
     "plotly>=5.20.0",
-    "pandas>=2.2.2"
+    "pandas>=2.2.2",
+    "orjson>=3.10.12",
 ]
 
 [dependency-groups]
@@ -41,7 +42,7 @@ path = "artipy/__init__.py"
 packages = [ "artipy" ]
 
 [tool.ruff]
-line-length = 120
+line-length = 90
 preview = true
 
 [tool.ruff.format]

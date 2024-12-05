@@ -24,7 +24,7 @@ def test_fuzz_MainStat(
 
     Args:
         name (StatType): The name of the stat.
-        _value (Union[float, int, decimal.Decimal]): The value of the stat.
+        _value (float | decimal.Decimal): The value of the stat.
         rarity (int): The rarity of the stat.
     """
     stats.MainStat(name=name, _value=_value, rarity=rarity)
@@ -48,7 +48,7 @@ def test_fuzz_MainStat_set_value_by_level(
 
     Args:
         name (artipy.stats.stats.StatType): The name of the stat.
-        _value (Union[float, int, decimal.Decimal]): The value of the stat.
+        _value (float | decimal.Decimal): The value of the stat.
         rarity (int): The rarity of the stat.
         level (int): The level of the artifact.
     """
@@ -76,7 +76,7 @@ def test_fuzz_MainStat_str(
 
     Args:
         name (artipy.stats.stats.StatType): The name of the stat.
-        _value (Union[float, int, decimal.Decimal]): The value of the stat.
+        _value (float | decimal.Decimal): The value of the stat.
         rarity (int): The rarity of the stat.
         level (int): The level of the artifact.
     """
@@ -103,7 +103,7 @@ def test_fuzz_SubStat(
 
     Args:
         name (StatType): The name of the stat.
-        _value (Union[float, int, decimal.Decimal]): The value of the stat.
+        _value (float | decimal.Decimal): The value of the stat.
         rarity (int): The rarity of the stat.
     """
     stats.SubStat(name=name, _value=_value, rarity=rarity)

@@ -9,7 +9,7 @@ def main() -> None:
     artifact = (
         ArtifactBuilder()
         .with_level(8)
-        .with_rarity(5)
+        .five_star()
         .with_mainstat(StatType.ATK_PERCENT, 0.228)
         .with_substats([
             (StatType.ATK, 19),

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from copy import deepcopy
 import random
 from collections.abc import Callable
 from itertools import starmap
@@ -33,19 +34,19 @@ def _level_up_artifact(artifact: Artifact) -> None:
     artifact.level = new_level
     artifact.mainstat.set_value_by_level(new_level)
 
-
-def upgrade_artifact(artifact: Artifact) -> None:
-    """Upgrade the artifact's level."""
-    _level_up_artifact(artifact)
-
-
 def pick_stat(artifact: Artifact) -> SubStat:
-    stats = [s.name for s in (artifact.mainstat, *artifact.substats)]
+    if not artifact.rarity:
+        raise ValueError("Artifact must have a rarity set")
+    
+    stats = frozenset(s.name for s in (artifact.mainstat, *artifact.substats))
     pool = {s: w for s, w in substat_weights.items() if s not in stats}
+    
+    if not pool:
+        raise ValueError("No valid stats available to pick from")
+        
     population, weights = map(tuple, zip(*pool.items(), strict=False))
     new_stat_name = choose(population, weights)
-    new_stat = create_substat(name=new_stat_name, rarity=artifact.rarity)
-    return new_stat
+    return create_substat(name=new_stat_name, rarity=artifact.rarity)
 
 
 def upgrade_artifact_new_stat(artifact: Artifact) -> None:
@@ -58,9 +59,8 @@ def upgrade_artifact_new_stat(artifact: Artifact) -> None:
 
 def upgrade_artifact_upgrade_stat(artifact: Artifact) -> None:
     """Upgrade the artifact's level and upgrade a random substat if the level is divisible by the upgrade step."""
-    if artifact.level % UPGRADE_STEP == 0:
-        substat = random.choice(artifact.substats)
-        substat.upgrade()
+    if artifact.level % UPGRADE_STEP == 0 and artifact.substats:
+        random.choice(artifact.substats).upgrade()
     _level_up_artifact(artifact)
 
 
@@ -198,7 +198,7 @@ class Artifact:
             UpgradeMethod: The upgrade strategy of the artifact.
         """
         if self.rarity == 1:
-            return upgrade_artifact
+            return _level_up_artifact
         if len(self.substats) < self.rarity - 1:
             return upgrade_artifact_new_stat
         return upgrade_artifact_upgrade_stat
@@ -271,7 +271,9 @@ class ArtifactBuilder:
         Returns:
             ArtifactBuilder: The artifact builder object
         """
-        if (rarity := self._artifact.rarity) > 0 and len(self._artifact.substats) >= rarity - 1:
+        if (rarity := self._artifact.rarity) > 0 and len(
+            self._artifact.substats,
+        ) >= rarity - 1:
             msg = "Substats are already full."
             raise ValueError(msg)
         self._artifact.add_substat(SubStat(stat, value))
@@ -342,9 +344,7 @@ class ArtifactBuilder:
                 raise ValueError(msg)
 
             if (substat_length := len(self._artifact.substats)) >= rarity:
-                msg = (
-                    f"Substat length mismatch with rarity '{rarity}' (Expected {rarity} substats, got {substat_length})"
-                )
+                msg = f"Substat length mismatch with rarity '{rarity}' (Expected {rarity} substats, got {substat_length})"
                 raise ValueError(msg)
             self._artifact.mainstat.set_value_by_level(level)
 
@@ -385,6 +385,14 @@ class ArtifactBuilder:
 
         self._artifact.rarity = rarity
         return self
+    
+    @classmethod
+    def five_star(cls) -> ArtifactBuilder:
+        return cls().with_rarity(5)
+    
+    @classmethod
+    def four_star(cls) -> ArtifactBuilder:
+        return cls().with_rarity(4)
 
     def with_set(self, artifact_set: ArtifactSet) -> ArtifactBuilder:
         """Set the artifact set.
@@ -420,4 +428,4 @@ class ArtifactBuilder:
         Returns:
             artipy.artifacts.Artifact: The artifact object
         """
-        return self._artifact
+        return deepcopy(self._artifact)

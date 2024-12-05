@@ -37,7 +37,11 @@ class Stat:
         self._value = Decimal(value)
 
     def __format__(self, format_spec: str) -> str:
-        return f"{self.name} = {self.value}" if format_spec in ("v", "verbose") else str(self)  # noqa: PLR6201 tuple is slightly faster
+        return (
+            f"{self.name} = {self.value}"
+            if format_spec in {"v", "verbose"}
+            else str(self)
+        )
 
     def __str__(self) -> str:
         name, *_ = STAT_NAMES[self.name].split("%")
@@ -53,7 +57,6 @@ class MainStat(Stat):
     def set_value_by_level(self, level: int) -> None:
         """Set the value of the mainstat based on the level of the artifact."""
         self.value = possible_mainstat_values(self.name, self.rarity)[level]
-
 
 @dataclass(slots=True)
 class SubStat(Stat):
@@ -86,7 +89,7 @@ def create_substat(
 
     Args:
         rarity (int): The rarity of the artifact.
-        name (StatType | None, optional): The name of the substat. If not given, defaults to a random valid substat.
+        name (StatType, optional): The name of the substat. If not given, defaults to a random valid substat.
 
     Returns:
         SubStat: The substat object.

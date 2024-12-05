@@ -17,7 +17,13 @@ from plotly.subplots import make_subplots
 from artipy import UPGRADE_STEP
 from artipy.artifacts import Artifact, ArtifactBuilder
 from artipy.stats import SubStat
-from artipy.types import STAT_NAMES, VALID_MAINSTATS, ArtifactSlot, RollMagnitude, StatType
+from artipy.types import (
+    STAT_NAMES,
+    VALID_MAINSTATS,
+    ArtifactSlot,
+    RollMagnitude,
+    StatType,
+)
 from artipy.utils import choose, possible_substat_values
 
 ROUND_TO = Decimal("1E-2")
@@ -193,8 +199,22 @@ def calculate_artifact_crit_value(artifact: Artifact) -> Decimal:
     Returns:
         Decimal: The crit value of the artifact.
     """
-    crit_dmg = sum(substat.value for substat in artifact.substats if substat.name == StatType.CRIT_DMG) * 100
-    crit_rate = sum(substat.value for substat in artifact.substats if substat.name == StatType.CRIT_RATE) * 100
+    crit_dmg = (
+        sum(
+            substat.value
+            for substat in artifact.substats
+            if substat.name == StatType.CRIT_DMG
+        )
+        * 100
+    )
+    crit_rate = (
+        sum(
+            substat.value
+            for substat in artifact.substats
+            if substat.name == StatType.CRIT_RATE
+        )
+        * 100
+    )
     return Decimal(crit_dmg + crit_rate * 2)
 
 
@@ -214,7 +234,10 @@ def plot_artifact_substat_rolls(artifact: Artifact) -> None:
     Args:
         artifact (artipy.artifacts.Artifact): The artifact to plot the substat rolls for.
     """
-    substat_rolls = {STAT_NAMES[substat.name]: calculate_substat_rolls(substat) for substat in artifact.substats}
+    substat_rolls = {
+        STAT_NAMES[substat.name]: calculate_substat_rolls(substat)
+        for substat in artifact.substats
+    }
     stat_rolls_df = pd.DataFrame(substat_rolls.items(), columns=["stat", "rolls"])
 
     colors = px.colors.qualitative.Plotly
@@ -227,10 +250,13 @@ def plot_artifact_substat_rolls(artifact: Artifact) -> None:
     )
 
     magnitudes_flat = [
-        tuple(i.value for i in calculate_substat_roll_magnitudes(substat)) for substat in artifact.substats
+        tuple(i.value for i in calculate_substat_roll_magnitudes(substat))
+        for substat in artifact.substats
     ]
     magnitudes_to_dict = {
-        STAT_NAMES[substat.name]: {i.value: magnitudes_flat[idx].count(i.value) for i in RollMagnitude}
+        STAT_NAMES[substat.name]: {
+            i.value: magnitudes_flat[idx].count(i.value) for i in RollMagnitude
+        }
         for idx, substat in enumerate(artifact.substats)
     }
     magnitudes_to_long_form = [
@@ -260,7 +286,10 @@ def plot_artifact_substat_rolls(artifact: Artifact) -> None:
         column_widths=[0.4] + [0.6 / len(bar_traces)] * len(bar_traces),
         subplot_titles=[
             f"Substat rolls on Artifact with {sum(substat_rolls.values())} total rolls",
-            *(f"{stat} ({substat_rolls[STAT_NAMES[stat.name]]} rolls)" for stat in artifact.substats),
+            *(
+                f"{stat} ({substat_rolls[STAT_NAMES[stat.name]]} rolls)"
+                for stat in artifact.substats
+            ),
         ],
     )
 
@@ -287,7 +316,11 @@ def plot_crit_value_distribution(iterations: int = 1000) -> None:
 
     bins = [0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0]
     labels = [f"{bins[i]}-{bins[i + 1]}" for i in range(len(bins) - 1)]
-    crit_value_df["crit_value_range"] = pd.cut(crit_value_df["crit_value"], bins=bins, labels=labels)
+    crit_value_df["crit_value_range"] = pd.cut(
+        crit_value_df["crit_value"],
+        bins=bins,
+        labels=labels,
+    )
 
     fig = px.histogram(
         crit_value_df,
@@ -328,16 +361,21 @@ def plot_expected_against_actual_mainstats(iterations: int = 1000) -> None:
         upgrade_artifact_to_max(a)
 
     expected_mainstats: dict[ArtifactSlot, dict[StatType, float]] = {
-        ArtifactSlot(k): v for k, v in VALID_MAINSTATS.items() if k not in (ArtifactSlot.FLOWER, ArtifactSlot.PLUME)
+        ArtifactSlot(k): v
+        for k, v in VALID_MAINSTATS.items()
+        if k not in (ArtifactSlot.FLOWER, ArtifactSlot.PLUME)
     }
-    actual_mainstats: dict[ArtifactSlot, list[StatType]] = {k: [] for k in expected_mainstats}
+    actual_mainstats: dict[ArtifactSlot, list[StatType]] = {
+        k: [] for k in expected_mainstats
+    }
 
     for a in artifacts:
         if (slot := ArtifactSlot(str(a.artifact_slot))) in expected_mainstats:
             actual_mainstats[slot].append(a.mainstat.name)
 
     actual_mainstats_pct: dict[ArtifactSlot, dict[StatType, float]] = {
-        k: {stat: (v.count(stat) / len(v)) * 100 for stat in v} for k, v in actual_mainstats.items()
+        k: {stat: (v.count(stat) / len(v)) * 100 for stat in v}
+        for k, v in actual_mainstats.items()
     }
 
     fig = make_subplots(
@@ -387,7 +425,10 @@ def plot_multi_value_distribution(
     Raises:
         ValueError: If an invalid attribute is passed.
     """
-    all_attributes: Mapping[str, Callable[..., Any]] = {**ARTIFACT_ATTRIBUTES, **SUBSTAT_ATTRIBUTES}
+    all_attributes: Mapping[str, Callable[..., Any]] = {
+        **ARTIFACT_ATTRIBUTES,
+        **SUBSTAT_ATTRIBUTES,
+    }
     for attr in attributes:
         if attr not in all_attributes:
             msg = f"Invalid attribute: {attr}\nValid attributes: {all_attributes}"
@@ -398,7 +439,9 @@ def plot_multi_value_distribution(
 
     concatted_df = pd.DataFrame()
     for attr in attributes:
-        values = [all_attributes[attr](a) for a in artifacts if all_attributes[attr](a) > 0]
+        values = [
+            all_attributes[attr](a) for a in artifacts if all_attributes[attr](a) > 0
+        ]
         attr_df = pd.DataFrame(values, columns=[attr])
         concatted_df = pd.concat([concatted_df, attr_df])
 

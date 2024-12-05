@@ -41,8 +41,8 @@ class StatContainer(NamedTuple):
     add_props: list[StatData]
 
 
-@lru_cache
-def possible_mainstat_values(stat: StatType, rarity: int) -> tuple[Decimal, ...]:
+@lru_cache(maxsize=1024)
+def possible_mainstat_values(stat: StatType, rarity: int) -> list[Decimal]:
     """Get the possible values for a mainstat based on the stat type and rarity.
     Map the values to Decimal.
 
@@ -51,16 +51,22 @@ def possible_mainstat_values(stat: StatType, rarity: int) -> tuple[Decimal, ...]
         rarity (int): The rarity of the artifact.
 
     Returns:
-        tuple[Decimal, ...]: The possible values for the mainstat.
+        list[Decimal]: The possible values for the mainstat.
     """
     mainstat_data = MAINSTAT_DATA.as_list()
     values = cast(list[StatContainer], mainstat_data[1:])
-    data = [j.value for i in values if i.rank == rarity for j in i.add_props if j.prop_type == stat]
-    return tuple(x for x in map(Decimal, data))
+    data = [
+        j.value
+        for i in values
+        if i.rank == rarity
+        for j in i.add_props
+        if j.prop_type == stat
+    ]
+    return sorted(Decimal(str(x)) for x in data)
 
 
-@lru_cache
-def possible_substat_values(stat: StatType, rarity: int) -> tuple[Decimal, ...]:
+@lru_cache(maxsize=1024)
+def possible_substat_values(stat: StatType, rarity: int) -> list[Decimal]:
     """Get the possible values for a substat based on the stat type and rarity.
     Map the values to Decimal.
 
@@ -69,9 +75,13 @@ def possible_substat_values(stat: StatType, rarity: int) -> tuple[Decimal, ...]:
         rarity (int): The rarity of the artifact.
 
     Returns:
-        tuple[Decimal, ...]: The possible values for the substat.
+        list[Decimal]: The possible values for the substat.
     """
     substat_data = cast(list[StatData], SUBSTAT_DATA.as_list())
-    data = [d for d in substat_data if d.depot_id == int(f"{rarity}01") and d.prop_type == stat]
+    data = [
+        d
+        for d in substat_data
+        if d.depot_id == int(f"{rarity}01") and d.prop_type == stat
+    ]
     sorted_data = sorted(data, key=attrgetter("prop_value"))
-    return tuple(x for x in map(Decimal, (d.prop_value for d in sorted_data)))
+    return sorted(Decimal(str(x.prop_value)) for x in sorted_data)

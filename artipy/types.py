@@ -34,7 +34,10 @@ def key_to_constant(key: str) -> str:
 
 def generate_artifact_sets() -> None:
     """Use this if artifactNames_gen.json ever changes."""
-    data = {key_to_constant(k): v for k, v in json_to_dict("artifacts/artifactNames_gen.json").items()}
+    data = {
+        key_to_constant(k): v
+        for k, v in json_to_dict("artifacts/artifactNames_gen.json").items()
+    }
     print("\n".join(f"{k} = {v}" for k, v in data.items()))  # noqa: T201
 
 

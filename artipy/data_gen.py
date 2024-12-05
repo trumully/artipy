@@ -1,11 +1,10 @@
 """Module that handles JSON data for the stats module."""
 
-import json
+import orjson
 import re
 from collections.abc import Iterator, Mapping, MutableMapping, Sequence
-from pathlib import Path
 from types import SimpleNamespace
-from typing import Any, ClassVar
+from typing import Any, ClassVar, cast
 
 from artipy import __data__
 
@@ -25,7 +24,7 @@ def camel_to_snake_case(s: str) -> str:
     return re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", s).lower()
 
 
-def recursive_namespace(data: Mapping[str, Any]) -> Any | SimpleNamespace:
+def recursive_namespace(data: Any) -> Any | SimpleNamespace:
     """Recursively convert a dictionary to a SimpleNamespace.
 
     Convert any attribute names from camelCase to snake_case for consistency.
@@ -36,8 +35,14 @@ def recursive_namespace(data: Mapping[str, Any]) -> Any | SimpleNamespace:
     Returns:
         Any | SimpleNamespace: The converted data.
     """
-    if isinstance(data, dict):
-        return SimpleNamespace(**{camel_to_snake_case(k): recursive_namespace(v) for k, v in data.items()})
+    if isinstance(data, Mapping):
+        data = cast(Mapping[str, Any], data)
+        return SimpleNamespace(**{
+            camel_to_snake_case(k): recursive_namespace(v) for k, v in data.items()
+        })
+    if isinstance(data, list):
+        data = cast("Sequence[Any]", data)
+        return [recursive_namespace(item) for item in data]
     return data
 
 
@@ -55,30 +60,33 @@ class DataGen:
     """
 
     _instances: ClassVar[MutableMapping[str, "DataGen"]] = {}
-    _data: Sequence[SimpleNamespace]
 
     def __new__(cls, file_name: str) -> "DataGen":
         """Create a new instance of the class if an instance with the same file name
         does not exist.
 
         Args:
-            file_name (str): The name of the file to load.
+            file_name (str): The name of the JSON file to load.
 
         Returns:
-            DataGen: The instance of the class.
+            DataGen: The instance of the DataGen class.
         """
         if file_name not in cls._instances:
-            cls._instances[file_name] = super().__new__(cls)
+            instance = super().__new__(cls)
+            cls._instances[file_name] = instance
+            instance._load_data(file_name)
         return cls._instances[file_name]
 
-    def __init__(self, file_name: str) -> None:
-        """Load the data from the JSON file.
+    def _load_data(self, file_name: str) -> None:
+        """Load data from a JSON file.
 
         Args:
-            file_name (str): The name of the file to load.
+            file_name (str): The name of the JSON file to load.
         """
-        with Path(__data__ / file_name).open(encoding="utf-8") as f:
-            self._data = json.load(f, object_hook=recursive_namespace)
+        with (__data__ / file_name).open("rb") as f:
+            data = orjson.loads(f.read())
+            if not hasattr(self, "_data"):
+                self._data = [recursive_namespace(item) for item in data]  # type: ignore
 
     def as_list(self) -> list[SimpleNamespace]:
         """Return the data as a list.
@@ -107,6 +115,6 @@ def json_to_dict(file_name: str) -> Mapping[str, Any]:
     Returns:
         dict[str, Any]: The data from the JSON file.
     """
-    with Path(__data__ / file_name).open(encoding="utf-8") as f:
-        data: dict[str, Any] = json.load(f)
+    with (__data__ / file_name).open("rb") as f:
+        data: dict[str, Any] = orjson.loads(f.read())
         return data

@@ -25,7 +25,7 @@ def artifact() -> Artifact:
         ArtifactBuilder()
         .with_mainstat(StatType.HP, 0)
         .with_substat(StatType.HP_PERCENT, 5)
-        .with_rarity(5)
+        .five_star()
         .with_level(0)
         .with_slot(ArtifactSlot.FLOWER)
         .with_set(ArtifactSet.GLADIATORS_FINALE)
